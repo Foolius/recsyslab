@@ -1,1 +1,1 @@
-A recommender system in python for my bachelor thesis
+A recommender system in python for my bachelor thesis.
