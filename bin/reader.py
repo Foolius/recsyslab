@@ -29,6 +29,14 @@ class tabSepReader(object):
 				return True
 		return False
 
+	def getOriginalUid(self,uid):
+		return self.uidList[uid]
+
+	def getOriginalIid(self,iid):
+		return self.iidList[iid]
+
 
 r=tabSepReader("../u.data")
 print r.getR()
+print r.iidList
+print r.getOriginalIid(8)
