@@ -1,11 +1,34 @@
-def grouplensReader(filename):
+class tabSepReader(object):
 
-	dbfile=open(filename,'r')
-	dbdict={}
-	
-	for line in dbfile:
-		print line
-		split=line.split()
-		dbdict[split[0]]=split[1]
-	
-	return dbdict
+	R={}
+	uidList=[]
+	iidList=[]
+
+	def __init__(self,filename):
+		dbfile=open(filename,'r')
+		
+		for line in dbfile:
+			split=line.split()
+			uid=split[0]
+			iid=split[1]
+			if not(self.elementInList(self.iidList,iid)):
+				self.iidList.append(iid)
+			if not(self.elementInList(self.uidList,uid)):
+				self.uidList.append(uid)
+			if self.uidList.index(uid) in self.R:
+				self.R[self.uidList.index(uid)].add(self.iidList.index(iid))
+			else:
+				self.R[self.uidList.index(uid)]={self.iidList.index(iid)}
+
+	def getR(self):
+		return self.R
+
+	def elementInList(self,list, element):
+		for i in list:
+			if i==element:
+				return True
+		return False
+
+
+r=tabSepReader("../u.data")
+print r.getR()
