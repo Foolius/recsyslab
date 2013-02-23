@@ -1,6 +1,7 @@
 class tabSepReader(object):
 
 	R={}
+	simpleList=[]
 	uidList=[]
 	iidList=[]
 
@@ -11,6 +12,9 @@ class tabSepReader(object):
 			split=line.split()
 			uid=split[0]
 			iid=split[1]
+
+			self.simpleList.append([uid,iid])
+
 			if not(self.elementInList(self.iidList,iid)):
 				self.iidList.append(iid)
 			if not(self.elementInList(self.uidList,uid)):
@@ -22,6 +26,9 @@ class tabSepReader(object):
 
 	def getR(self):
 		return self.R
+	
+	def getSimpleList(self):
+		return self.simpleList
 
 	def elementInList(self,list, element):
 		for i in list:
@@ -34,9 +41,3 @@ class tabSepReader(object):
 
 	def getOriginalIid(self,iid):
 		return self.iidList[iid]
-
-
-r=tabSepReader("../u.data")
-print r.getR()
-print r.iidList
-print r.getOriginalIid(8)

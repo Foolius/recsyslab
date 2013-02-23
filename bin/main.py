@@ -1,3 +1,6 @@
+import evaluation
 import reader
-import baselines
-print baselines.constant(reader.grouplensReader('u.data'))
+
+r=reader.tabSepReader("../u.data")
+
+print evaluation.split(0,r.getSimpleList(),3,1,1)
