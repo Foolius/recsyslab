@@ -1,6 +1,7 @@
 import evaluation
 import reader
+import baselines
 
 r=reader.tabSepReader("../u.data")
 
-print evaluation.split(0,r.getSimpleList(),3,1,1)
+print baselines.constant(r.getR(),10)

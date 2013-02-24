@@ -1,18 +1,17 @@
-def constant(dbdict):
+def constant(dbdict,n):
 	dictionary={}
 	for data in dbdict.iteritems():
-		print data
-		if dictionary.has_key(data[1]):
-			dictionary[data[1]]+=1
-		else:
-			dictionary[data[1]]=1
+		for item in iter(data[1]):
+			if dictionary.has_key(item):
+				dictionary[item]+=1
+			else:
+				dictionary[item]=1
 
-	print dictionary
-	max=-1
-	item=None
-	for tuple in dictionary.iteritems():
-		if tuple[1]>max:
-			item=tuple[0]
-			max=tuple[1]
+	sortedList=sorted(dictionary.iteritems(),
+							key=lambda (k,v):v,
+							reverse=True)
 
-	return item
+	if len(sortedList)<n:
+		n=len(sortedList)
+
+	return sortedList[:n]

@@ -23,7 +23,7 @@ def split(minItems, list, train, val, test):
 			continue
 		i+=1
 
-	print "train: %d"%len(trainList)
-	print "val: %d"%len(valList)
-	print "test: %d"%len(testList)
+	#print "train: %d"%len(trainList)
+	#print "val: %d"%len(valList)
+	#print "test: %d"%len(testList)
 	return trainList,valList,testList
