@@ -1,6 +1,6 @@
 import random
 
-def split(minItems, list, train, val, test):
+def split(list, train, val, test):
 	random.shuffle(list)
 	
 	trainList	=	[]
@@ -8,10 +8,8 @@ def split(minItems, list, train, val, test):
 	testList		=	[]
 
 	i=0
-	print list
 
 	while list:
-		print i
 		if i<train:
 			trainList.append(list.pop())
 		elif i<train+val:

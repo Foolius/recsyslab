@@ -13,12 +13,15 @@ class tabSepReader(object):
 			uid=split[0]
 			iid=split[1]
 
-			self.simpleList.append([uid,iid])
-
 			if not(self.elementInList(self.iidList,iid)):
 				self.iidList.append(iid)
 			if not(self.elementInList(self.uidList,uid)):
 				self.uidList.append(uid)
+
+			self.simpleList.append([
+				self.uidList.index(uid),
+				self.iidList.index(iid)])
+
 			if self.uidList.index(uid) in self.R:
 				self.R[self.uidList.index(uid)].add(self.iidList.index(iid))
 			else:
