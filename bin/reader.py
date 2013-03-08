@@ -9,7 +9,7 @@ class tabSepReader(object):
 		dbfile=open(filename,'r')
 		
 		for line in dbfile:
-			split=line.split()
+			split=line.strip().split()
 			uid=split[0]
 			iid=split[1]
 

@@ -1,27 +1,12 @@
 import random
 
-def split(list, train, val, test):
-	random.shuffle(list)
+def split(R):
 	
-	trainList	=	[]
-	valList		=	[]
-	testList		=	[]
+	split={}
 
-	i=0
+	for user in R.iterkeys():
+		item=random.sample(R[user],1)[0] #because random.sample gives a list
+		split[user]=item
+		R[user].discard(item)
 
-	while list:
-		if i<train:
-			trainList.append(list.pop())
-		elif i<train+val:
-			valList.append(list.pop())
-		elif i<train+val+test:
-			testList.append(list.pop())
-		else:
-			i=0
-			continue
-		i+=1
-
-	#print "train: %d"%len(trainList)
-	#print "val: %d"%len(valList)
-	#print "test: %d"%len(testList)
-	return trainList,valList,testList
+	return split
