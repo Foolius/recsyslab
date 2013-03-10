@@ -1,46 +1,37 @@
+import helper
+
 class tabSepReader(object):
 
 	R={}
 	simpleList=[]
 	uidList=[]
 	iidList=[]
+	uidDict=helper.idOrigDict()
+	iidDict=helper.idOrigDict()
 
 	def __init__(self,filename):
 		dbfile=open(filename,'r')
 		
 		for line in dbfile:
 			split=line.strip().split()
-			uid=split[0]
-			iid=split[1]
-
-			if not(self.elementInList(self.iidList,iid)):
-				self.iidList.append(iid)
-			if not(self.elementInList(self.uidList,uid)):
-				self.uidList.append(uid)
-
-			self.simpleList.append([
-				self.uidList.index(uid),
-				self.iidList.index(iid)])
-
-			if self.uidList.index(uid) in self.R:
-				self.R[self.uidList.index(uid)].add(self.iidList.index(iid))
+			origUid=split[0]
+			origIid=split[1]
+		
+			uid=self.uidDict.add(origUid)
+			iid=self.iidDict.add(origIid)
+			
+			#put in R when not already there
+			if uid in self.R:
+				self.R[uid].add(iid)
 			else:
-				self.R[self.uidList.index(uid)]={self.iidList.index(iid)}
+				self.R[uid]={iid}
 
 	def getR(self):
 		return self.R
 	
-	def getSimpleList(self):
-		return self.simpleList
-
-	def elementInList(self,list, element):
-		for i in list:
-			if i==element:
-				return True
-		return False
-
 	def getOriginalUid(self,uid):
-		return self.uidList[uid]
+		print("getor")
+		return self.uidDict.getOrig(uid)
 
 	def getOriginalIid(self,iid):
-		return self.iidList[iid]
+		return self.iidDict.getOrig(iid)
