@@ -1,9 +1,9 @@
 class constant(object):
 	
-	dictionary={}
-	sortedList=[]
 
 	def __init__(self,dbdict):
+		self.dictionary={}
+		self.sortedList=[]
 		for data in dbdict.iteritems():
 			for item in iter(data[1]):
 				if self.dictionary.has_key(item):

@@ -1,7 +1,7 @@
 import random
 
 def split(R):
-	
+
 	split={}
 
 	for user in R.iterkeys():
