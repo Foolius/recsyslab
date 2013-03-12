@@ -14,8 +14,8 @@ class constant(object):
 		self.sortedList=sorted(self.dictionary.iteritems(),
 								key=lambda (k,v):v,
 								reverse=True)
+	 
 	def getRec(self,user,n):
 		if len(self.sortedList)<n:
 			n=len(self.sortedList)
-
 		return self.sortedList[:n]

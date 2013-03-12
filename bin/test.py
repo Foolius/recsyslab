@@ -1,9 +1,10 @@
+import time
+
 def hitrate(testR, recommender,n):
 	hits=0.0
 	for i in testR:
-		for d in recommender(i[0],n):
-			#print "d: %s i: %s"%(d[1],i[1])
-			if d[1]==i[1]:
+		for d in recommender(i,n):
+			if d[0]==testR[i]:
 				hits+=1
 				break
 

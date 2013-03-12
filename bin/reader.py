@@ -13,13 +13,9 @@ class tabSepReader(object):
 			split=line.strip().split()
 			origUid=split[0]
 
-#			print("reader: %r"%origUid)
-#			time.sleep(1.0)
 
 			origIid=split[1]
-			print("uidDict:")	
 			uid=self.uidDict.add(origUid)
-			print("iidDict:")	
 			iid=self.iidDict.add(origIid)
 			
 			#put in R when not already there
@@ -27,7 +23,6 @@ class tabSepReader(object):
 				self.R[uid].add(iid)
 			else:
 				self.R[uid]={iid}
-			time.sleep(1.4)
 
 	def getR(self):
 		return self.R

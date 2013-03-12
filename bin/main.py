@@ -5,22 +5,22 @@ import test
 import helper
 
 r=reader.tabSepReader("../u.data")
-#training,test=evaluation.split(r.getR())
-training=r.getR()
-test={}
+trainingDict,testDict=evaluation.split(r.getR())
+
 trainingFile=file("training","w")
-for t in training.iterkeys():
+for t in trainingDict.iterkeys():
 	ti=r.getOriginalUid(t)
-	for i in training[t]:
+	for i in trainingDict[t]:
 		#i=r.getOriginalIid(i)
 		trainingFile.write("%r\t%r\n"%(t,i))
 trainingFile.close()
 
 testFile=file("test","w")
-for t in test.iterkeys():
+for t in testDict.iterkeys():
 	ti=r.getOriginalUid(t)
-	i=r.getOriginalIid(test[t])
+	i=r.getOriginalIid(testDict[t])
 	testFile.write("%r\t%r\n"%(ti,i))
 testFile.close()
-print("origuid(242):%r")%r.getOriginalUid(242)
-print("origiid(242):%r")%r.getOriginalIid(242)
+
+rec=baselines.constant(trainingDict)
+print test.hitrate(testDict, rec.getRec,10)
