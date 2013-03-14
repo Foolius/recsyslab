@@ -3,12 +3,17 @@ import reader
 import baselines
 import test
 import helper
+import bpr
 
-r=reader.tabSepReader("../u.data")
-trainingDict,testDict=evaluation.split(r.getR())
+r=reader.tabSepReader("../kleinu.data")
+for d in bpr.computeDs(r):
+	print d
 
-helper.writeToFile(r,trainingDict,"training")
-helper.writeToFile(r,testDict,"test")
 
-rec=baselines.constant(trainingDict)
-print test.hitrate(testDict, rec.getRec,10)
+#trainingDict,testDict=evaluation.split(r.getR())
+
+#helper.writeInternalToFile(r,trainingDict,"training")
+#helper.writeInternalToFile(r,testDict,"test")
+
+#rec=baselines.constant(trainingDict)
+#print test.hitrate(testDict, rec.getRec,10)

@@ -18,11 +18,18 @@ class idOrigDict(object):
 	def getId(self,orig):
 		return self.orig2id[orig]
 
-def writeToFile(reader,toSave,filename):
+def writeOrigToFile(reader,toSave,filename):
 	f=file(filename,"w")
 	for r in toSave.iterkeys():
 		ri=reader.getOriginalUid(r)
 		for i in toSave[r]:
 			ii=reader.getOriginalIid(i)
 			f.write("%r\t%r\n"%(ri,ii))
+	f.close()
+
+def writeInternalToFile(reader,toSave,filename):
+	f=file(filename,"w")
+	for r in toSave.iterkeys():
+		for i in toSave[r]:
+			f.write("%r\t%r\n"%(r,i))
 	f.close()
