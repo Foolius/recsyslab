@@ -1,0 +1,3 @@
+def computeDs(R):
+	ds={}
+

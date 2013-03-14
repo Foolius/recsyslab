@@ -4,7 +4,7 @@ def hitrate(testR, recommender,n):
 	hits=0.0
 	for i in testR:
 		for d in recommender(i,n):
-			if d[0]==testR[i]:
+			if d[0]==testR[i][0]:
 				hits+=1
 				break
 
