@@ -4,11 +4,9 @@ import baselines
 import test
 import helper
 import bpr
+import numpy as np
 
 r=reader.tabSepReader("../kleinu.data")
-for d in bpr.computeDs(r):
-	print d
-
 
 #trainingDict,testDict=evaluation.split(r.getR())
 
@@ -17,3 +15,5 @@ for d in bpr.computeDs(r):
 
 #rec=baselines.constant(trainingDict)
 #print test.hitrate(testDict, rec.getRec,10)
+
+bpr.foo(9,r)

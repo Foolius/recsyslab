@@ -35,3 +35,6 @@ class tabSepReader(object):
 
 	def getMaxIid(self):
 		return self.iidDict.id
+
+	def getMaxUid(self):
+		return self.uidDict.id
