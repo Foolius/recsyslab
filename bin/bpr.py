@@ -30,3 +30,5 @@ def foo(k,R):
 	def xuij(u,i,j):
 		return xui(u,i)-xui(u,j)
 
+	def dxuij(u,i,j,theta):
+		return 0
