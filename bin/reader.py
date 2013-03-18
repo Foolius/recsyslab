@@ -8,8 +8,10 @@ class tabSepReader(object):
 		self.uidDict=helper.idOrigDict()
 		self.iidDict=helper.idOrigDict()
 		self.dbfile=open(filename,'r')
+		self.numberOfTransactions=0
 		
 		for line in self.dbfile:
+			self.numberOfTransactions+=1
 			split=line.strip().split()
 			origUid=split[0]
 

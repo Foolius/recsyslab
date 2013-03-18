@@ -6,6 +6,6 @@ def split(R):
 
 	for user in R.iterkeys():
 		item=random.sample(R[user],1)[0] #because random.sample gives a list
-		split[user]=[item]
+		split[user]=set([item])
 		R[user].discard(item)
 	return R,split
