@@ -14,12 +14,18 @@ trainingDict,testDict=evaluation.split(r.getR())
 #helper.writeInternalToFile(r,trainingDict,"training")
 #helper.writeInternalToFile(r,testDict,"test")
 
-#rec=baselines.randomRec(trainingDict)
+#rec=baselines.constant(trainingDict)
 #print test.hitrate(testDict, rec.getRec,10)
-
-W,H = bprmf.learnModel(r.getMaxUid(),r.getMaxIid(),0.1,0.1,0.1,0.1,trainingDict,10, 10,
+rank=RankMFX.RankMFX()
+W,H = rank.learnModel(r.getMaxUid(),r.getMaxIid(),0.01,0.01,0.01,0.01,trainingDict,350, 15,
 					r.numberOfTransactions)
 
-rec=test.svdtest(W,H)
+np.savez_compressed("modelFile",W=W,H=H)
+modelf=np.load("modelFile.npz")
+W=modelf['W']
+H=modelf['H']
+modelf.close()
+
+rec=test.svdtest(W,H,trainingDict)
 
 print test.hitrate(testDict,rec.getRec,10)

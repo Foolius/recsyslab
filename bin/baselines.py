@@ -19,10 +19,8 @@ class constant(object):
 	def getRec(self,user,n):
 		if len(self.sortedList)<n:
 			n=len(self.sortedList)
-		s=set()
-		for i in self.sortedList:
-			s.add(i[0])
-		return s
+
+		return set(self.sortedList[:n])
 
 class randomRec(object):
 	def __init__(self,dbdict):

@@ -10,11 +10,14 @@ class tabSepReader(object):
 		self.dbfile=open(filename,'r')
 		self.numberOfTransactions=0
 		
+		print("Start reading the database.")
 		for line in self.dbfile:
 			self.numberOfTransactions+=1
 			split=line.strip().split()
 			origUid=split[0]
 
+			if self.numberOfTransactions %10000 == 0:
+				print("%r Lines read."%self.numberOfTransactions)
 
 			origIid=split[1]
 			uid=self.uidDict.add(origUid)

@@ -4,22 +4,29 @@ import numpy as np
 def hitrate(testR, recommender,n):
 	hits=0.0
 	items=0.0
-	for i in testR:
-		hits+=len(recommender(i,n).intersection(testR[i]))
-		items+=len(recommender(i,n))
+	for u in testR.iterkeys():
+		if u%100==0:
+			print("%r users tested"%u)
+			print("Hitrate: %r"% hits/items)
+		hits+=len(recommender(u,n).intersection(testR[u]))
+		items+=len(recommender(u,n))
 
+	print("Number of hits: %r"%hits)
+	print("Number of recommended items: %r"%items)
 	return hits/items
 
 class svdtest(object):
 
-	def __init__(self,W,H):
+	def __init__(self,W,H,trainingR):
 		self.W=W
 		self.H=H
+		self.R=trainingR
 
 	def	getRec(self,u,n):
 		scoredict={}
 		for i in range(0,self.H.shape[0]):
-			scoredict[i]=np.dot(self.W[u],self.H[i])
+			if not i in self.R[u]:
+				scoredict[i]=np.dot(self.W[u],self.H[i])
 	
 		sortedscorelist=sorted(scoredict.iteritems(),
 									key=lambda(k,v):v,
@@ -27,6 +34,6 @@ class svdtest(object):
 		if len(sortedscorelist)<n:
 			n=len(sortedscorelist)
 		s=set()
-		for i in sortedscorelist:
+		for i in sortedscorelist[:n]:
 			s.add(i[0])
 		return s
