@@ -7,15 +7,15 @@ def hitrate(testR, recommender,n):
 	for u in testR.iterkeys():
 		if u%100==0:
 			print("%r users tested"%u)
-			print("Hitrate: %r"% hits/items)
+			print("Hits so far: %r"%hits)
 		hits+=len(recommender(u,n).intersection(testR[u]))
-		items+=len(recommender(u,n))
+		items+=len(testR[u])
 
 	print("Number of hits: %r"%hits)
 	print("Number of recommended items: %r"%items)
 	return hits/items
 
-class svdtest(object):
+class MFtest(object):
 
 	def __init__(self,W,H,trainingR):
 		self.W=W
