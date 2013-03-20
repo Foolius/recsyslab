@@ -4,7 +4,6 @@ import numpy as np
 def hitrate(testR, recommender,n):
 	hits=0.0
 	items=0.0
-	print(testR)
 	for u in testR.iterkeys():
 		#print("recommender:")
 		#print(recommender(u,n))

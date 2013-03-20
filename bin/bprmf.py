@@ -2,25 +2,6 @@ import random
 import numpy as np
 import math
 
-def computeDs(R,m_items):
-	ds=[]
-	for u in R.iterkeys():
-		for i in R[u]:
-			for j in xrange(0,m_items):
-				if j in R[u]:
-					continue
-				ds.append((u,i,j))
-	random.shuffle(ds)
-	return ds
-
-def xui(u,i):
-	#getA() gives an array in an array so [0]
-	dot=np.dot(W[u].getA()[0],H[i].getA()[0])
-	return dot
-
-def xuij(u,i,j):
-	return xui(u,i)-xui(u,j)
-
 def logLoss(a, y):
     """
     logLoss(a, y) = log(1 + exp(-a*y))
