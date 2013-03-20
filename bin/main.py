@@ -105,13 +105,18 @@ def loadM(name):
 
 def testMF(W,H,trainingDict,testDict):
 	t=test.MFtest(W,H,trainingDict)
-	hr=test.hitrate(testDict,t.getRec,1000)
+	hr=test.hitrate(testDict,t.getRec,10)
 	return hr
 
 #testMF(W,H,trainingDict,testDict)
 
+ts=time.time()
+st = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
+file=open("results.data","a")
+file.write("Started at: "+st+"\n")
+print("Started at: "+st+"\n")
+
 def tweak(learnModel,r,trainingDict,fulltrain,testDict,evalDict):
-	file=open("results.data","a")
 	legend="Algorithm|Regconstant|Learningrate|Epochs|Hitrate\n"
 	file.write(legend)
 
@@ -149,16 +154,9 @@ def tweak(learnModel,r,trainingDict,fulltrain,testDict,evalDict):
 			print(legend+s)
 			file.write(s)
 
-	file.close()
 
-r,trainingDict,fulltrain,testDict,evalDict=readDBandSplit("u.data")
+r,trainingDict,fulltrain,testDict,evalDict=readDBandSplit("kleinu.data")
 
-ts=time.time()
-st = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
-file=open("results.data","a")
-file.write("Started at: "+st+"\n")
-print("Started at: "+st+"\n")
-file.close
 
 for i in xrange(0,10):
 	print("BPRMF %r"%i)
@@ -167,3 +165,5 @@ for i in xrange(0,10):
 for i in xrange(0,10):
 	print("RankMFX%r"%i)
 	tweak(learnRankMFX,r,trainingDict,fulltrain,testDict,evalDict)
+
+file.close
