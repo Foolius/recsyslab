@@ -155,7 +155,7 @@ def tweak(learnModel,r,trainingDict,fulltrain,testDict,evalDict):
 			file.write(s)
 
 
-r,trainingDict,fulltrain,testDict,evalDict=readDBandSplit("kleinu.data")
+r,trainingDict,fulltrain,testDict,evalDict=readDBandSplit("u.data")
 
 
 for i in xrange(0,10):
