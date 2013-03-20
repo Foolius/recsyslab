@@ -7,15 +7,17 @@ import bprmf
 import numpy as np
 import RankMFX
 import cPickle
+import time
+import datetime
 
 SEED1=1
 SEED2=11
-EPOCHS=3
+EPOCHS=15
 
-#learningratevalues=[0.001,0.01,0.1]
-#regularizationvalues=[0,0.001,0.01,0.1,1]
-learningratevalues=[0.01,0.1]
-regularizationvalues=[0,1]
+learningratevalues=[0.001,0.01,0.1]
+regularizationvalues=[0,0.001,0.01,0.1,1]
+#learningratevalues=[0.01,0.1]
+#regularizationvalues=[0,1]
 
 def readDBandSplit(dbfile):
 	r=reader.tabSepReader(dbfile)
@@ -103,17 +105,15 @@ def loadM(name):
 
 def testMF(W,H,trainingDict,testDict):
 	t=test.MFtest(W,H,trainingDict)
-	hr=test.hitrate(testDict,t.getRec,10)
+	hr=test.hitrate(testDict,t.getRec,1000)
 	return hr
 
 #testMF(W,H,trainingDict,testDict)
 
-def tweak(learnModel):
+def tweak(learnModel,r,trainingDict,fulltrain,testDict,evalDict):
 	file=open("results.data","a")
 	legend="Algorithm|Regconstant|Learningrate|Epochs|Hitrate\n"
 	file.write(legend)
-
-	r,trainingDict,fulltrain,testDict,evalDict=readDBandSplit("kleinu.data")
 
 	results=[]
 
@@ -151,10 +151,19 @@ def tweak(learnModel):
 
 	file.close()
 
+r,trainingDict,fulltrain,testDict,evalDict=readDBandSplit("u.data")
+
+ts=time.time()
+st = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
+file=open("results.data","a")
+file.write("Started at: "+st+"\n")
+print("Started at: "+st+"\n")
+file.close
+
 for i in xrange(0,10):
 	print("BPRMF %r"%i)
-	tweak(learnBPRMF)
+	tweak(learnBPRMF,r,trainingDict,fulltrain,testDict,evalDict)
 
 for i in xrange(0,10):
 	print("RankMFX%r"%i)
-	tweak(learnRankMFX)
+	tweak(learnRankMFX,r,trainingDict,fulltrain,testDict,evalDict)

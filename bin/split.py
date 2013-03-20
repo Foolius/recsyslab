@@ -13,4 +13,4 @@ def split(R,seed):
 		s=copy.deepcopy(R[user])
 		s.discard(item)
 		training[user]=s
-	return R,split
+	return training,split
