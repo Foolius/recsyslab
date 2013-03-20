@@ -12,8 +12,10 @@ SEED1=1
 SEED2=11
 EPOCHS=3
 
-learningratevalues=[0.001,0.01,0.1]
-regularizationvalues=[0,0.001,0.01,0.1,1]
+#learningratevalues=[0.001,0.01,0.1]
+#regularizationvalues=[0,0.001,0.01,0.1,1]
+learningratevalues=[0.01,0.1]
+regularizationvalues=[0,1]
 
 def readDBandSplit(dbfile):
 	r=reader.tabSepReader(dbfile)
@@ -122,6 +124,12 @@ def tweak(learnModel):
 			results.append(
 				testMF(W,H,trainingDict,
 				evalDict))
+			s=(learnModel.__name__+"|%r|%r|%r|%r\n"
+				%(reg,ler,EPOCHS,
+				results[-1]))
+			print("")
+			print(legend+s)
+			file.write(s)
 			
 	index=results.index(max(results))
 	count=0
@@ -134,7 +142,7 @@ def tweak(learnModel):
 				r,fulltrain,reg,ler)
 			hr=testMF(W,H,fulltrain,
 				testDict)
-			s=(learnModel.__name__+"|%r|%r|%r|%r\n"
+			s=("Best:\n"+learnModel.__name__+"|%r|%r|%r|%r\n\n"
 				%(reg,ler,EPOCHS,
 				results[-1]))
 			print("")
