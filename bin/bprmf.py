@@ -39,8 +39,8 @@ def learnModel(n_users,m_items,regU,regI,regJ,learningRate,R,k,epochs,numberOfIt
 	y = 1.0
 
 	changeU=1.0-learningRate*regU
-	changeI=1.0-learningRate*regU
-	changeJ=1.0-learningRate*regU
+	changeI=1.0-learningRate*regI
+	changeJ=1.0-learningRate*regJ
 
 	for e in xrange(0,epochs):
 		iter=0
