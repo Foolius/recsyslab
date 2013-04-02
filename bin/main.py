@@ -15,10 +15,10 @@ SEED2=11
 EPOCHS=15
 features=350
 
-learningratevalues=[0.001,0.01,0.1]
-regularizationvalues=[0,0.001,0.01,0.1,1]
-#learningratevalues=[0.01,0.1]
-#regularizationvalues=[0,1]
+#learningratevalues=[0.001,0.01,0.1]
+#regularizationvalues=[0,0.001,0.01,0.1,1]
+learningratevalues=[0.1]
+regularizationvalues=[0.01]
 
 def readDBandSplit(dbfile):
     r=reader.tabSepReader(dbfile)
@@ -119,8 +119,11 @@ file.write("Started at: "+st+"\n")
 print("Started at: "+st+"\n")
 
 def tweak(learnModel,r,trainingDict,fulltrain,testDict,evalDict):
-    legend="Algorithm|Regconstant|Learningrate|Epochs|Hitrate\n"
+    legend="Algorithm|Regconstant|Learningrate|Epochs|Features|Hitrate\n"
     file.write(legend)
+
+    trainingDict=fulltrain
+    evalDict=testDict
 
     results=[]
 
@@ -131,16 +134,15 @@ def tweak(learnModel,r,trainingDict,fulltrain,testDict,evalDict):
             results.append(
                 testMF(W,H,trainingDict,
                 evalDict))
-            s=(learnModel.__name__+"|%r|%r|%r|%r\n"
-                %(reg,ler,EPOCHS,
+            s=(learnModel.__name__+"|%r|%r|%r|%r|%r\n"
+                %(reg,ler,EPOCHS,features,
                 results[-1]))
             print("")
             print(legend+s)
             file.write(s)
-            
+    return results[-1]
+
     index=results.index(max(results))
-    print results
-    print index
     count=-1
     for reg in regularizationvalues:
         for ler in learningratevalues:
@@ -166,11 +168,24 @@ def tweak(learnModel,r,trainingDict,fulltrain,testDict,evalDict):
 def tweak10times():
     for i in xrange(0,10):
         print("BPRMF %r"%i)
-        #tweak(learnBPRMF,r,trainingDict,fulltrain,testDict,evalDict)
+        tweak(learnBPRMF,r,trainingDict,fulltrain,testDict,evalDict)
 
     for i in xrange(0,10):
         print("RankMFX%r"%i)
         tweak(learnRankMFX,r,trainingDict,fulltrain,testDict,evalDict)
 
-tweak10times()
+def findBestFeature():
+    features=512
+    ult=0.0
+    penult=0.0
+    dir=True
+    while(True):
+        penult=ult
+        ult=tweak(learnBPRMF,r,trainingDict,fulltrain,testDict,evalDict)
+        #ult=tweak(learnRankMFX,r,trainingDict,fulltrain,testDict,evalDict)
+        if ult>penult and dir:
+            features+=features/2
+        if ult>penult and not dir:
+            features-=features/2
+            
 file.close
