@@ -1,5 +1,7 @@
 import helper
 import time
+import numpy as np
+
 class tabSepReader(object):
 
 
@@ -29,8 +31,17 @@ class tabSepReader(object):
             else:
                 self.R[uid]={iid}
 
+        self.matrix=np.zeros((self.getMaxUid(),self.getMaxIid()))
+        for u in self.R.iterkeys():
+            for i in self.R[u]:
+                self.matrix[u,i]=1.0
+
+
     def getR(self):
         return self.R
+
+    def getMatrix(self):
+        return self.matrix
     
     def getOriginalUid(self,uid):
         return self.uidDict.getOrig(uid)
