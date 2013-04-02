@@ -188,4 +188,20 @@ def findBestFeature():
         if ult>penult and not dir:
             features-=features/2
             
+r=reader.tabSepReader("kleinu.data")
+rf=open("reader.npz","wb")
+cPickle.dump(r,rf,-1)
+#print r.getMatrix()
+rf.close()
+
+import knn
+k=knn.knn(r.getMatrix())
+#kf=open("knn.npz","wb")
+#cPickle.dump(k,kf,-1)
+#kf.close()
+#kf=open("knn.npz","rb")
+#k=cPickle.load(kf)
+print k.sim
+k.mostSim(1,10)
+
 file.close
