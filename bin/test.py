@@ -18,6 +18,7 @@ def hitrate(testR, recommender,n):
 
     print("Number of hits: %r"%hits)
     print("Number of recommended items: %r"%items)
+    print("Hitrate: %r"%hits/items)
     return hits/items
 
 class MFtest(object):
@@ -35,12 +36,3 @@ class MFtest(object):
                 scoredict[i]=np.dot(self.W[u],self.H[i])
    
         return helper.listToSet(helper.sortList(scoredict.iteritems()),n)
-#        sortedscorelist=sorted(scoredict.iteritems(),
-#                                    key=lambda(k,v):v,
-#                                    reverse=True)
-        if len(sortedscorelist)<n:
-            n=len(sortedscorelist)
-        s=set()
-        for i in sortedscorelist[:n]:
-            s.add(i[0])
-        return s
