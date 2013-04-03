@@ -4,17 +4,23 @@ import helper
 class knn(object):
     def __init__(self, matrix):
         self.sim=np.zeros((matrix.shape[1],matrix.shape[1]))
-        self.matrix=matrix
+        self.itemUserMatrix=matrix.transpose()
         count=0
-        for i in xrange(0,matrix.shape[1]):
+        print self.sim.shape
+        for i in xrange(0,self.sim.shape[1]):
             if count%100==0:
                 print("%r Similarities calculated"%count)
             count+=1
 
-            for j in xrange(0,matrix.shape[1]):
-                self.sim[i,j]=np.dot(matrix.getA()[i],matrix.getA()[j])/(
-                    np.sqrt(np.dot(matrix.getA()[i],matrix.getA()[i]))*(
-                    np.sqrt(np.dot(matrix.getA()[j],matrix.getA()[j]))))
+            for j in xrange(0,self.sim.shape[1]):
+                self.sim[i,j]=self.cos(self.itemUserMatrix[i],self.itemUserMatrix[j])
+
+    def cos(self,a,b):
+        """gets two vectors(onedimensional np.matrix)
+        and computes their cosine"""
+        return np.dot(a.getA()[0],b.getA()[0])/(
+            np.sqrt(np.dot(a.getA()[0],a.getA()[0]))*(
+            np.sqrt(np.dot(b.getA()[0],b.getA()[0]))))
 
 
     def mostSim(self,item,n):
@@ -42,16 +48,12 @@ class knn(object):
         U=set() #items the user bought
         C=set() #items similar to items the items of u
         for j in xrange(0,self.sim.shape[1]):
-            if self.matrix[u,j]:
+            if self.itemUserMatrix[j,u]:
                 U.add(j)
                 C=C.union(self.mostSim(j,n))
         C=C.difference(U)
         l=[]
-#        for c in C:
-            #l.append(c,self.simToSet(U,c,n))
+        for c in C:
+            l.append((c,self.simToSet(U,c,n)))
 
-
-        print C
-        print U
-
-        return
+        return helper.listToSet(helper.sortList(l),n)
