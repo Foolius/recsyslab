@@ -82,3 +82,27 @@ def sortResults(name):
     infile.close()
     
 #sortResults("RankMFXresults.data")
+
+
+def printMatrix(m):
+    for i in xrange(0,m.shape[0]):
+        s=""
+        for j in xrange(0,m.shape[1]):
+            s+="%r\t"%m[i,j]
+        print s
+
+import functools
+def cache(fn):
+    cacheDict={}
+    @functools.wraps(fn)
+    def cached(*args):
+        try:
+            return cacheDict[args]
+        except KeyError:
+            result = cacheDict[args] = fn(*args)
+            return result
+
+    return cached
+
+
+
