@@ -18,7 +18,7 @@ def hitrate(testR, recommender,n):
 
     print("Number of hits: %r"%hits)
     print("Number of recommended items: %r"%items)
-    print("Hitrate: %r"%hits/items)
+    print("Hitrate: %r"%(hits/items))
     return hits/items
 
 class MFtest(object):
