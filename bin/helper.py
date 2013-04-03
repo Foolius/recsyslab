@@ -18,6 +18,19 @@ class idOrigDict(object):
     def getId(self,orig):
         return self.orig2id[orig]
 
+import functools
+def cache(fn):
+    cacheDict={}
+    @functools.wraps(fn)
+    def cached(*args):
+        try:
+            return cacheDict[args]
+        except KeyError:
+            result = cacheDict[args] = fn(*args)
+            return result
+
+    return cached
+
 def writeOrigToFile(reader,toSave,filename):
     f=file(filename,"w")
     for r in toSave.iterkeys():
@@ -90,19 +103,3 @@ def printMatrix(m):
         for j in xrange(0,m.shape[1]):
             s+="%r\t"%m[i,j]
         print s
-
-import functools
-def cache(fn):
-    cacheDict={}
-    @functools.wraps(fn)
-    def cached(*args):
-        try:
-            return cacheDict[args]
-        except KeyError:
-            result = cacheDict[args] = fn(*args)
-            return result
-
-    return cached
-
-
-
