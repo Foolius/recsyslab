@@ -10,19 +10,20 @@ class knn(object):
                 print("%r Similarities calculated"%count)
             count+=1
 
-            for j in xrange(0,matrix.shape[0]):
+            for j in xrange(0,matrix.shape[1]):
                 self.sim[i,j]=np.dot(matrix.getA()[i],matrix.getA()[j])/(
                     np.sqrt(np.dot(matrix.getA()[i],matrix.getA()[i]))*(
                     np.sqrt(np.dot(matrix.getA()[j],matrix.getA()[j]))))
 
         print self.sim
 
-    def mostSim(self,u,n):
+    def mostSim(self,item,n):
+        """Returns the n most similar items for item."""
         scorelist=[]
         for i in xrange(self.sim.shape[0]):
-            if i==u:
+            if i==item:
                 continue
-            scorelist.append((i,self.sim[u,i]))
+            scorelist.append((i,self.sim[item,i]))
 
         sortedscorelist=sorted(scorelist,
                                     key=lambda(k,v):v,
