@@ -28,7 +28,7 @@ def splitMatrix(M,seed):
     count=0
     for user in xrange(0,bigSplit.shape[0]):
         if count%100==0:
-            #print("%r Users split."%count)
+            print("%r Users split."%count)
         count+=1
 
         item=random.randint(0,bigSplit.shape[1]-1)
