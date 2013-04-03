@@ -15,7 +15,6 @@ class knn(object):
                     np.sqrt(np.dot(matrix.getA()[i],matrix.getA()[i]))*(
                     np.sqrt(np.dot(matrix.getA()[j],matrix.getA()[j]))))
 
-        print self.sim
 
     def mostSim(self,item,n):
         """Returns the n most similar items for item."""
@@ -33,8 +32,16 @@ class knn(object):
         s=set()
         for i in sortedscorelist[:n]:
             s.add(i[0])
-        print s
         return s
 
+    def simToset(self,itemSet,item,n):
+        """Returns the sum of the similarities of itemSet and item."""
+        simsum=0.
+        for s in itemSet:
+            simsum+=self.sim[s,item]
+        return simsum
+
+
     def getRec(self,u,n):
+        """Returns the n best recommendations for user u"""
         return
