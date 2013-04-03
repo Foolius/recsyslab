@@ -188,21 +188,20 @@ def findBestFeature():
         if ult>penult and not dir:
             features-=features/2
             
-r=reader.tabSepReader("kleinu.data")
-rf=open("reader.npz","wb")
-cPickle.dump(r,rf,-1)
+#r=reader.tabSepReader("u.data")
+#rf=open("reader.npz","wb")
+#cPickle.dump(r,rf,-1)
 #print r.getMatrix()
+rf=open("reader.npz","rb")
+r=cPickle.load(rf)
 rf.close()
-
+train,testDict=split.splitMatrix(r.getMatrix(),123)
 import knn
-k=knn.knn(r.getMatrix())
+#k=knn.knn(train)
 #kf=open("knn.npz","wb")
 #cPickle.dump(k,kf,-1)
-#kf.close()
-#kf=open("knn.npz","rb")
-#k=cPickle.load(kf)
-print r.getMatrix()
-print k.sim
-k.getRec(1,10)
-
+kf=open("knn.npz","rb")
+k=cPickle.load(kf)
+kf.close()
+test.hitrate(testDict,k.getRec,10)
 file.close
