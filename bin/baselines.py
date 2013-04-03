@@ -1,4 +1,5 @@
 import random
+import helper
 
 class constant(object):
 
@@ -12,9 +13,7 @@ class constant(object):
                 else:
                     self.dictionary[item]=1
 
-        self.sortedList=sorted(self.dictionary.iteritems(),
-                                key=lambda (k,v):v,
-                                reverse=True)
+        self.sortedList=helper.sortList(self.dictionary.iteritems())
      
     def getRec(self,user,n):
         if len(self.sortedList)<n:

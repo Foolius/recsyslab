@@ -1,4 +1,5 @@
 import time
+import helper
 import numpy as np
 
 def hitrate(testR, recommender,n):
@@ -32,11 +33,11 @@ class MFtest(object):
         for i in range(0,self.H.shape[0]):
             if not i in self.R[u]:
                 scoredict[i]=np.dot(self.W[u],self.H[i])
-                #print("scoredict[%r]: %r"%(i,scoredict[i]))
-    
-        sortedscorelist=sorted(scoredict.iteritems(),
-                                    key=lambda(k,v):v,
-                                    reverse=True)
+   
+        return helper.listToSet(helper.sortList(scoredict.iteritems()),n)
+#        sortedscorelist=sorted(scoredict.iteritems(),
+#                                    key=lambda(k,v):v,
+#                                    reverse=True)
         if len(sortedscorelist)<n:
             n=len(sortedscorelist)
         s=set()

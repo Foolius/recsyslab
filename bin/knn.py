@@ -1,4 +1,5 @@
 import numpy as np
+import helper
 
 class knn(object):
     def __init__(self, matrix):
@@ -24,18 +25,12 @@ class knn(object):
                 continue
             scorelist.append((i,self.sim[item,i]))
 
-        sortedscorelist=sorted(scorelist,
-                                    key=lambda(k,v):v,
-                                    reverse=True)
-        if len(sortedscorelist)<n:
-            n=len(sortedscorelist)
-        s=set()
-        for i in sortedscorelist[:n]:
-            s.add(i[0])
-        return s
+        return helper.listToSet(helper.sortList(scorelist),n)
 
-    def simToset(self,itemSet,item,n):
-        """Returns the sum of the similarities of itemSet and item."""
+    def simToSet(self,itemSet,item,n):
+        """Returns the sum of the similarities of itemSet and item.
+        not exactly like in the paper because I'm adding up all items 
+        in the set and not only n."""
         simsum=0.
         for s in itemSet:
             simsum+=self.sim[s,item]
@@ -44,4 +39,19 @@ class knn(object):
 
     def getRec(self,u,n):
         """Returns the n best recommendations for user u"""
+        U=set() #items the user bought
+        C=set() #items similar to items the items of u
+        for j in xrange(0,self.sim.shape[1]):
+            if self.matrix[u,j]:
+                U.add(j)
+                C=C.union(self.mostSim(j,n))
+        C=C.difference(U)
+        l=[]
+#        for c in C:
+            #l.append(c,self.simToSet(U,c,n))
+
+
+        print C
+        print U
+
         return

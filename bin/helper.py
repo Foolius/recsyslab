@@ -34,6 +34,25 @@ def writeInternalToFile(reader,toSave,filename):
             f.write("%r\t%r\n"%(r,i))
     f.close()
 
+def sortList(scorelist):
+    """Gets a list of tuples (itemid,score),
+    sorts by score decreasing."""
+    sortedscorelist=sorted(scorelist,
+                                key=lambda(k,v):v,
+                                reverse=True)
+    return sortedscorelist
+
+def listToSet(sortedscorelist,n):
+    """Gets a list like sortList returns
+    and returns a set with the first n
+    items, or less, when there are not
+    enough items"""
+    if len(sortedscorelist)<n:
+        n=len(sortedscorelist)
+    s=set()
+    for i in sortedscorelist[:n]:
+        s.add(i[0])
+    return s
 
 def sortResults(name):
     infile=open(name,'r')

@@ -47,7 +47,7 @@ def loadData():
     inputfile.close()
     return r,trainingDict,fulltrain,testDict,evalDict
 
-r,trainingDict,fulltrain,testDict,evalDict=loadData()
+#r,trainingDict,fulltrain,testDict,evalDict=loadData()
 
 #helper.writeInternalToFile(
     #r,trainingDict,"training")
@@ -81,7 +81,7 @@ def learnRankMFX(r,trainingDict,reg,ler):
         "RankMFXModelFile",W=W,H=H)
     return W,H
 
-#learnRankMFX(r,trainingDict)
+#W,H=learnRankMFX(r,trainingDict,0.1,0.1)
 
 def learnBPRMF(r,trainingDict,reg,ler):
     W,H = bprmf.learnModel(
@@ -201,7 +201,8 @@ k=knn.knn(r.getMatrix())
 #kf.close()
 #kf=open("knn.npz","rb")
 #k=cPickle.load(kf)
+print r.getMatrix()
 print k.sim
-k.mostSim(1,10)
+k.getRec(1,10)
 
 file.close
