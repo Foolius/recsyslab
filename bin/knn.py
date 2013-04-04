@@ -15,6 +15,16 @@ class knn(object):
             for j in xrange(0,self.sim.shape[1]):
                 self.sim[i,j]=self.cos(self.itemUserMatrix[i],self.itemUserMatrix[j])
 
+        print self.itemUserMatrix
+        self.normRow(self.itemUserMatrix)
+        print self.itemUserMatrix
+
+    @helper.cache
+    def normRow(self,m):
+        "Normalize each row of the matrix so the sum is 1"
+        for i in xrange(0,m.shape[0]):
+            m[i]/=np.sum(m[0])
+            
     @helper.cache
     def cos(self,a,b):
         """gets two vectors(onedimensional np.matrix)
@@ -43,8 +53,8 @@ class knn(object):
         in the set and not only n."""
         simsum=0.0
         for s in itemSet:
-            #if item in self.mostSim(s,n):
-            simsum+=self.sim[s,item]
+            if item in self.mostSim(s,n):
+                simsum+=self.sim[s,item]
         return simsum
 
 

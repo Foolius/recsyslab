@@ -21,8 +21,12 @@ class idOrigDict(object):
 import functools
 def cache(fn):
     cacheDict={}
+    count=0
+    count=count+1
     @functools.wraps(fn)
     def cached(*args):
+        if count>1:
+            print count
         try:
             return cacheDict[args]
         except KeyError:
