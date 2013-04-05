@@ -21,18 +21,29 @@ class idOrigDict(object):
 import functools
 
 
+class Namespace():
+    pass
+
+
 def cache(fn):
+    ns = Namespace()
+    ns.fail = 0
+    ns.success = 0
+    ns.count = 0
     cacheDict = {}
-    count = 0
-    count = count + 1
 
     @functools.wraps(fn)
     def cached(*args):
-        if count > 1:
-            print count
+        if (ns.count % 1000 == 0):
+            print("Success: %r Fail: %r Sum: %r Count: %r"
+                  % (ns.success, ns.fail, (ns.success + ns.fail), ns.count))
+        ns.count += 1
         try:
-            return cacheDict[args]
+            result = cacheDict[args]
+            ns.success += 1
+            return result
         except KeyError:
+            ns.fail += 1
             result = cacheDict[args] = fn(*args)
             return result
 
