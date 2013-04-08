@@ -13,8 +13,7 @@ def hitrate(testR, recommender, n):
         if u % 100 == 0:
             print("%r users tested" % u)
             print("Hits so far: %r" % hits)
-            # print(recommender(u,n))
-           # print(testR[u])
+            # print(recommender(u, n))
         hits += len(recommender(u, n).intersection(testR[u]))
         items += len(testR[u])
 

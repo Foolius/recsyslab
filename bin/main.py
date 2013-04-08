@@ -9,10 +9,10 @@ import cPickle
 import time
 import datetime
 
-SEED1 = 1
-SEED2 = 11
-EPOCHS = 15
-features = 350
+SEED1 = 1213451205
+SEED2 = 10989084
+EPOCHS = 3
+features = 50
 
 # learningratevalues=[0.001,0.01,0.1]
 # regularizationvalues=[0,0.001,0.01,0.1,1]
@@ -35,7 +35,7 @@ def readDBandSplit(dbfile):
     output.close()
     return r, trainingDict, fulltrain, testDict, evalDict
 
-# r,trainingDict,fulltrain,testDict,evalDict=readDBandSplit("u.data")
+r, trainingDict, fulltrain, testDict, evalDict = readDBandSplit("u.data")
 
 
 def loadData():
@@ -95,7 +95,7 @@ def learnBPRMF(r, trainingDict, reg, ler):
         "BPRMFModelFile", W=W, H=H)
     return W, H
 
-# learnBPRMF(r,trainingDict)
+W, H = learnBPRMF(r, trainingDict, 0.01, 0.1)
 
 
 def loadM(name):
@@ -114,7 +114,7 @@ def testMF(W, H, trainingDict, testDict):
     hr = test.hitrate(testDict, t.getRec, 10)
     return hr
 
-# testMF(W,H,trainingDict,testDict)
+testMF(W, H, trainingDict, testDict)
 
 ts = time.time()
 st = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
@@ -198,19 +198,19 @@ def findBestFeature():
 r = reader.tabSepReader("u.data")
 rf = open("reader.npz", "wb")
 cPickle.dump(r, rf, -1)
-# helper.printMatrix(r.getMatrix())
-#rf = open("reader.npz", "rb")
-#r = cPickle.load(rf)
-rf.close()
-train, testDict = split.splitMatrix(r.getMatrix(), 12313135)
-import knn
-k = knn.knn(train, 10)
-kf = open("knn.npz", "wb")
-cPickle.dump(k, kf, -1)
-#kf = open("knn.npz", "rb")
-#k = cPickle.load(kf)
-kf.close()
-test.hitrate(testDict, k.getRec, 10)
+# rf = open("reader.npz", "rb")
+# r = cPickle.load(rf)
+# rf.close()
+# import knn
+# r = np.matrix(np.random.randint(0, 2, (943, 1682)))
+train, testDict = split.splitMatrix(r.getMatrix(), 12313136)
+# k = knn.knn(train, 1)
+# kf = open("knn.npz", "wb")
+# cPickle.dump(k, kf, -1)
+# kf = open("knn.npz", "rb")
+# k = cPickle.load(kf)
+# kf.close()
+# test.hitrate(testDict, k.getRec, 1)
 # trainingDict,testDict = split.split(r.getR(),123)
 # random(r.getR,trainingDict,testDict)
 file.close

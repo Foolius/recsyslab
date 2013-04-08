@@ -5,12 +5,10 @@ class knn(object):
     def __init__(self, matrix, n):
         self.sim = np.zeros((matrix.shape[1], matrix.shape[1]))
         self.itemUserMatrix = matrix.transpose()
-        self.computeSim()
+        self.computeCosSim()
         #self.sim = np.load("sim.data")
         self.recs = {}
         self.matrix = matrix
-
-        self.sim.dump("sim.data")
 
         order = self.sim.argsort(1)
 
@@ -20,7 +18,7 @@ class knn(object):
 
         self.normRow(self.itemUserMatrix)
 
-    def computeSim(self):
+    def computeCosSim(self):
         count = 0
         for i in xrange(0, self.sim.shape[1]):
             if count % 100 == 0:
@@ -34,11 +32,6 @@ class knn(object):
                     self.sim[i, j] = self.cos(
                         self.itemUserMatrix[i], self.itemUserMatrix[j])
 
-    def normRow(self, m):
-        "Normalize each row of the matrix so the sum is 1"
-        for i in xrange(0, m.shape[0]):
-            m[i] /= np.sum(m[0])
-
     def cos(self, a, b):
         """gets two vectors(onedimensional np.matrix)
         and computes their cosine"""
@@ -51,6 +44,34 @@ class knn(object):
             return 0
 
         return dotproduct / normproduct
+
+    def computecondProbSim(self):
+        count = 0
+        for i in xrange(0, self.sim.shape[1]):
+            if count % 100 == 0:
+                print("%r Similarities calculated" % count)
+            count += 1
+
+            for j in xrange(0, self.sim.shape[1]):
+                if i == j:
+                    self.sim[i, j] = 0
+                else:
+                    self.sim[i, j] = self.cos(
+                        self.itemUserMatrix[i], self.itemUserMatrix[j])
+
+    def condProb(a, b):
+        """Returns the similarity of a and b."""
+        fa = a.sum()
+        if fa == 0:
+            return 0
+        fb = b.sum()
+        if fb == 0:
+            return 0
+
+    def normRow(self, m):
+        "Normalize each row of the matrix so the sum is 1"
+        for i in xrange(0, m.shape[0]):
+            m[i] /= np.sum(m[0])
 
     def getRec(self, u, n):
         """Returns the n best recommendations for user u"""
