@@ -34,7 +34,7 @@ def cache(fn):
 
     @functools.wraps(fn)
     def cached(*args):
-        if (ns.count % 1000 == 0):
+        if (ns.count % 100000 == 0):
             print("Success: %r Fail: %r Sum: %r Count: %r"
                   % (ns.success, ns.fail, (ns.success + ns.fail), ns.count))
         ns.count += 1

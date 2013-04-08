@@ -195,19 +195,20 @@ def findBestFeature():
         if ult > penult and not dir:
             features -= features / 2
 
-# r =reader.tabSepReader("u.data")
-# rf =open("reader.npz","wb")
+# r = reader.tabSepReader("u.data")
+# rf = open("reader.npz","wb")
 # cPickle.dump(r,rf,-1)
 # helper.printMatrix(r.getMatrix())
 rf = open("reader.npz", "rb")
 r = cPickle.load(rf)
 rf.close()
 train, testDict = split.splitMatrix(r.getMatrix(), 123)
-# k =knn.knn(train)
-# kf =open("knn.npz","wb")
-# cPickle.dump(k,kf,-1)
-kf = open("knn.npz", "rb")
-k = cPickle.load(kf)
+import knn
+k = knn.knn(train, 10)
+kf = open("knn.npz", "wb")
+cPickle.dump(k, kf, -1)
+#kf = open("knn.npz", "rb")
+#k = cPickle.load(kf)
 kf.close()
 test.hitrate(testDict, k.getRec, 10)
 # trainingDict,testDict =split.split(r.getR(),123)
