@@ -1,25 +1,22 @@
 import numpy as np
-import helper
 
 
 class knn(object):
     def __init__(self, matrix, n):
         self.sim = np.zeros((matrix.shape[1], matrix.shape[1]))
         self.itemUserMatrix = matrix.transpose()
-        #self.computeSim()
-        self.sim = np.load("sim.data")
+        self.computeSim()
+        #self.sim = np.load("sim.data")
         self.recs = {}
+        self.matrix = matrix
 
-        #self.sim.dump("sim.data")
+        self.sim.dump("sim.data")
 
         order = self.sim.argsort(1)
 
         for j in xrange(0, self.sim.shape[1]):
-            self.recs[j] = set()
-            for i in xrange(0, self.sim.shape[1] - 10):
+            for i in xrange(0, self.sim.shape[1] - n):
                 self.sim[0, order[0, i]] = 0
-            for i in xrange(order.shape[0] - 10, self.sim.shape[1]):
-                self.recs[j].add(i)
 
         self.normRow(self.itemUserMatrix)
 
@@ -57,40 +54,24 @@ class knn(object):
 
     def getRec(self, u, n):
         """Returns the n best recommendations for user u"""
-        if not len(self.recs[u]) == 10:
-            print(len(self.recs[u]))
-        return self.recs[u]
 
-        U = set()  # items the user bought
-        C = set()  # items similar to the items of u
-        for j in xrange(0, self.sim.shape[1]):
-            if self.itemUserMatrix[j, u]:
-                U.add(j)
-                C = C.union(self.mostSim(j, n))
+#        print("u: %r"%self.matrix[u])
+        x = self.sim * self.matrix[u].transpose()
+#        print("x: %r"%x)
+        for i in xrange(0, self.sim.shape[0]):
+            if not self.matrix[u, i] == 0:
+                x[i] = 0
 
-        C.difference_update(U)
-        l = []
-        for c in C:
-            l.append((c, self.simToSet(U, c, n)))
+ #       print("0: %r"%x)
+        order = x.argsort()
+        for i in xrange(0, self.sim.shape[1] - n):
+            x[order[i]] = 0
 
-        return helper.listToSet(helper.sortList(l), n)
+  #      print("r: %r"%x)
+   #     time.sleep(4)
+        s = set()
+        for i in xrange(0, self.sim.shape[1]):
+            if not x[i] == 0:
+                s.add(i)
 
-    @helper.cache
-    def mostSim(self, item, n):
-        """Returns the n most similar items for item."""
-        scorelist = []
-        for i in xrange(self.sim.shape[0]):
-            if i == item:
-                continue
-            scorelist.append((i, self.sim[item, i]))
-        return helper.listToSet(helper.sortList(scorelist), n)
-
-    def simToSet(self, itemSet, item, n):
-        """Returns the sum of the similarities of itemSet and item.
-        not exactly like in the paper because I'm adding up all items
-        in the set and not only n."""
-        simsum = 0.0
-        for s in itemSet:
-            if item in self.mostSim(s, n):
-                simsum += self.sim[s, item]
-        return simsum
+        return s

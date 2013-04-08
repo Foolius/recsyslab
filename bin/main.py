@@ -202,7 +202,7 @@ def findBestFeature():
 rf = open("reader.npz", "rb")
 r = cPickle.load(rf)
 rf.close()
-train, testDict = split.splitMatrix(r.getMatrix(), 123)
+train, testDict = split.splitMatrix(r.getMatrix(), 12313135)
 import knn
 k = knn.knn(train, 10)
 kf = open("knn.npz", "wb")
@@ -211,6 +211,6 @@ cPickle.dump(k, kf, -1)
 #k = cPickle.load(kf)
 kf.close()
 test.hitrate(testDict, k.getRec, 10)
-# trainingDict,testDict =split.split(r.getR(),123)
+# trainingDict,testDict = split.split(r.getR(),123)
 # random(r.getR,trainingDict,testDict)
 file.close
