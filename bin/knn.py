@@ -6,7 +6,7 @@ class knn(object):
         self.sim = np.zeros((matrix.shape[1], matrix.shape[1]))
         self.itemUserMatrix = matrix.transpose()
         self.computeCosSim()
-        #self.sim = np.load("sim.data")
+        # self.sim = np.load("sim.data")
         self.recs = {}
         self.matrix = matrix
 
@@ -20,16 +20,16 @@ class knn(object):
 
     def computeCosSim(self):
         count = 0
-        for i in xrange(0, self.sim.shape[1]):
+        for i in xrange(1, self.sim.shape[1]):
             if count % 100 == 0:
                 print("%r Similarities calculated" % count)
             count += 1
 
-            for j in xrange(0, self.sim.shape[1]):
+            for j in xrange(0, i):
                 if i == j:
                     self.sim[i, j] = 0
                 else:
-                    self.sim[i, j] = self.cos(
+                    self.sim[i, j] = self.sim[j, i] = self.cos(
                         self.itemUserMatrix[i], self.itemUserMatrix[j])
 
     def cos(self, a, b):
@@ -45,7 +45,7 @@ class knn(object):
 
         return dotproduct / normproduct
 
-    def computecondProbSim(self):
+    def computeCondProbSim(self):
         count = 0
         for i in xrange(0, self.sim.shape[1]):
             if count % 100 == 0:
