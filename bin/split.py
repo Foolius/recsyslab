@@ -21,11 +21,10 @@ def split(R, seed):
 def splitMatrix(M, seed):
     """Takes an User x Item Matrix and returns
     an User x Item Matrix with one item per user missing
-    and a User x Item Matrix with the missing entrys."""
+    and a User -> Item Dict with the missing entrys."""
     random.seed(seed)
     bigSplit = M.copy(order='A')
     smallSplitDict = {}
-    # smallSplit=np.matrix(np.zeros(M.shape))
 
     count = 0
     for user in xrange(0, bigSplit.shape[0]):
@@ -34,10 +33,9 @@ def splitMatrix(M, seed):
         count += 1
 
         item = random.randint(0, bigSplit.shape[1] - 1)
-        while bigSplit[user, item] == 1:
+        while bigSplit[user, item] == 0:
             item = random.randint(0, bigSplit.shape[1] - 1)
         bigSplit[user, item] = 0
         smallSplitDict[user] = set([item])
-        # smallSplit[u,item]=1
 
     return bigSplit, smallSplitDict
