@@ -3,9 +3,15 @@ import numpy as np
 
 class knn(object):
     def __init__(self, matrix, n):
+        print("matrix")
+        print(matrix)
         self.sim = np.zeros((matrix.shape[1], matrix.shape[1]))
         self.itemUserMatrix = matrix.transpose()
+        print("itemuser")
+        print(self.itemUserMatrix)
         self.computeCosSim()
+        print("sim")
+        print(self.sim)
         # self.sim = np.load("sim.data")
         self.recs = {}
         self.matrix = matrix
@@ -14,9 +20,9 @@ class knn(object):
 
         for j in xrange(0, self.sim.shape[1]):
             for i in xrange(0, self.sim.shape[1] - n):
-                self.sim[0, order[0, i]] = 0
-
-        self.normRow(self.itemUserMatrix)
+                self.sim[j, order[j, i]] = 0
+        print("ordered")
+        print(self.sim)
 
     def computeCosSim(self):
         count = 0
@@ -78,21 +84,26 @@ class knn(object):
 
 #        print("u: %r"%self.matrix[u])
         x = self.sim * self.matrix[u].transpose()
+        x = x.transpose()
 #        print("x: %r"%x)
         for i in xrange(0, self.sim.shape[0]):
-            if not self.matrix[u, i] == 0:
-                x[i] = 0
+            if self.matrix[u, i] != 0:
+                x[0, i] = 0
 
  #       print("0: %r"%x)
         order = x.argsort()
-        for i in xrange(0, self.sim.shape[1] - n):
-            x[order[i]] = 0
-
-  #      print("r: %r"%x)
-   #     time.sleep(4)
         s = set()
-        for i in xrange(0, self.sim.shape[1]):
-            if not x[i] == 0:
-                s.add(i)
+        for i in xrange(0, x.shape[0]):
+            print("%r\t%r" % (x[0, i], order[0, i]))
+        for i in xrange(0, n):
+#            print("%r   %r" % (i, x[order[-i]]))
+            s.add(x[0, order[0, -n]])
 
+        print("\n")
         return s
+
+    def getRecX(self, u, topN):
+        vu = self.matrix[u]
+        rec = vu * self.sim
+        #sort desc
+        return rec[0:n]

@@ -126,3 +126,17 @@ def printMatrix(m):
         for j in xrange(0, m.shape[1]):
             s += "%r\t" % m[i, j]
         print s
+
+
+def randDataset(x, y, p, seed):
+    import random
+#    random.seed(seed)
+    f = open("rand.data", 'w')
+
+    for i in xrange(0, x):
+        for j in xrange(0, y):
+            if(random.randint(0, 100) < p * 100):
+                f.write("%r\t%r\n" % (i, j))
+    f.close
+
+randDataset(10, 10, 0.3, 14890)
