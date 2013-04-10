@@ -87,6 +87,10 @@ def sortList(scorelist):
                              key=lambda(k, v): v,
                              reverse=True)
     return sortedscorelist
+    l = []
+    for i in sortedscorelist:
+        l.append(i[0])
+    return l
 
 
 def listToSet(sortedscorelist, n):
