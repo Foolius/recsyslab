@@ -6,20 +6,17 @@ def hitrate(testR, recommender, n):
     hits = 0.0
     items = 0.0
     for u in testR.iterkeys():
-        # print("recommender:")
-        # print(recommender(u,n))
-        # print("testR")
-        # print(testR[u])
         if u % 100 == 0:
             print("%r users tested" % u)
             print("Hits so far: %r" % hits)
-            print(recommender(u, n))
-            print(testR[u])
-        hits += len(recommender(u, n).intersection(testR[u]))
+        recs = recommender(u, n)
+        if len(recs) > n:
+            print("Fatal error: too much recommended items.")
+        hits += len(recs.intersection(testR[u]))
         items += len(testR[u])
 
     print("Number of hits: %r" % hits)
-    print("Number of recommended items: %r" % items)
+    print("Number of possible hits: %r" % items)
     print("Hitrate: %r" % (hits / items))
     return hits / items
 

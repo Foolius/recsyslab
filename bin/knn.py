@@ -3,40 +3,31 @@ import numpy as np
 
 class knn(object):
     def __init__(self, matrix, n):
-        print("matrix")
-        print(matrix)
         self.sim = np.zeros((matrix.shape[1], matrix.shape[1]))
         self.itemUserMatrix = matrix.transpose()
-        print("itemuser")
-        print(self.itemUserMatrix)
         self.computeCosSim()
-        print("sim")
-        print(self.sim)
-        # self.sim = np.load("sim.data")
         self.recs = {}
         self.matrix = matrix
+
+        if n > self.sim.shape[0]:
+            n = self.sim.shape[0]
 
         order = self.sim.argsort(1)
 
         for j in xrange(0, self.sim.shape[1]):
             for i in xrange(0, self.sim.shape[1] - n):
                 self.sim[j, order[j, i]] = 0
-        print("ordered")
-        print(self.sim)
 
     def computeCosSim(self):
         count = 0
         for i in xrange(1, self.sim.shape[1]):
-            if count % 100 == 0:
-                print("%r Similarities calculated" % count)
-            count += 1
 
             for j in xrange(0, i):
-                if i == j:
-                    self.sim[i, j] = 0
-                else:
-                    self.sim[i, j] = self.sim[j, i] = self.cos(
-                        self.itemUserMatrix[i], self.itemUserMatrix[j])
+                if count % 10000 == 0:
+                    print("%r Similarities calculated" % count)
+                count += 1
+                self.sim[i, j] = self.sim[j, i] = self.cos(
+                    self.itemUserMatrix[i], self.itemUserMatrix[j])
 
     def cos(self, a, b):
         """gets two vectors(onedimensional np.matrix)
@@ -82,28 +73,18 @@ class knn(object):
     def getRec(self, u, n):
         """Returns the n best recommendations for user u"""
 
-#        print("u: %r"%self.matrix[u])
-        x = self.sim * self.matrix[u].transpose()
-        x = x.transpose()
-#        print("x: %r"%x)
+        if n > self.sim.shape[0]:
+            n = self.sim.shape[0]
+
+        x = self.matrix[u] * self.sim
+
         for i in xrange(0, self.sim.shape[0]):
             if self.matrix[u, i] != 0:
                 x[0, i] = 0
 
- #       print("0: %r"%x)
         order = x.argsort()
         s = set()
-        for i in xrange(0, x.shape[0]):
-            print("%r\t%r" % (x[0, i], order[0, i]))
-        for i in xrange(0, n):
-#            print("%r   %r" % (i, x[order[-i]]))
-            s.add(x[0, order[0, -n]])
+        for i in xrange(1, n + 1):
+            s.add(order[0, -i])
 
-        print("\n")
         return s
-
-    def getRecX(self, u, topN):
-        vu = self.matrix[u]
-        rec = vu * self.sim
-        #sort desc
-        return rec[0:n]
