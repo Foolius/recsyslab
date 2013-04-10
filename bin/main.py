@@ -48,7 +48,7 @@ def loadData():
     inputfile.close()
     return r, trainingDict, fulltrain, testDict, evalDict
 
-# r,trainingDict,fulltrain,testDict,evalDict=loadData()
+r,trainingDict,fulltrain,testDict,evalDict=loadData()
 
 # helper.writeInternalToFile(
     # r,trainingDict,"training")
@@ -106,7 +106,7 @@ def loadM(name):
     return W, H
 
 # W,H=loadM("RankMFXModelFile")
-# W,H=loadM("BPRMFModelFile")
+W,H=loadM("BPRMFModelFile")
 
 
 def testMF(W, H, trainingDict, testDict):
@@ -114,7 +114,7 @@ def testMF(W, H, trainingDict, testDict):
     hr = test.hitrate(testDict, t.getRec, 10)
     return hr
 
-#testMF(W, H, trainingDict, testDict)
+testMF(W, H, trainingDict, testDict)
 
 ts = time.time()
 st = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
@@ -203,12 +203,12 @@ r = cPickle.load(rf)
 rf.close()
 import knn
 # r = np.matrix(np.random.randint(0, 2, (943, 1682)))
-train, testDict = split.splitMatrix(r.getMatrix(), 12313136)
-k = knn.knn(train, 10)
-kf = open("knn.npz", "wb")
-cPickle.dump(k, kf, -1)
+#train, testDict = split.splitMatrix(r.getMatrix(), 12313136)
+#k = knn.knn(train, 10)
+#kf = open("knn.npz", "wb")
+#cPickle.dump(k, kf, -1)
 #kf = open("knn.npz", "rb")
 #k = cPickle.load(kf)
-kf.close()
-test.hitrate(testDict, k.getRec, 10)
+#kf.close()
+#test.hitrate(testDict, k.getRec, 10)
 file.close
