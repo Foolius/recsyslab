@@ -28,11 +28,12 @@ class RankMFX:
         changeI = 1.0 - learningRate * regI
         changeJ = 1.0 - learningRate * regJ
 
+        # constant learning rate :
+        eta = learningRate
+
         for epoch in xrange(0, epochs):
             t = 1  # iteration
             while t <= niter:
-                # constant learning rate :
-                eta = learningRate
 
                 u = random.choice(userIds)
 

@@ -16,13 +16,31 @@ def hitrate(testR, recommender, n):
             if i in recs:
                 hits += 1
             items += 1
-#        hits += len(recs.intersection(testR[u]))
-#        items += len(testR[u])
 
     print("Number of hits: %r" % hits)
     print("Number of possible hits: %r" % items)
     print("Hitrate: %r" % (hits / items))
     return hits / items
+
+
+def mrhr(testR, recommender, n):
+    score = 0.0
+    items = 0.0
+    for u in testR.iterkeys():
+        if u % 100 == 0:
+            print("%r users tested" % u)
+            print("Score so far: %r" % score)
+        recs = recommender(u, n)
+        if len(recs) > n:
+            print("Fatal error: too much recommended items.")
+        for i in testR[u]:
+            if i in recs:
+                score += 1.0 / (recs.index(i) + 1)
+            items += 1
+    print("Score: %r" % score)
+    print("Number of possible hits: %r" % items)
+    print("Mean Reciprocal Hitrate: %r" % (score / items))
+    return score / items
 
 
 class MFtest(object):
