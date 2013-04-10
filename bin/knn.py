@@ -2,12 +2,12 @@ import numpy as np
 
 
 class knn(object):
-    def __init__(self, matrix, n):
-        self.sim = np.zeros((matrix.shape[1], matrix.shape[1]))
-        self.itemUserMatrix = matrix.transpose()
+    def __init__(self, userItemMatrix, n):
+        self.sim = np.zeros((userItemMatrix.shape[1], userItemMatrix.shape[1]))
+        self.itemUserMatrix = userItemMatrix.transpose()
         self.computeCosSim()
         self.recs = {}
-        self.matrix = matrix
+        self.userItemMatrix = userItemMatrix
 
         if n > self.sim.shape[0]:
             n = self.sim.shape[0]
@@ -71,15 +71,15 @@ class knn(object):
         if n > self.sim.shape[0]:
             n = self.sim.shape[0]
 
-        x = self.matrix[u] * self.sim
+        x = self.userItemMatrix[u] * self.sim
 
         for i in xrange(0, self.sim.shape[0]):
-            if self.matrix[u, i] != 0:
+            if self.userItemMatrix[u, i] != 0:
                 x[0, i] = 0
 
         order = x.argsort()
-        s = set()
+        l = []
         for i in xrange(1, n + 1):
-            s.add(order[0, -i])
+            l.append(order[0, -i])
 
-        return s
+        return l
