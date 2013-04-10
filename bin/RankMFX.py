@@ -86,7 +86,7 @@ class RankMFX:
 
                 t += 1  # increment the iteration
                 if t % printDelay == 0:
-                    print("Epoch: %i/%i | iteration %i/%i | learning rate=%f" \
+                    print("Epoch: %i/%i | iteration %i/%i | learning rate=%f"
                           " | average_loss for the last %i iterations = %f" %
                          (epoch + 1, epochs, t, niter, eta, printDelay,
                           sum_loss / printDelay))
