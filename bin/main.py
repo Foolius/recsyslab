@@ -35,7 +35,7 @@ def readDBandSplit(dbfile):
     output.close()
     return r, trainingDict, fulltrain, testDict, evalDict
 
-#r, trainingDict, fulltrain, testDict, evalDict = readDBandSplit("u.data")
+# r, trainingDict, fulltrain, testDict, evalDict = readDBandSplit("u.data")
 
 
 def loadData():
@@ -48,7 +48,7 @@ def loadData():
     inputfile.close()
     return r, trainingDict, fulltrain, testDict, evalDict
 
-r,trainingDict,fulltrain,testDict,evalDict=loadData()
+r, trainingDict, fulltrain, testDict, evalDict = loadData()
 
 # helper.writeInternalToFile(
     # r,trainingDict,"training")
@@ -58,17 +58,17 @@ r,trainingDict,fulltrain,testDict,evalDict=loadData()
 
 def constant(r, trainingDict, testDict):
     rec = baselines.constant(trainingDict)
-    print("Hitrate for constant: %r" % test.hitrate(testDict, rec.getRec, 10))
+    print("Hitrate for constant: %r" %
+          test.hitrate(testDict, rec.getRec, 10))
 
-# constant(r,trainingDict,testDict)
+constant(r, trainingDict, testDict)
 
 
 def random(r, trainingDict, testDict):
     rec = baselines.randomRec(trainingDict)
     print("Hitrate for random: %r" % test.hitrate(testDict, rec.getRec, 10))
 
-
-# random(r,trainingDict,testDict)
+random(r, trainingDict, testDict)
 
 
 def learnRankMFX(r, trainingDict, reg, ler):
@@ -95,7 +95,7 @@ def learnBPRMF(r, trainingDict, reg, ler):
         "BPRMFModelFile", W=W, H=H)
     return W, H
 
-#W, H = learnBPRMF(r, trainingDict, 0.01, 0.1)
+# W, H = learnBPRMF(r, trainingDict, 0.01, 0.1)
 
 
 def loadM(name):
@@ -106,7 +106,7 @@ def loadM(name):
     return W, H
 
 # W,H=loadM("RankMFXModelFile")
-W,H=loadM("BPRMFModelFile")
+#W, H = loadM("BPRMFModelFile")
 
 
 def testMF(W, H, trainingDict, testDict):
@@ -114,7 +114,7 @@ def testMF(W, H, trainingDict, testDict):
     hr = test.hitrate(testDict, t.getRec, 10)
     return hr
 
-testMF(W, H, trainingDict, testDict)
+#testMF(W, H, trainingDict, testDict)
 
 ts = time.time()
 st = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
@@ -195,20 +195,20 @@ def findBestFeature():
         if ult > penult and not dir:
             features -= features / 2
 
-#r = reader.tabSepReader("u.data")
-#rf = open("reader.npz", "wb")
-#cPickle.dump(r, rf, -1)
-rf = open("reader.npz", "rb")
-r = cPickle.load(rf)
-rf.close()
+# r = reader.tabSepReader("u.data")
+# rf = open("reader.npz", "wb")
+# cPickle.dump(r, rf, -1)
+# rf = open("reader.npz", "rb")
+# r = cPickle.load(rf)
+# rf.close()
 import knn
 # r = np.matrix(np.random.randint(0, 2, (943, 1682)))
-#train, testDict = split.splitMatrix(r.getMatrix(), 12313136)
-#k = knn.knn(train, 10)
-#kf = open("knn.npz", "wb")
-#cPickle.dump(k, kf, -1)
-#kf = open("knn.npz", "rb")
-#k = cPickle.load(kf)
-#kf.close()
-#test.hitrate(testDict, k.getRec, 10)
+# train, testDict = split.splitMatrix(r.getMatrix(), 12313136)
+# k = knn.knn(train, 10)
+# kf = open("knn.npz", "wb")
+# cPickle.dump(k, kf, -1)
+# kf = open("knn.npz", "rb")
+# k = cPickle.load(kf)
+# kf.close()
+# test.hitrate(testDict, k.getRec, 10)
 file.close

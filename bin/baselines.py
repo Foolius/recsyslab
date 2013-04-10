@@ -19,10 +19,7 @@ class constant(object):
     def getRec(self, user, n):
         if len(self.sortedList) < n:
             n = len(self.sortedList)
-        s = set()
-        for i in self.sortedList[:n]:
-            s.add(i[0])
-        return s
+        return self.sortedList[:n]
 
 
 class randomRec(object):
@@ -34,4 +31,4 @@ class randomRec(object):
                     self.maxIid = item
 
     def getRec(self, user, n):
-        return set(random.sample(range(self.maxIid), n))
+        return list(random.sample(range(self.maxIid), n))

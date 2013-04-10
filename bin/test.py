@@ -39,7 +39,4 @@ class MFtest(object):
             if not i in self.R[u]:
                 scoredict[i] = np.dot(self.W[u], self.H[i])
 
-        l = []
-        for i in helper.sortList(scoredict.iteritems())[:n]:
-            l.append(i[0])
-        return l
+        return helper.sortList(scoredict.iteritems())[:n]
