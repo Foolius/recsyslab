@@ -45,15 +45,15 @@ class knn(object):
     def computeCondProbSim(self):
         count = 0
         for i in xrange(0, self.sim.shape[1]):
-            if count % 100 == 0:
-                print("%r Similarities calculated" % count)
-            count += 1
-
             for j in xrange(0, self.sim.shape[1]):
+                if count % 10000 == 0:
+                    print("%r Similarities calculated" % count)
+                count += 1
+
                 if i == j:
                     self.sim[i, j] = 0
                 else:
-                    self.sim[i, j] = self.cos(
+                    self.sim[i, j] = self.condProb(
                         self.itemUserMatrix[i], self.itemUserMatrix[j])
 
     def condProb(a, b):
@@ -64,11 +64,6 @@ class knn(object):
         fb = b.sum()
         if fb == 0:
             return 0
-
-    def normRow(self, m):
-        "Normalize each row of the matrix so the sum is 1"
-        for i in xrange(0, m.shape[0]):
-            m[i] /= np.sum(m[0])
 
     def getRec(self, u, n):
         """Returns the n best recommendations for user u"""

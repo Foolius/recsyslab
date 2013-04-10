@@ -18,14 +18,26 @@ class idOrigDict(object):
     def getId(self, orig):
         return self.orig2id[orig]
 
-import functools
+
+def normRowNorm(m):
+    import numpy as np
+    "Normalize in place each row of the matrix so the norm is 1"
+    for i in xrange(0, m.shape[0]):
+        m[i] /= np.linalg.norm(m[0])
 
 
-class Namespace():
-    pass
+def normRowSum(m):
+    import numpy as np
+    "Normalize in place each row of the matrix so the sum is 1"
+    for i in xrange(0, m.shape[0]):
+        m[i] /= np.sum(m[0])
 
 
 def cache(fn):
+    import functools
+
+    class Namespace():
+        pass
     ns = Namespace()
     ns.fail = 0
     ns.success = 0
