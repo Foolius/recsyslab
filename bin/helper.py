@@ -24,6 +24,7 @@ def normRowNorm(m):
     "Normalize in place each row of the matrix so the norm is 1"
     for i in xrange(0, m.shape[0]):
         m[i] /= np.linalg.norm(m[0])
+    return m
 
 
 def normRowSum(m):
@@ -31,6 +32,7 @@ def normRowSum(m):
     "Normalize in place each row of the matrix so the sum is 1"
     for i in xrange(0, m.shape[0]):
         m[i] /= np.sum(m[0])
+    return m
 
 
 def cache(fn):

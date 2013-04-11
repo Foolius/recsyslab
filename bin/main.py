@@ -82,7 +82,7 @@ def learnRankMFX(r, trainingDict, reg, ler):
         "RankMFXModelFile", W=W, H=H)
     return W, H
 
-W, H = learnRankMFX(r, trainingDict, 0.1, 0.01)
+#W, H = learnRankMFX(r, trainingDict, 0.1, 0.01)
 
 
 def learnBPRMF(r, trainingDict, reg, ler):
@@ -114,7 +114,7 @@ def testMF(W, H, trainingDict, testDict):
     hr = test.mrhr(testDict, t.getRec, 10)
     return hr
 
-testMF(W, H, trainingDict, testDict)
+#testMF(W, H, trainingDict, testDict)
 
 ts = time.time()
 st = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
@@ -196,19 +196,21 @@ def findBestFeature():
             features -= features / 2
 
 # r = reader.tabSepReader("u.data")
-# rf = open("reader.npz", "wb")
+rf = open("reader.npz", "wb")
 # cPickle.dump(r, rf, -1)
 # rf = open("reader.npz", "rb")
 # r = cPickle.load(rf)
 # rf.close()
 # import knn
 # r = np.matrix(np.random.randint(0, 2, (943, 1682)))
-# train, testDict = split.splitMatrix(r.getMatrix(), 12313136)
-# k = knn.knn(train, 10)
-# kf = open("knn.npz", "wb")
-# cPickle.dump(k, kf, -1)
+train, testDict = split.splitMatrix(r.getMatrix(), 12313136)
+import helper
+import knn
+k = knn.knn(train, 10)
+kf = open("knn.npz", "wb")
+cPickle.dump(k, kf, -1)
 # kf = open("knn.npz", "rb")
 # k = cPickle.load(kf)
-# kf.close()
-# test.hitrate(testDict, k.getRec, 10)
+kf.close()
+test.hitrate(testDict, k.getRec, 10)
 file.close
