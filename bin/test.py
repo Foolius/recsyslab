@@ -30,17 +30,29 @@ def mrhr(testR, recommender, n):
         if u % 100 == 0:
             print("%r users tested" % u)
             print("Score so far: %r" % score)
+
         recs = recommender(u, n)
         if len(recs) > n:
             print("Fatal error: too much recommended items.")
+
         for i in testR[u]:
             if i in recs:
                 score += 1.0 / (recs.index(i) + 1)
             items += 1
+
     print("Score: %r" % score)
     print("Number of possible hits: %r" % items)
     print("Mean Reciprocal Hitrate: %r" % (score / items))
     return score / items
+
+
+def auc(testR, recommender, n, trainingDict):
+    """Returns the AUC of the recommender function.
+    See BPR paper."""
+    i = testR[u]
+
+    for u in testR.iterkeys():
+
 
 
 class MFtest(object):
