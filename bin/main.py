@@ -95,7 +95,7 @@ def learnBPRMF(r, trainingDict, reg, ler):
         "BPRMFModelFile", W=W, H=H)
     return W, H
 
-# W, H = learnBPRMF(r, trainingDict, 0.01, 0.1)
+W, H = learnBPRMF(r, trainingDict, 0.01, 0.1)
 
 
 def loadM(name):

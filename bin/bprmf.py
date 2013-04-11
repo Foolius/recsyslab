@@ -32,6 +32,7 @@ def dLogLoss(a, y):
 
 def learnModel(n_users, m_items, regU, regI, regJ,
                learningRate, R, k, epochs, numberOfIterations):
+    """Learning rate is constant."""
     # MIN_SCALING_FACTOR = 1E-5
     y = 1.0
     # loss = logLoss(0, 0)
@@ -41,14 +42,20 @@ def learnModel(n_users, m_items, regU, regI, regJ,
     # Random initialization of W and H between mean=0 ; sigma=0.1
     W = sigma * np.random.randn(n_users, k) + mu
     H = sigma * np.random.randn(m_items, k) + mu
+
+    printDelay = 0.01 * numberOfIterations
+    sum_loss = 0.0
     y = 1.0
 
     changeU = 1.0 - learningRate * regU
     changeI = 1.0 - learningRate * regI
     changeJ = 1.0 - learningRate * regJ
 
+    eta = learningRate
+
     for e in xrange(0, epochs):
         iter = 0
+        t = 0
         print("epoch: %r" % e)
         while iter <= numberOfIterations:
             iter += 1
@@ -82,6 +89,8 @@ def learnModel(n_users, m_items, regU, regI, regJ,
             wx = np.dot(W[u], X)
             dloss = dLogLoss(wx, y)
 
+            sum_loss += logLoss(wx, y)
+
             W[u] *= changeU
             H[i] *= changeI
             H[j] *= changeJ
@@ -92,6 +101,14 @@ def learnModel(n_users, m_items, regU, regI, regJ,
                 H[i] += eta_dloss * W[u]
                 H[j] += eta_dloss * (-W[u])
 
+            t += 1  # increment the iteration
+            if t % printDelay == 0:
+                print("Epoch: %i/%i | iteration %i/%i | learning rate=%f"
+                      " | average_loss for the last %i iterations = %f" %
+                     (e + 1, epochs, t, numberOfIterations, eta, printDelay,
+                      sum_loss / printDelay))
+                sum_loss = 0.0
+
     return W, H
 
 
@@ -100,7 +117,7 @@ def slowlearnModel(n_users, m_items, regU, regI, regJ,
     """slower but the learning rate can change"""
     MIN_SCALING_FACTOR = 1E-5
     y = 1.0
-    #loss = logLoss(0, 0)
+    # loss = logLoss(0, 0)
 
     sigma = 0.1
     mu = 0

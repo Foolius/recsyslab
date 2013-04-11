@@ -21,7 +21,7 @@ class RankMFX:
         userIds = R.keys()
 
         printDelay = 0.01 * niter
-        sum_loss = 0
+        sum_loss = 0.0
         y = 1.0
 
         changeU = 1.0 - learningRate * regU
