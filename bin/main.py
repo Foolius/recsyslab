@@ -58,15 +58,15 @@ r, trainingDict, fulltrain, testDict, evalDict = loadData()
 
 def constant(r, trainingDict, testDict):
     rec = baselines.constant(trainingDict)
-    print("Hitrate for constant: %r" %
-          test.hitrate(testDict, rec.getRec, -1))
+    print("AUC for constant: %r" %
+          test.auc(testDict, rec.getRec, r))
 
 #constant(r, trainingDict, testDict)
 
 
 def random(r, trainingDict, testDict):
     rec = baselines.randomRec(trainingDict)
-    print("Hitrate for random: %r" % test.hitrate(testDict, rec.getRec, 2000))
+    print("AUC for random: %r" % test.auc(testDict, rec.getRec, r))
 
 #random(r, trainingDict, testDict)
 
@@ -106,12 +106,12 @@ def loadM(name):
     return W, H
 
 # W,H=loadM("RankMFXModelFile")
-#W, H = loadM("BPRMFModelFile")
+W, H = loadM("BPRMFModelFile")
 
 
 def testMF(W, H, trainingDict, testDict):
     t = test.MFtest(W, H, trainingDict)
-    hr = test.hitrate(testDict, t.getRec, -1)
+    hr = test.auc(testDict, t.getRec, r)
     return hr
 
 #testMF(W, H, trainingDict, testDict)
@@ -204,13 +204,13 @@ def findBestFeature():
 # import knn
 # r = np.matrix(np.random.randint(0, 2, (943, 1682)))
 #train, testDict = split.splitMatrix(r.getMatrix(), 12313136)
-import helper
 import knn
-#k = knn.itemKnn(train, 10)
+import helper
+#k = knn.userKnn(helper.dictToMatrix(fulltrain), 100)
 #kf = open("knn.npz", "wb")
 #cPickle.dump(k, kf, -1)
-#kf = open("knn.npz", "rb")
-#k = cPickle.load(kf)
-#kf.close()
-#test.mrhr(testDict, k.getRec, 10)
+kf = open("knn.npz", "rb")
+k = cPickle.load(kf)
+kf.close()
+test.auc(testDict, k.getRec, r)
 file.close

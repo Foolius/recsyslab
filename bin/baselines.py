@@ -29,6 +29,7 @@ class randomRec(object):
             for item in iter(data[1]):
                 if item > self.maxIid:
                     self.maxIid = item
+        self.maxIid += 1
 
     def getRec(self, user, n):
         if self.maxIid < n or n == -1:
