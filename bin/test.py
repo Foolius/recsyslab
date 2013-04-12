@@ -51,14 +51,24 @@ def auc(testR, recommender, r):
     See BPR paper."""
     maxIid = r.getMaxIid()
 
-    u = 0
+    result = 0
     for u in testR.iterkeys():
-        e = 0
-        recs = recommender(u, n)
+        if u % 100 == 0:
+            print("%r users tested" % u)
+            print("Score so far: %r" % result)
+        e = 0.0  # number of items in E
+        score = 0  # how often is the hidden item better
+        recs = recommender(u, -1)
         for i in testR[u]:
-            for j in xrange(0, maxIid + 1):
-                if j in r.getR()[u]:
+            for j in xrange(0, maxIid):
+                if j in r.getR()[u] or j == i or not j in recs:
                     continue
+                e += 1
+                if recs.index(i) > recs.index(j):
+                    score += 1
+        result += score / e
+    return result / len(testR.keys())
+
 
 class MFtest(object):
 
