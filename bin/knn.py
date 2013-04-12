@@ -23,8 +23,8 @@ class itemKnn(object):
     def getRec(self, u, n):
         """Returns the n best recommendations for user u"""
 
-        if n > self.sim.shape[0] or n == -1:
-            n = self.sim.shape[0]
+        if n > self.userItemMatrix.shape[1] or n == -1:
+            n = self.userItemMatrix.shape[1]
 
         x = self.userItemMatrix[u] * self.sim
 
@@ -36,7 +36,6 @@ class itemKnn(object):
         l = []
         for i in xrange(1, n + 1):
             l.append(order[0, -i])
-
         return l
 
 
@@ -61,8 +60,8 @@ class userKnn(object):
     def getRec(self, u, n):
         """Returns the n best recommendations for user u"""
 
-        if n > self.sim.shape[0] or n == -1:
-            n = self.sim.shape[0]
+        if n > self.userItemMatrix.shape[1] or n == -1:
+            n = self.userItemMatrix.shape[1]
 
         # x is the weighted sum of the items
         # weighted with the similarity between u and the
