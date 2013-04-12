@@ -157,3 +157,21 @@ def randDataset(x, y, p, seed):
     f.close
 
 randDataset(10, 10, 0.3, 14890)
+
+
+def dictToMatrix(d):
+    import numpy as np
+    rows = max(d)
+    lines = 0
+    for data in d.iteritems():
+        for item in iter(data[1]):
+            if item > lines:
+                lines = item
+
+    m = np.matrix(np.zeros((rows + 1, lines + 1)))
+
+    for data in d.iteritems():
+        for item in iter(data[1]):
+            m[data[0], item] = 1
+
+    return m
