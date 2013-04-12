@@ -17,7 +17,7 @@ class constant(object):
         self.sortedList = helper.sortList(self.dictionary.iteritems())
 
     def getRec(self, user, n):
-        if len(self.sortedList) < n:
+        if len(self.sortedList) < n or n == -1:
             n = len(self.sortedList)
         return self.sortedList[:n]
 
@@ -31,4 +31,8 @@ class randomRec(object):
                     self.maxIid = item
 
     def getRec(self, user, n):
+        if self.maxIid < n or n == -1:
+            l = range(self.maxIid)
+            random.shuffle(l)
+            return l
         return list(random.sample(range(self.maxIid), n))

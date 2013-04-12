@@ -23,7 +23,7 @@ class itemKnn(object):
     def getRec(self, u, n):
         """Returns the n best recommendations for user u"""
 
-        if n > self.sim.shape[0]:
+        if n > self.sim.shape[0] or n == -1:
             n = self.sim.shape[0]
 
         x = self.userItemMatrix[u] * self.sim
@@ -61,7 +61,7 @@ class userKnn(object):
     def getRec(self, u, n):
         """Returns the n best recommendations for user u"""
 
-        if n > self.sim.shape[0]:
+        if n > self.sim.shape[0] or n == -1:
             n = self.sim.shape[0]
 
         # x is the weighted sum of the items

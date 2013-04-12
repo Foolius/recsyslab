@@ -10,7 +10,7 @@ def hitrate(testR, recommender, n):
             print("%r users tested" % u)
             print("Hits so far: %r" % hits)
         recs = recommender(u, n)
-        if len(recs) > n:
+        if len(recs) > n and not n == -1:
             print("Fatal error: too much recommended items.")
         for i in testR[u]:
             if i in recs:
@@ -32,7 +32,7 @@ def mrhr(testR, recommender, n):
             print("Score so far: %r" % score)
 
         recs = recommender(u, n)
-        if len(recs) > n:
+        if len(recs) > n and not n == -1:
             print("Fatal error: too much recommended items.")
 
         for i in testR[u]:
@@ -46,14 +46,19 @@ def mrhr(testR, recommender, n):
     return score / items
 
 
-def auc(testR, recommender, n, trainingDict):
+def auc(testR, recommender, r):
     """Returns the AUC of the recommender function.
     See BPR paper."""
-    i = testR[u]
+    maxIid = r.getMaxIid()
 
+    u = 0
     for u in testR.iterkeys():
-
-
+        e = 0
+        recs = recommender(u, n)
+        for i in testR[u]:
+            for j in xrange(0, maxIid + 1):
+                if j in r.getR()[u]:
+                    continue
 
 class MFtest(object):
 
@@ -61,7 +66,6 @@ class MFtest(object):
         self.W = W
         self.H = H
         self.R = trainingR
-        # print(self.R)
 
     def getRec(self, u, n):
         scoredict = {}
