@@ -12,10 +12,9 @@ def hitrate(testR, recommender, n):
         recs = recommender(u, n)
         if len(recs) > n and not n == -1:
             print("Fatal error: too much recommended items.")
-        for i in testR[u]:
-            if i in recs:
-                hits += 1
-            items += 1
+        intersection = set(testR[u]).intersection(set(recs))
+        hits += len(intersection)
+        items += len(testR[u])
 
     print("Number of hits: %r" % hits)
     print("Number of possible hits: %r" % items)
