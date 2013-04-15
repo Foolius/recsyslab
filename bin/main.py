@@ -206,11 +206,11 @@ def findBestFeature():
 #train, testDict = split.splitMatrix(r.getMatrix(), 12313136)
 import knn
 import helper
-k = knn.userKnn(helper.dictToMatrix(fulltrain), 10)
-kf = open("knn.npz", "wb")
-cPickle.dump(k, kf, -1)
+#k = knn.userKnn(helper.dictToMatrix(fulltrain), 10)
+#kf = open("knn.npz", "wb")
+#cPickle.dump(k, kf, -1)
 kf = open("knn.npz", "rb")
 k = cPickle.load(kf)
 kf.close()
-test.auc(testDict, k.getRec, r)
+test.f1(testDict, k.getRec, 10)
 file.close
