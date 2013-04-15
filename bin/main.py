@@ -35,7 +35,7 @@ def readDBandSplit(dbfile):
     output.close()
     return r, trainingDict, fulltrain, testDict, evalDict
 
-r, trainingDict, fulltrain, testDict, evalDict = readDBandSplit("u.data")
+#r, trainingDict, fulltrain, testDict, evalDict = readDBandSplit("u.data")
 
 
 def loadData():
@@ -48,7 +48,7 @@ def loadData():
     inputfile.close()
     return r, trainingDict, fulltrain, testDict, evalDict
 
-#r, trainingDict, fulltrain, testDict, evalDict = loadData()
+r, trainingDict, fulltrain, testDict, evalDict = loadData()
 
 # helper.writeInternalToFile(
     # r,trainingDict,"training")
@@ -66,9 +66,9 @@ def constant(r, trainingDict, testDict):
 
 def random(r, trainingDict, testDict):
     rec = baselines.randomRec(trainingDict)
-    print("Hitrate for random: %r" % test.hitrate(testDict, rec.getRec, 10))
+    print("AUC for random: %r" % test.auc(testDict, rec.getRec, r))
 
-random(r, trainingDict, testDict)
+#random(r, trainingDict, testDict)
 
 
 def learnRankMFX(r, trainingDict, reg, ler):
@@ -82,7 +82,7 @@ def learnRankMFX(r, trainingDict, reg, ler):
         "RankMFXModelFile", W=W, H=H)
     return W, H
 
-W, H = learnRankMFX(r, trainingDict, 0.1, 0.01)
+#W, H = learnRankMFX(r, trainingDict, 0.1, 0.01)
 
 
 def learnBPRMF(r, trainingDict, reg, ler):
@@ -95,7 +95,7 @@ def learnBPRMF(r, trainingDict, reg, ler):
         "BPRMFModelFile", W=W, H=H)
     return W, H
 
-W, H = learnBPRMF(r, trainingDict, 0.01, 0.1)
+#W, H = learnBPRMF(r, trainingDict, 0.01, 0.1)
 
 
 def loadM(name):
@@ -114,7 +114,7 @@ def testMF(W, H, trainingDict, testDict):
     hr = test.auc(testDict, t.getRec, r)
     return hr
 
-testMF(W, H, trainingDict, testDict)
+#testMF(W, H, trainingDict, testDict)
 
 ts = time.time()
 st = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
@@ -206,11 +206,11 @@ def findBestFeature():
 #train, testDict = split.splitMatrix(r.getMatrix(), 12313136)
 import knn
 import helper
-#k = knn.userKnn(helper.dictToMatrix(fulltrain), 100)
-#kf = open("knn.npz", "wb")
-#cPickle.dump(k, kf, -1)
+k = knn.userKnn(helper.dictToMatrix(fulltrain), 10)
+kf = open("knn.npz", "wb")
+cPickle.dump(k, kf, -1)
 kf = open("knn.npz", "rb")
 k = cPickle.load(kf)
 kf.close()
-#test.auc(testDict, k.getRec, r)
+test.auc(testDict, k.getRec, r)
 file.close

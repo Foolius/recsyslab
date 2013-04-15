@@ -60,7 +60,7 @@ def auc(testR, recommender, r):
         score = 0  # how often is the hidden item better
         recs = recommender(u, -1)
         for i in testR[u]:
-            score += r.getMaxIid() - recs.index(e) - 1
+            score += r.getMaxIid() - recs.index(i) - 1
             e += maxIid - 1
         result += score / e
     result /= len(testR.keys())
