@@ -51,6 +51,8 @@ def f1(testR, recommender, n):
                   (recall + prec))
     result /= len(testR)
     print("F1: %r" % result)
+    print("F1: %r" % result)
+    result /= len(testR)
 
 #    recall = hitrate(testR, recommender, n)
 #    prec = precision(testR, recommender, n)
