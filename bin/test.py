@@ -12,14 +12,30 @@ def hitrate(testR, recommender, n):
         recs = recommender(u, n)
         if len(recs) > n and not n == -1:
             print("Fatal error: too much recommended items.")
-        intersection = set(testR[u]).intersection(set(recs))
-        hits += len(intersection)
+        hits += len(set(testR[u]).intersection(set(recs)))
         items += len(testR[u])
 
     print("Number of hits: %r" % hits)
     print("Number of possible hits: %r" % items)
     print("Hitrate: %r" % (hits / items))
     return hits / items
+
+
+def precision(testR, recommender, n):
+    hits = 0.0
+    for u in testR.iterkeys():
+        if u % 100 == 0:
+            print("%r users tested" % u)
+            print("Hits so far: %r" % hits)
+        recs = recommender(u, n)
+        if len(recs) > n and not n == -1:
+            print("Fatal error: too much recommended items.")
+        hits += len(set(testR[u]).intersection(set(recs)))
+
+    result = hits / n
+    print("Number of hits: %r" % hits)
+    print("Precision: %r" % result)
+    return result
 
 
 def mrhr(testR, recommender, n):
