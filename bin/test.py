@@ -38,6 +38,29 @@ def precision(testR, recommender, n):
     return result
 
 
+def f1(testR, recommender, n):
+    result = 0.0
+    for u in testR.iterkeys():
+        if u % 100 == 0:
+            print("%r users tested" % u)
+        recall = hitrate({u: testR[u]}, recommender, n)
+        prec = precision({u: testR[u]}, recommender, n)
+        if recall == 0 or prec == 0:
+            continue
+        result += ((2 * recall * prec) /
+                  (recall + prec))
+    print("F1: %r" % result)
+    result /= len(testR)
+
+#    recall = hitrate(testR, recommender, n)
+#    prec = precision(testR, recommender, n)
+#
+#    result = ((2 * recall * prec) /
+#             (recall + prec))
+#    print("F1: %r" % result)
+#    return result
+
+
 def mrhr(testR, recommender, n):
     score = 0.0
     items = 0.0
