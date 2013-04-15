@@ -67,8 +67,9 @@ def auc(testR, recommender, r):
                 if recs.index(i) > recs.index(j):
                     score += 1
         result += score / e
-    print("AUC: %r" % result / len(testR.keys()))
-    return result / len(testR.keys())
+    result /= len(testR.keys())
+    print("AUC: %r" % result)
+    return result
 
 
 class MFtest(object):

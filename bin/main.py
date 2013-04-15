@@ -11,8 +11,8 @@ import datetime
 
 SEED1 = 1213451205
 SEED2 = 10989084
-EPOCHS = 3
-features = 50
+EPOCHS = 10
+features = 150
 
 # learningratevalues=[0.001,0.01,0.1]
 # regularizationvalues=[0,0.001,0.01,0.1,1]
@@ -58,17 +58,17 @@ r, trainingDict, fulltrain, testDict, evalDict = loadData()
 
 def constant(r, trainingDict, testDict):
     rec = baselines.constant(trainingDict)
-    print("AUC for constant: %r" %
-          test.auc(testDict, rec.getRec, r))
+    print("Hitratefor constant: %r" %
+          test.hitrate(testDict, rec.getRec, 10))
 
 #constant(r, trainingDict, testDict)
 
 
 def random(r, trainingDict, testDict):
     rec = baselines.randomRec(trainingDict)
-    print("AUC for random: %r" % test.auc(testDict, rec.getRec, r))
+    print("Hitrate for random: %r" % test.hitrate(testDict, rec.getRec, 10))
 
-#random(r, trainingDict, testDict)
+random(r, trainingDict, testDict)
 
 
 def learnRankMFX(r, trainingDict, reg, ler):
@@ -82,7 +82,7 @@ def learnRankMFX(r, trainingDict, reg, ler):
         "RankMFXModelFile", W=W, H=H)
     return W, H
 
-#W, H = learnRankMFX(r, trainingDict, 0.1, 0.01)
+W, H = learnRankMFX(r, trainingDict, 0.1, 0.01)
 
 
 def learnBPRMF(r, trainingDict, reg, ler):
@@ -95,7 +95,7 @@ def learnBPRMF(r, trainingDict, reg, ler):
         "BPRMFModelFile", W=W, H=H)
     return W, H
 
-#W, H = learnBPRMF(r, trainingDict, 0.01, 0.1)
+W, H = learnBPRMF(r, trainingDict, 0.01, 0.1)
 
 
 def loadM(name):
@@ -106,7 +106,7 @@ def loadM(name):
     return W, H
 
 # W,H=loadM("RankMFXModelFile")
-W, H = loadM("BPRMFModelFile")
+#W, H = loadM("BPRMFModelFile")
 
 
 def testMF(W, H, trainingDict, testDict):
@@ -114,7 +114,7 @@ def testMF(W, H, trainingDict, testDict):
     hr = test.auc(testDict, t.getRec, r)
     return hr
 
-#testMF(W, H, trainingDict, testDict)
+testMF(W, H, trainingDict, testDict)
 
 ts = time.time()
 st = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
@@ -212,5 +212,5 @@ import helper
 kf = open("knn.npz", "rb")
 k = cPickle.load(kf)
 kf.close()
-test.auc(testDict, k.getRec, r)
+#test.auc(testDict, k.getRec, r)
 file.close
