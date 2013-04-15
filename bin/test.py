@@ -49,8 +49,8 @@ def f1(testR, recommender, n):
             continue
         result += ((2 * recall * prec) /
                   (recall + prec))
-    print("F1: %r" % result)
     result /= len(testR)
+    print("F1: %r" % result)
 
 #    recall = hitrate(testR, recommender, n)
 #    prec = precision(testR, recommender, n)
@@ -59,6 +59,9 @@ def f1(testR, recommender, n):
 #             (recall + prec))
 #    print("F1: %r" % result)
 #    return result
+""" with knn first version: 0.0445
+                    second: 0,48
+"""
 
 
 def mrhr(testR, recommender, n):
