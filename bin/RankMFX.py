@@ -13,8 +13,10 @@ class RankMFX:
         # Random initialization of W and H between mean=0 ; sigma=0.1
         sigma = 0.1
         mu = 0
-        W = sigma * np.random.randn(n_users, k) + mu
-        H = sigma * np.random.randn(m_items, k) + mu
+        W = sigma * np.random.randn(n_users + 1, k) + mu
+        H = sigma * np.random.randn(m_items + 1, k) + mu
+        m_items -= 1  # to be the max index
+
         #---
         # This is slower if R is big, i.e., close to the number of users, but
         # for the online approach is faster
@@ -45,12 +47,12 @@ class RankMFX:
                 userItems = list(R[u])
                 i = userItems[np.random.random_integers(0, len(userItems) - 1)]
                 # the negative example
-                j = np.random.random_integers(0, m_items - 1)
+                j = np.random.random_integers(0, m_items)
                 # if  j is also relevant for u we continue
                 # we need to see a negative example to contrast the positive
                 # one
                 while j in R[u]:
-                    j = np.random.random_integers(0, m_items - 1)
+                    j = np.random.random_integers(0, m_items)
 
                 # The features difference between the sampled items
                 X = H[i] - H[j]

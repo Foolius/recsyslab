@@ -40,8 +40,8 @@ def learnModel(n_users, m_items, regU, regI, regJ,
     sigma = 0.1
     mu = 0
     # Random initialization of W and H between mean=0 ; sigma=0.1
-    W = sigma * np.random.randn(n_users, k) + mu
-    H = sigma * np.random.randn(m_items, k) + mu
+    W = sigma * np.random.randn(n_users + 1, k) + mu
+    H = sigma * np.random.randn(m_items + 1, k) + mu
 
     printDelay = 0.01 * numberOfIterations
     sum_loss = 0.0
@@ -56,7 +56,6 @@ def learnModel(n_users, m_items, regU, regI, regJ,
     for e in xrange(0, epochs):
         iter = 0
         t = 0
-        print("epoch: %r" % e)
         while iter <= numberOfIterations:
             iter += 1
 
@@ -70,11 +69,11 @@ def learnModel(n_users, m_items, regU, regI, regJ,
             userItems = list(R[u])
             i = userItems[np.random.random_integers(0, len(userItems) - 1)]
             # the negative example
-            j = np.random.random_integers(0, m_items - 1)
+            j = np.random.random_integers(0, m_items)
             # if  j is also relevant for u we continue
             # we need to see a negative example to contrast the positive one
             while j in R[u]:
-                j = np.random.random_integers(0, m_items - 1)
+                j = np.random.random_integers(0, m_items)
 
             X = H[i] - H[j]
             # rank labels
@@ -141,11 +140,11 @@ def slowlearnModel(n_users, m_items, regU, regI, regJ,
             userItems = list(R[u])
             i = userItems[np.random.random_integers(0, len(userItems) - 1)]
             # the negative example
-            j = np.random.random_integers(0, m_items - 1)
+            j = np.random.random_integers(0, m_items)
             # if  j is also relevant for u we continue
             # we need to see a negative example to contrast the positive one
             while j in R[u]:
-                j = np.random.random_integers(0, m_items - 1)
+                j = np.random.random_integers(0, m_items)
 
             X = H[i] - H[j]
             # rank labels

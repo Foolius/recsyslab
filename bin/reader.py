@@ -30,7 +30,8 @@ class tabSepReader(object):
             else:
                 self.R[uid] = {iid}
 
-        self.matrix = np.matrix(np.zeros((self.getMaxUid(), self.getMaxIid())))
+        self.matrix = np.matrix(np.zeros((
+            self.getMaxUid() + 1, self.getMaxIid() + 1)))
         for u in self.R.iterkeys():
             for i in self.R[u]:
                 self.matrix[u, i] = 1.0
@@ -49,7 +50,7 @@ class tabSepReader(object):
         return self.iidDict.getOrig(iid)
 
     def getMaxIid(self):
-        return self.iidDict.id
+        return self.iidDict.id - 1
 
     def getMaxUid(self):
         return self.uidDict.id
