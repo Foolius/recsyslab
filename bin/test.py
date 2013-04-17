@@ -39,28 +39,33 @@ def precision(testR, recommender, n):
 
 
 def f1(testR, recommender, n):
-    result = 0.0
-    for u in testR.iterkeys():
-        if u % 100 == 0:
-            print("%r users tested" % u)
-        recall = hitrate({u: testR[u]}, recommender, n)
-        prec = precision({u: testR[u]}, recommender, n)
-        if recall == 0 or prec == 0:
-            continue
-        result += ((2 * recall * prec) /
-                  (recall + prec))
-    result /= len(testR)
-    print("F1: %r" % result)
-    print("F1: %r" % result)
-    result /= len(testR)
-
-#    recall = hitrate(testR, recommender, n)
-#    prec = precision(testR, recommender, n)
-#
-#    result = ((2 * recall * prec) /
-#             (recall + prec))
+#    result = 0.0
+#    for u in testR.iterkeys():
+#        if u % 100 == 0:
+#            print("%r users tested" % u)
+#        recall = hitrate({u: testR[u]}, recommender, n)
+#        prec = precision({u: testR[u]}, recommender, n)
+#        if recall == 0 or prec == 0:
+#            continue
+#        result += ((2 * recall * prec) /
+#                  (recall + prec))
+#    result /= len(testR)
 #    print("F1: %r" % result)
-#    return result
+#    print("F1: %r" % result)
+#    result /= len(testR)
+
+    recall = hitrate(testR, recommender, n)
+    if recall == 0:
+        return 0
+
+    prec = precision(testR, recommender, n)
+    if prec == 0:
+        return 0
+
+    result = ((2 * recall * prec) /
+              (recall + prec))
+    print("F1: %r" % result)
+    return result
 """ with knn first version: 0.0445
                     second: 0,48
 """
