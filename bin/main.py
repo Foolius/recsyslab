@@ -68,7 +68,7 @@ def random(r, trainingDict, testDict):
     rec = baselines.randomRec(trainingDict)
     print("AUC for random: %r" % test.auc(testDict, rec.getRec, r))
 
-random(r, trainingDict, testDict)
+#random(r, trainingDict, testDict)
 
 
 def learnRankMFX(r, trainingDict, reg, ler):
@@ -96,6 +96,9 @@ def learnBPRMF(r, trainingDict, reg, ler):
     return W, H
 
 #W, H = learnBPRMF(r, trainingDict, 0.01, 0.1)
+
+
+def learnSVD(r,
 
 
 def loadM(name):
@@ -204,13 +207,13 @@ def findBestFeature():
 # import knn
 # r = np.matrix(np.random.randint(0, 2, (943, 1682)))
 #train, testDict = split.splitMatrix(r.getMatrix(), 12313136)
-import knn
-import helper
+#import knn
+#import helper
 #k = knn.userKnn(helper.dictToMatrix(fulltrain), 10)
 #kf = open("knn.npz", "wb")
 #cPickle.dump(k, kf, -1)
-kf = open("knn.npz", "rb")
-k = cPickle.load(kf)
-kf.close()
-test.f1(testDict, k.getRec, 10)
-file.close
+#kf = open("knn.npz", "rb")
+#k = cPickle.load(kf)
+#kf.close()
+#test.f1(testDict, k.getRec, 10)
+#file.close
