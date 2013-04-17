@@ -10,6 +10,7 @@ class tabSepReader(object):
         self.iidDict = helper.idOrigDict()
         self.dbfile = open(filename, 'r')
         self.numberOfTransactions = 0
+        self.userItemInteractions = []
 
         print("Start reading the database.")
         for line in self.dbfile:
@@ -23,6 +24,8 @@ class tabSepReader(object):
             origIid = split[1]
             uid = self.uidDict.add(origUid)
             iid = self.iidDict.add(origIid)
+
+            self.userItemInteractions.append((uid, iid))
 
             # put in R when not already there
             if uid in self.R:
