@@ -72,12 +72,12 @@ def random(r, trainingDict, testDict):
 # random(r, trainingDict, testDict)
 
 
-def testMF(W, H, trainingDict, testDict):
+def testMF(W, H, trainingDict, testDict, n):
     t = test.MFtest(W, H, trainingDict)
-    test.hitrate(testDict, t.getRec, r)
-    test.f1(testDict, t.getRec, r)
-    test.precision(testDict, t.getRec, r)
-    test.mrhr(testDict, t.getRec, r)
+    test.hitrate(testDict, t.getRec, n)
+    test.f1(testDict, t.getRec, n)
+    test.precision(testDict, t.getRec, n)
+    test.mrhr(testDict, t.getRec, n)
     hr = test.auc(testDict, t.getRec, r)
     return hr
 
@@ -94,7 +94,7 @@ def learnRankMFX(r, trainingDict, reg, ler):
     return W, H
 
 W, H = learnRankMFX(r, trainingDict, 0.1, 0.01)
-testMF(W, H, trainingDict, testDict)
+testMF(W, H, trainingDict, testDict, 10)
 
 
 def learnBPRMF(r, trainingDict, reg, ler):
@@ -108,7 +108,7 @@ def learnBPRMF(r, trainingDict, reg, ler):
     return W, H
 
 W, H = learnBPRMF(r, trainingDict, 0.01, 0.1)
-testMF(W, H, trainingDict, testDict)
+testMF(W, H, trainingDict, testDict, 10)
 
 
 def learnMF(r, trainingDict, reg, ler, lossF, dlossF):
@@ -122,11 +122,11 @@ def learnMF(r, trainingDict, reg, ler, lossF, dlossF):
 #        "BPRMFModelFile", W=W, H=H)
     return W, H
 
-W, H = mf(r, trainingDict, 0.01, 0.1, mf.hingeLoss, mf.dHingeLoss)
-testMF(W, H, trainingDict, testDict)
+W, H = learnMF(r, trainingDict, 0.01, 0.1, mf.hingeLoss, mf.dHingeLoss)
+testMF(W, H, trainingDict, testDict, 10)
 
-W, H = mf(r, trainingDict, 0.01, 0.1, mf.logLoss, mf.dLogLoss)
-testMF(W, H, trainingDict, testDict)
+W, H = learnMF(r, trainingDict, 0.01, 0.1, mf.logLoss, mf.dLogLoss)
+testMF(W, H, trainingDict, testDict, 10)
 
 
 def loadM(name):

@@ -102,10 +102,10 @@ def learnModel(n_users, m_items, regU, regI, regJ,
 
             t += 1  # increment the iteration
             if t % printDelay == 0:
-                print("Epoch: %i/%i | iteration %i/%i | learning rate=%f"
-                      " | average_loss for the last %i iterations = %f" %
-                     (e + 1, epochs, t, numberOfIterations, eta, printDelay,
-                      sum_loss / printDelay))
+#                print("Epoch: %i/%i | iteration %i/%i | learning rate=%f"
+#                      " | average_loss for the last %i iterations = %f" %
+#                     (e + 1, epochs, t, numberOfIterations, eta, printDelay,
+#                      sum_loss / printDelay))
                 sum_loss = 0.0
 
     return W, H
