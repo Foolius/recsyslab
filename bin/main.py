@@ -8,6 +8,7 @@ import RankMFX
 import cPickle
 import time
 import datetime
+import mf
 
 SEED1 = 1213451205
 SEED2 = 10989084
@@ -48,7 +49,7 @@ def loadData():
     inputfile.close()
     return r, trainingDict, fulltrain, testDict, evalDict
 
-#r, trainingDict, fulltrain, testDict, evalDict = loadData()
+# r, trainingDict, fulltrain, testDict, evalDict = loadData()
 
 # helper.writeInternalToFile(
     # r,trainingDict,"training")
@@ -61,14 +62,24 @@ def constant(r, trainingDict, testDict):
     print("Hitratefor constant: %r" %
           test.hitrate(testDict, rec.getRec, 10))
 
-#constant(r, trainingDict, testDict)
+# constant(r, trainingDict, testDict)
 
 
 def random(r, trainingDict, testDict):
     rec = baselines.randomRec(trainingDict)
     print("AUC for random: %r" % test.auc(testDict, rec.getRec, r))
 
-#random(r, trainingDict, testDict)
+# random(r, trainingDict, testDict)
+
+
+def testMF(W, H, trainingDict, testDict):
+    t = test.MFtest(W, H, trainingDict)
+    test.hitrate(testDict, t.getRec, r)
+    test.f1(testDict, t.getRec, r)
+    test.precision(testDict, t.getRec, r)
+    test.mrhr(testDict, t.getRec, r)
+    hr = test.auc(testDict, t.getRec, r)
+    return hr
 
 
 def learnRankMFX(r, trainingDict, reg, ler):
@@ -82,7 +93,8 @@ def learnRankMFX(r, trainingDict, reg, ler):
         "RankMFXModelFile", W=W, H=H)
     return W, H
 
-#W, H = learnRankMFX(r, trainingDict, 0.1, 0.01)
+W, H = learnRankMFX(r, trainingDict, 0.1, 0.01)
+testMF(W, H, trainingDict, testDict)
 
 
 def learnBPRMF(r, trainingDict, reg, ler):
@@ -95,10 +107,26 @@ def learnBPRMF(r, trainingDict, reg, ler):
         "BPRMFModelFile", W=W, H=H)
     return W, H
 
-#W, H = learnBPRMF(r, trainingDict, 0.01, 0.1)
+W, H = learnBPRMF(r, trainingDict, 0.01, 0.1)
+testMF(W, H, trainingDict, testDict)
 
 
-def learnSVD(r,
+def learnMF(r, trainingDict, reg, ler, lossF, dlossF):
+    W, H = mf.learnModel(
+        r.getMaxUid(), r.getMaxIid(),
+        reg, reg, reg, ler, trainingDict,
+        features, EPOCHS,
+        r.numberOfTransactions,
+        lossF, dlossF)
+#    np.savez_compressed(
+#        "BPRMFModelFile", W=W, H=H)
+    return W, H
+
+W, H = mf(r, trainingDict, 0.01, 0.1, mf.hingeLoss, mf.dHingeLoss)
+testMF(W, H, trainingDict, testDict)
+
+W, H = mf(r, trainingDict, 0.01, 0.1, mf.logLoss, mf.dLogLoss)
+testMF(W, H, trainingDict, testDict)
 
 
 def loadM(name):
@@ -109,15 +137,8 @@ def loadM(name):
     return W, H
 
 # W,H=loadM("RankMFXModelFile")
-#W, H = loadM("BPRMFModelFile")
+# W, H = loadM("BPRMFModelFile")
 
-
-def testMF(W, H, trainingDict, testDict):
-    t = test.MFtest(W, H, trainingDict)
-    hr = test.auc(testDict, t.getRec, r)
-    return hr
-
-#testMF(W, H, trainingDict, testDict)
 
 ts = time.time()
 st = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
@@ -198,22 +219,22 @@ def findBestFeature():
         if ult > penult and not dir:
             features -= features / 2
 
-#r = reader.tabSepReader("u.data")
-#rf = open("reader.npz", "wb")
-#cPickle.dump(r, rf, -1)
-#rf = open("reader.npz", "rb")
-#r = cPickle.load(rf)
-#rf.close()
+# r = reader.tabSepReader("u.data")
+# rf = open("reader.npz", "wb")
+# cPickle.dump(r, rf, -1)
+# rf = open("reader.npz", "rb")
+# r = cPickle.load(rf)
+# rf.close()
 # import knn
 # r = np.matrix(np.random.randint(0, 2, (943, 1682)))
-#train, testDict = split.splitMatrix(r.getMatrix(), 12313136)
-#import knn
-#import helper
-#k = knn.userKnn(helper.dictToMatrix(fulltrain), 10)
-#kf = open("knn.npz", "wb")
-#cPickle.dump(k, kf, -1)
-#kf = open("knn.npz", "rb")
-#k = cPickle.load(kf)
-#kf.close()
-#test.f1(testDict, k.getRec, 10)
-#file.close
+# train, testDict = split.splitMatrix(r.getMatrix(), 12313136)
+# import knn
+# import helper
+# k = knn.userKnn(helper.dictToMatrix(fulltrain), 10)
+# kf = open("knn.npz", "wb")
+# cPickle.dump(k, kf, -1)
+# kf = open("knn.npz", "rb")
+# k = cPickle.load(kf)
+# kf.close()
+# test.f1(testDict, k.getRec, 10)
+# file.close
