@@ -4,7 +4,7 @@ import math
 
 
 # hinge loss
-def hingeLoss(self, a, y):
+def hingeLoss(a, y):
     """
     hingeLoss(a, y) = max(0, 1 - a*y)
     """
@@ -14,7 +14,7 @@ def hingeLoss(self, a, y):
     return 1 - z
 
 
-def dHingeLoss(self, a, y):
+def dHingeLoss(a, y):
     """
     -dloss(a,y)/da
     """
