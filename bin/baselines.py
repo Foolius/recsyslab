@@ -8,7 +8,8 @@ class constant(object):
         self.dictionary = {}
         self.sortedList = []
         for data in dbdict.iteritems():
-            for item in iter(data[1]):
+            for itemRating in iter(data[1]):
+                item = itemRating[0]
                 if item in self.dictionary:
                     self.dictionary[item] += 1
                 else:
@@ -26,7 +27,8 @@ class randomRec(object):
     def __init__(self, dbdict):
         self.maxIid = 0
         for data in dbdict.iteritems():
-            for item in iter(data[1]):
+            for itemRating in iter(data[1]):
+                item = itemRating[0]
                 if item > self.maxIid:
                     self.maxIid = item
         self.maxIid += 1

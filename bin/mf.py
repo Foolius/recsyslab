@@ -89,7 +89,7 @@ def learnModel(n_users, m_items, regU, regI, regJ,
                 continue
             # the positive example
             userItems = list(R[u])
-            i = userItems[np.random.random_integers(0, len(userItems) - 1)]
+            i = userItems[np.random.random_integers(0, len(userItems) - 1)][0]
             # the negative example
             j = np.random.random_integers(0, m_items)
             # if  j is also relevant for u we continue

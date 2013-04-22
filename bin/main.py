@@ -34,7 +34,7 @@ def readDBandSplit(dbfile):
     output.close()
     return r, trainingDict, fulltrain, testDict, evalDict
 
-r, trainingDict, fulltrain, testDict, evalDict = readDBandSplit("u.data")
+#r, trainingDict, fulltrain, testDict, evalDict = readDBandSplit("u.data")
 
 
 def loadData():
@@ -47,7 +47,7 @@ def loadData():
     inputfile.close()
     return r, trainingDict, fulltrain, testDict, evalDict
 
-#r, trainingDict, fulltrain, testDict, evalDict = loadData()
+r, trainingDict, fulltrain, testDict, evalDict = loadData()
 
 # helper.writeInternalToFile(
     # r,trainingDict,"training")
@@ -57,17 +57,17 @@ def loadData():
 
 def constant(r, trainingDict, testDict):
     rec = baselines.constant(trainingDict)
-    print("Hitratefor constant: %r" %
+    print("Hitrate for constant: %r" %
           test.hitrate(testDict, rec.getRec, 10))
 
-# constant(r, trainingDict, testDict)
+#constant(r, trainingDict, testDict)
 
 
 def random(r, trainingDict, testDict):
     rec = baselines.randomRec(trainingDict)
-    print("AUC for random: %r" % test.auc(testDict, rec.getRec, r))
+    print("Hitrate for random: %r" % test.hitrate(testDict, rec.getRec, 10))
 
-# random(r, trainingDict, testDict)
+random(r, trainingDict, testDict)
 
 
 def testMF(W, H, trainingDict, testDict, n):
