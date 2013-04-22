@@ -2,9 +2,7 @@ import split
 import reader
 import baselines
 import test
-import bprmf
 import numpy as np
-import RankMFX
 import cPickle
 import time
 import datetime
@@ -36,7 +34,7 @@ def readDBandSplit(dbfile):
     output.close()
     return r, trainingDict, fulltrain, testDict, evalDict
 
-#r, trainingDict, fulltrain, testDict, evalDict = readDBandSplit("u.data")
+r, trainingDict, fulltrain, testDict, evalDict = readDBandSplit("u.data")
 
 
 def loadData():
@@ -49,7 +47,7 @@ def loadData():
     inputfile.close()
     return r, trainingDict, fulltrain, testDict, evalDict
 
-r, trainingDict, fulltrain, testDict, evalDict = loadData()
+#r, trainingDict, fulltrain, testDict, evalDict = loadData()
 
 # helper.writeInternalToFile(
     # r,trainingDict,"training")
@@ -82,35 +80,6 @@ def testMF(W, H, trainingDict, testDict, n):
 #    return hr
 
 
-def learnRankMFX(r, trainingDict, reg, ler):
-    rank = RankMFX.RankMFX()
-    W, H = rank.learnModel(
-        r.getMaxUid(), r.getMaxIid(),
-        reg, reg, reg, ler, trainingDict,
-        features, EPOCHS,
-        r.numberOfTransactions)
-    np.savez_compressed(
-        "RankMFXModelFile", W=W, H=H)
-    return W, H
-
-W, H = learnRankMFX(r, trainingDict, 0.01, 0.1)
-testMF(W, H, trainingDict, testDict, 10)
-
-
-def learnBPRMF(r, trainingDict, reg, ler):
-    W, H = bprmf.learnModel(
-        r.getMaxUid(), r.getMaxIid(),
-        reg, reg, reg, ler, trainingDict,
-        features, EPOCHS,
-        r.numberOfTransactions)
-    np.savez_compressed(
-        "BPRMFModelFile", W=W, H=H)
-    return W, H
-
-#W, H = learnBPRMF(r, trainingDict, 0.01, 0.1)
-#testMF(W, H, trainingDict, testDict, 10)
-
-
 def learnMF(r, trainingDict, reg, ler, lossF, dlossF):
     W, H = mf.learnModel(
         r.getMaxUid(), r.getMaxIid(),
@@ -122,10 +91,11 @@ def learnMF(r, trainingDict, reg, ler, lossF, dlossF):
 #        "BPRMFModelFile", W=W, H=H)
     return W, H
 
-#RankMFX
-W, H = learnMF(r, trainingDict, 0.01, 0.1, mf.hingeLoss, mf.dHingeLoss)
-testMF(W, H, trainingDict, testDict, 10)
+# RankMFX
+#W, H = learnMF(r, trainingDict, 0.01, 0.1, mf.hingeLoss, mf.dHingeLoss)
+#testMF(W, H, trainingDict, testDict, 10)
 
+# BPRMF
 #W, H = learnMF(r, trainingDict, 0.01, 0.1, mf.logLoss, mf.dLogLoss)
 #testMF(W, H, trainingDict, testDict, 10)
 
@@ -147,95 +117,3 @@ st = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
 file = open("results.data", "a")
 file.write("Started at: " + st + "\n")
 print("Started at: " + st + "\n")
-
-
-def tweak(learnModel, r, trainingDict, fulltrain, testDict, evalDict):
-    legend = "Algorithm|Regconstant|Learningrate|Epochs|Features|Hitrate\n"
-    file.write(legend)
-
-    trainingDict = fulltrain
-    evalDict = testDict
-
-    results = []
-
-    for reg in regularizationvalues:
-        for ler in learningratevalues:
-            W, H = learnModel(
-                r, trainingDict, reg, ler)
-            results.append(
-                testMF(W, H, trainingDict,
-                       evalDict))
-            s = (learnModel.__name__ + "|%r|%r|%r|%r|%r\n"
-                 % (reg, ler, EPOCHS, features,
-                    results[-1]))
-            print("")
-            print(legend + s)
-            file.write(s)
-    return results[-1]
-
-    index = results.index(max(results))
-    count = -1
-    for reg in regularizationvalues:
-        for ler in learningratevalues:
-            print("%r %r %r" % (count, reg, ler))
-            count += 1
-            if count != index:
-                continue
-            W, H = learnModel(
-                r, fulltrain, reg, ler)
-            hr = testMF(W, H, fulltrain,
-                        testDict)
-            s = ("Best:\n" + learnModel.__name__ + "|%r|%r|%r|%r\n\n"
-                 % (reg, ler, EPOCHS,
-                    hr))
-            print("")
-            print(legend + s)
-            file.write(s)
-
-
-# r,trainingDict,fulltrain,testDict,evalDict=readDBandSplit("u.data")
-
-
-def tweak10times():
-    for i in xrange(0, 10):
-        print("BPRMF %r" % i)
-        tweak(learnBPRMF, r, trainingDict, fulltrain, testDict, evalDict)
-
-    for i in xrange(0, 10):
-        print("RankMFX%r" % i)
-        tweak(learnRankMFX, r, trainingDict, fulltrain, testDict, evalDict)
-
-
-def findBestFeature():
-    features = 512
-    ult = 0.0
-    penult = 0.0
-    dir = True
-    while(True):
-        penult = ult
-        ult = tweak(learnBPRMF, r, trainingDict, fulltrain, testDict, evalDict)
-        # ult =tweak(learnRankMFX,r,trainingDict,fulltrain,testDict,evalDict)
-        if ult > penult and dir:
-            features += features / 2
-        if ult > penult and not dir:
-            features -= features / 2
-
-# r = reader.tabSepReader("u.data")
-# rf = open("reader.npz", "wb")
-# cPickle.dump(r, rf, -1)
-# rf = open("reader.npz", "rb")
-# r = cPickle.load(rf)
-# rf.close()
-# import knn
-# r = np.matrix(np.random.randint(0, 2, (943, 1682)))
-# train, testDict = split.splitMatrix(r.getMatrix(), 12313136)
-# import knn
-# import helper
-# k = knn.userKnn(helper.dictToMatrix(fulltrain), 10)
-# kf = open("knn.npz", "wb")
-# cPickle.dump(k, kf, -1)
-# kf = open("knn.npz", "rb")
-# k = cPickle.load(kf)
-# kf.close()
-# test.f1(testDict, k.getRec, 10)
-# file.close
