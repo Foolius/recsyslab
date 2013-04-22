@@ -10,12 +10,11 @@ class tabSepReader(object):
         self.iidDict = helper.idOrigDict()
         self.dbfile = open(filename, 'r')
         self.numberOfTransactions = 0
-        self.userItemInteractions = []
 
         print("Start reading the database.")
         for line in self.dbfile:
             self.numberOfTransactions += 1
-            split = line.strip().split("\t", 2)
+            split = line.strip().split("\t", 3)
             origUid = split[0]
 
             if self.numberOfTransactions % 10000 == 0:
@@ -25,19 +24,17 @@ class tabSepReader(object):
             uid = self.uidDict.add(origUid)
             iid = self.iidDict.add(origIid)
 
-            self.userItemInteractions.append((uid, iid))
-
             # put in R when not already there
             if uid in self.R:
-                self.R[uid].add(iid)
+                self.R[uid].add((iid, int(split[2])))
             else:
-                self.R[uid] = {iid}
+                self.R[uid] = {(iid, int(split[2]))}
 
         self.matrix = np.matrix(np.zeros((
             self.getMaxUid() + 1, self.getMaxIid() + 1)))
         for u in self.R.iterkeys():
             for i in self.R[u]:
-                self.matrix[u, i] = 1.0
+                self.matrix[u, i[0]] = i[1]
 
     def getR(self):
         return self.R
