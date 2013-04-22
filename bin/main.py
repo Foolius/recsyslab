@@ -36,7 +36,7 @@ def readDBandSplit(dbfile):
     output.close()
     return r, trainingDict, fulltrain, testDict, evalDict
 
-r, trainingDict, fulltrain, testDict, evalDict = readDBandSplit("u.data")
+#r, trainingDict, fulltrain, testDict, evalDict = readDBandSplit("u.data")
 
 
 def loadData():
@@ -49,7 +49,7 @@ def loadData():
     inputfile.close()
     return r, trainingDict, fulltrain, testDict, evalDict
 
-# r, trainingDict, fulltrain, testDict, evalDict = loadData()
+r, trainingDict, fulltrain, testDict, evalDict = loadData()
 
 # helper.writeInternalToFile(
     # r,trainingDict,"training")
@@ -75,11 +75,11 @@ def random(r, trainingDict, testDict):
 def testMF(W, H, trainingDict, testDict, n):
     t = test.MFtest(W, H, trainingDict)
     test.hitrate(testDict, t.getRec, n)
-    test.f1(testDict, t.getRec, n)
-    test.precision(testDict, t.getRec, n)
-    test.mrhr(testDict, t.getRec, n)
-    hr = test.auc(testDict, t.getRec, r)
-    return hr
+#    test.f1(testDict, t.getRec, n)
+#    test.precision(testDict, t.getRec, n)
+#    test.mrhr(testDict, t.getRec, n)
+#    hr = test.auc(testDict, t.getRec, r)
+#    return hr
 
 
 def learnRankMFX(r, trainingDict, reg, ler):
@@ -93,7 +93,7 @@ def learnRankMFX(r, trainingDict, reg, ler):
         "RankMFXModelFile", W=W, H=H)
     return W, H
 
-W, H = learnRankMFX(r, trainingDict, 0.1, 0.01)
+W, H = learnRankMFX(r, trainingDict, 0.01, 0.1)
 testMF(W, H, trainingDict, testDict, 10)
 
 
@@ -107,8 +107,8 @@ def learnBPRMF(r, trainingDict, reg, ler):
         "BPRMFModelFile", W=W, H=H)
     return W, H
 
-W, H = learnBPRMF(r, trainingDict, 0.01, 0.1)
-testMF(W, H, trainingDict, testDict, 10)
+#W, H = learnBPRMF(r, trainingDict, 0.01, 0.1)
+#testMF(W, H, trainingDict, testDict, 10)
 
 
 def learnMF(r, trainingDict, reg, ler, lossF, dlossF):
@@ -122,11 +122,12 @@ def learnMF(r, trainingDict, reg, ler, lossF, dlossF):
 #        "BPRMFModelFile", W=W, H=H)
     return W, H
 
+#RankMFX
 W, H = learnMF(r, trainingDict, 0.01, 0.1, mf.hingeLoss, mf.dHingeLoss)
 testMF(W, H, trainingDict, testDict, 10)
 
-W, H = learnMF(r, trainingDict, 0.01, 0.1, mf.logLoss, mf.dLogLoss)
-testMF(W, H, trainingDict, testDict, 10)
+#W, H = learnMF(r, trainingDict, 0.01, 0.1, mf.logLoss, mf.dLogLoss)
+#testMF(W, H, trainingDict, testDict, 10)
 
 
 def loadM(name):

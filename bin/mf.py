@@ -56,6 +56,7 @@ def learnModel(n_users, m_items, regU, regI, regJ,
     """Learning rate is constant."""
     # MIN_SCALING_FACTOR = 1E-5
     y = 1.0
+    np.random.seed(1234567890)
     # loss = logLoss(0, 0)
 
     sigma = 0.1
