@@ -117,6 +117,7 @@ def learnModel(n_users, m_items, regU, regI, regJ,
             H[j] *= changeJ
 
             if dloss != 0.0:
+                # Updates
                 eta_dloss = learningRate * dloss
                 W[u] += eta_dloss * X
                 H[i] += eta_dloss * W[u]
@@ -124,10 +125,10 @@ def learnModel(n_users, m_items, regU, regI, regJ,
 
             t += 1  # increment the iteration
             if t % printDelay == 0:
-#                print("Epoch: %i/%i | iteration %i/%i | learning rate=%f"
-#                      " | average_loss for the last %i iterations = %f" %
-#                     (e + 1, epochs, t, numberOfIterations, eta, printDelay,
-#                      sum_loss / printDelay))
+                print("Epoch: %i/%i | iteration %i/%i | learning rate=%f"
+                      " | average_loss for the last %i iterations = %f" %
+                     (e + 1, epochs, t, numberOfIterations, eta, printDelay,
+                      sum_loss / printDelay))
                 sum_loss = 0.0
 
     return W, H
