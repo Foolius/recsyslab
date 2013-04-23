@@ -34,7 +34,7 @@ def readDBandSplit(dbfile):
     output.close()
     return r, trainingDict, fulltrain, testDict, evalDict
 
-#r, trainingDict, fulltrain, testDict, evalDict = readDBandSplit("u.data")
+r, trainingDict, fulltrain, testDict, evalDict = readDBandSplit("u.data")
 
 
 def loadData():
@@ -47,7 +47,7 @@ def loadData():
     inputfile.close()
     return r, trainingDict, fulltrain, testDict, evalDict
 
-r, trainingDict, fulltrain, testDict, evalDict = loadData()
+#r, trainingDict, fulltrain, testDict, evalDict = loadData()
 
 # helper.writeInternalToFile(
     # r,trainingDict,"training")
@@ -67,7 +67,7 @@ def random(r, trainingDict, testDict):
     rec = baselines.randomRec(trainingDict)
     print("Hitrate for random: %r" % test.hitrate(testDict, rec.getRec, 10))
 
-random(r, trainingDict, testDict)
+#random(r, trainingDict, testDict)
 
 
 def testMF(W, H, trainingDict, testDict, n):
@@ -92,12 +92,12 @@ def learnMF(r, trainingDict, reg, ler, lossF, dlossF):
     return W, H
 
 # RankMFX
-#W, H = learnMF(r, trainingDict, 0.01, 0.1, mf.hingeLoss, mf.dHingeLoss)
-#testMF(W, H, trainingDict, testDict, 10)
+W, H = learnMF(r, trainingDict, 0.01, 0.1, mf.hingeLoss, mf.dHingeLoss)
+testMF(W, H, trainingDict, testDict, 10)
 
 # BPRMF
-#W, H = learnMF(r, trainingDict, 0.01, 0.1, mf.logLoss, mf.dLogLoss)
-#testMF(W, H, trainingDict, testDict, 10)
+W, H = learnMF(r, trainingDict, 0.01, 0.1, mf.logLoss, mf.dLogLoss)
+testMF(W, H, trainingDict, testDict, 10)
 
 
 def loadM(name):
