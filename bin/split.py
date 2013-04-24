@@ -9,12 +9,13 @@ def split(R, seed):
     training = {}
 
     for user in R.iterkeys():
-        item = random.sample(R[user], 1)[0][0]
+        item = random.sample(R[user], 1)[0]
         # because random.sample gives a list
         split[user] = set([item])
         s = copy.deepcopy(R[user])
         s.discard(item)
         training[user] = s
+    print len(split)
     return training, split
 
 
