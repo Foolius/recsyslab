@@ -44,6 +44,7 @@ class tabSepReader(object):
 
     def getMatrix(self):
         """user x items"""
+        print self.matrix.shape
         return self.matrix
 
     def getOriginalUid(self, uid):
@@ -56,4 +57,4 @@ class tabSepReader(object):
         return self.iidDict.id - 1
 
     def getMaxUid(self):
-        return self.uidDict.id
+        return self.uidDict.id - 1
