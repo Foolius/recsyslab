@@ -16,25 +16,28 @@ class tabSepReader(object):
             self.numberOfTransactions += 1
             split = line.strip().split("\t", 3)
             origUid = split[0]
+            origIid = split[1]
+            rating = int(split[2])
 
             if self.numberOfTransactions % 10000 == 0:
                 print("%r Lines read." % self.numberOfTransactions)
 
-            origIid = split[1]
             uid = self.uidDict.add(origUid)
             iid = self.iidDict.add(origIid)
 
             # put in R when not already there
             if uid in self.R:
-                self.R[uid].add((iid, int(split[2])))
+                self.R[uid].add((iid, rating))
             else:
-                self.R[uid] = {(iid, int(split[2]))}
+                self.R[uid] = {(iid, rating)}
 
         self.matrix = np.matrix(np.zeros((
             self.getMaxUid() + 1, self.getMaxIid() + 1)))
         for u in self.R.iterkeys():
-            for i in self.R[u]:
-                self.matrix[u, i[0]] = i[1]
+            for d in self.R[u]:
+                item = d[0]
+                rating = d[1]
+                self.matrix[u, item] = 1
 
     def getR(self):
         return self.R

@@ -10,8 +10,8 @@ def hitrate(testR, recommender, n):
             print("%r users tested" % u)
             print("Hits so far: %r" % hits)
         recs = recommender(u, n)
-        if len(recs) > n and not n == -1:
-            print("Fatal error: too much recommended items.")
+        if len(recs) != n and not n == -1:
+            print("Fatal error: not the right number of items.")
         hits += len(set(testR[u]).intersection(set(recs)))
         items += len(testR[u])
 
@@ -126,7 +126,8 @@ class MFtest(object):
     def getRec(self, u, n):
         scoredict = {}
         for i in range(0, self.H.shape[0]):
-            if not i in self.R[u]:
+#            if not i in self.R[u]:
+            if not i in [x[0] for x in self.R[u]]:
                 scoredict[i] = np.dot(self.W[u], self.H[i])
 
         return helper.sortList(scoredict.iteritems())[:n]

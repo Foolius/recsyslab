@@ -34,7 +34,7 @@ def readDBandSplit(dbfile):
     output.close()
     return r, trainingDict, fulltrain, testDict, evalDict
 
-r, trainingDict, fulltrain, testDict, evalDict = readDBandSplit("u.data")
+#r, trainingDict, fulltrain, testDict, evalDict = readDBandSplit("u.data")
 
 
 def loadData():
@@ -47,7 +47,7 @@ def loadData():
     inputfile.close()
     return r, trainingDict, fulltrain, testDict, evalDict
 
-#r, trainingDict, fulltrain, testDict, evalDict = loadData()
+r, trainingDict, fulltrain, testDict, evalDict = loadData()
 
 # helper.writeInternalToFile(
     # r,trainingDict,"training")
@@ -92,12 +92,11 @@ def learnMF(r, trainingDict, reg, ler, lossF, dlossF):
     return W, H
 
 # RankMFX
-W, H = learnMF(r, trainingDict, 0.01, 0.1, mf.hingeLoss, mf.dHingeLoss)
-testMF(W, H, trainingDict, testDict, 10)
+#W, H = learnMF(r, trainingDict, 0.01, 0.1, mf.hingeLoss, mf.dHingeLoss)
+#testMF(W, H, trainingDict, testDict, 10)
 
 # BPRMF
-W, H = learnMF(r, trainingDict, 0.01, 0.1, mf.logLoss, mf.dLogLoss)
-testMF(W, H, trainingDict, testDict, 10)
+#W, H = learnMF(r, trainingDict, 0.01, 0.1, mf.logLoss, mf.dLogLoss)
 
 
 def loadM(name):
@@ -108,8 +107,9 @@ def loadM(name):
     return W, H
 
 # W,H=loadM("RankMFXModelFile")
-# W, H = loadM("BPRMFModelFile")
+W, H = loadM("BPRMFModelFile")
 
+testMF(W, H, trainingDict, testDict, 10)
 
 ts = time.time()
 st = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
