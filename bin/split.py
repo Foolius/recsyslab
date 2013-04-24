@@ -15,7 +15,6 @@ def split(R, seed):
         s = copy.deepcopy(R[user])
         s.discard(item)
         training[user] = s
-    print len(split)
     return training, split
 
 
