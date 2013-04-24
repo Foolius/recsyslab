@@ -54,7 +54,7 @@ def dLogLoss(a, y):
 def learnModel(n_users, m_items, regU, regI, regJ,
                learningRate, R, k, epochs, numberOfIterations, lossF, dlossF):
     """Learning rate is constant."""
-    # MIN_SCALING_FACTOR = 1E-5
+    MIN_SCALING_FACTOR = 1E-5
     y = 1.0
     np.random.seed(1234567890)
     # loss = logLoss(0, 0)
@@ -68,12 +68,6 @@ def learnModel(n_users, m_items, regU, regI, regJ,
     printDelay = 0.01 * numberOfIterations
     sum_loss = 0.0
     y = 1.0
-
-    changeU = 1.0 - learningRate * regU
-    changeI = 1.0 - learningRate * regI
-    changeJ = 1.0 - learningRate * regJ
-
-    eta = learningRate
 
     for e in xrange(0, epochs):
         iter = 0
@@ -114,23 +108,42 @@ def learnModel(n_users, m_items, regU, regI, regJ,
 
             sum_loss += lossF(wx, y)
 
-            W[u] *= changeU
-            H[i] *= changeI
-            H[j] *= changeJ
+            # temp
+            wu = W[u]
+            hi = H[i]
+            hj = H[j]
 
             if dloss != 0.0:
                 # Updates
                 eta_dloss = learningRate * dloss
-                W[u] += eta_dloss * X
-                H[i] += eta_dloss * W[u]
-                H[j] += eta_dloss * (-W[u])
+                W[u] += eta_dloss * (hi - hj)
+                H[i] += eta_dloss * wu
+                H[j] += eta_dloss * (-wu)
+
+            scaling_factor = 1.0 - (learningRate * regU)
+            if scaling_factor > MIN_SCALING_FACTOR:
+                W[u] *= (1.0 - learningRate * regU)
+            else:
+                W[u] *= MIN_SCALING_FACTOR
+
+            scaling_factor = 1.0 - (learningRate * regI)
+            if scaling_factor > MIN_SCALING_FACTOR:
+                H[i] *= (1.0 - learningRate * regI)
+            else:
+                H[i] *= MIN_SCALING_FACTOR
+
+            scaling_factor = 1.0 - (learningRate * regJ)
+            if scaling_factor > MIN_SCALING_FACTOR:
+                H[j] *= (1.0 - learningRate * regJ)
+            else:
+                H[j] *= MIN_SCALING_FACTOR
 
             t += 1  # increment the iteration
             if t % printDelay == 0:
                 print("Epoch: %i/%i | iteration %i/%i | learning rate=%f"
                       " | average_loss for the last %i iterations = %f" %
-                     (e + 1, epochs, t, numberOfIterations, eta, printDelay,
-                      sum_loss / printDelay))
+                     (e + 1, epochs, t, numberOfIterations, learningRate,
+                      printDelay, sum_loss / printDelay))
                 sum_loss = 0.0
 
     return W, H
