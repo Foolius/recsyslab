@@ -13,11 +13,6 @@ SEED2 = 10989084
 EPOCHS = 10
 features = 150
 
-# learningratevalues=[0.001,0.01,0.1]
-# regularizationvalues=[0,0.001,0.01,0.1,1]
-learningratevalues = [0.1]
-regularizationvalues = [0.01]
-
 
 def readDBandSplit(dbfile):
     r = reader.tabSepReader(dbfile)
@@ -34,7 +29,7 @@ def readDBandSplit(dbfile):
     output.close()
     return r, trainingDict, fulltrain, testDict, evalDict
 
-#r, trainingDict, fulltrain, testDict, evalDict = readDBandSplit("u.data")
+r, trainingDict, fulltrain, testDict, evalDict = readDBandSplit("u.data")
 
 
 def loadData():
@@ -60,18 +55,24 @@ def constant(r, trainingDict, testDict):
     print("Hitrate for constant: %r" %
           test.hitrate(testDict, rec.getRec, 10))
 
-#constant(r, trainingDict, testDict)
+# constant(r, trainingDict, testDict)
 
 
 def random(r, trainingDict, testDict):
     rec = baselines.randomRec(trainingDict)
     print("Hitrate for random: %r" % test.hitrate(testDict, rec.getRec, 10))
 
-#random(r, trainingDict, testDict)
+# random(r, trainingDict, testDict)
+
+#print testDict
+#for t in testDict.iterkeys():
+#    print testDict[t].pop()[0]
+#    testDict[t] = set([testDict[t].pop()[0]])
+# print testDict
 
 
 def testMF(W, H, trainingDict, testDict, n):
-    t = test.MFtest(W, H, trainingDict)
+    t = test.MFtest(W, H, evalDict)
     test.hitrate(testDict, t.getRec, n)
 #    test.f1(testDict, t.getRec, n)
 #    test.precision(testDict, t.getRec, n)
@@ -92,11 +93,11 @@ def learnMF(r, trainingDict, reg, ler, lossF, dlossF):
     return W, H
 
 # RankMFX
-#W, H = learnMF(r, trainingDict, 0.01, 0.1, mf.hingeLoss, mf.dHingeLoss)
-#testMF(W, H, trainingDict, testDict, 10)
+# W, H = learnMF(r, trainingDict, 0.01, 0.1, mf.hingeLoss, mf.dHingeLoss)
+# testMF(W, H, trainingDict, testDict, 10)
 
 # BPRMF
-#W, H = learnMF(r, trainingDict, 0.01, 0.1, mf.logLoss, mf.dLogLoss)
+W, H = learnMF(r, trainingDict, 0.01, 0.1, mf.logLoss, mf.dLogLoss)
 
 
 def loadM(name):

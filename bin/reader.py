@@ -37,14 +37,13 @@ class tabSepReader(object):
             for d in self.R[u]:
                 item = d[0]
                 rating = d[1]
-                self.matrix[u, item] = 1
+                self.matrix[u, item] = rating
 
     def getR(self):
         return self.R
 
     def getMatrix(self):
         """user x items"""
-        print self.matrix.shape
         return self.matrix
 
     def getOriginalUid(self, uid):

@@ -36,6 +36,6 @@ def splitMatrix(M, seed):
         while bigSplit[user, item] == 0:
             item = random.randint(0, bigSplit.shape[1] - 1)
         bigSplit[user, item] = 0
-        smallSplitDict[user] = set([item])
+        smallSplitDict[user] = set([(item, 0)])
 
     return bigSplit, smallSplitDict
