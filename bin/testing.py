@@ -58,8 +58,8 @@ def simple():
     import split
     train, test1 = split.split(r.getR(), 1234567890)
 
-    import baselines
-    c = baselines.randomRec(r.getR())
+    import primitive
+    c = primitive.randomRec(r.getR())
 
     import test
     test.hitrate(test1, c.getRec, 10)
