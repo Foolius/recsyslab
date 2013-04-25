@@ -1,3 +1,4 @@
+import numpy as np
 
 
 def getScoreMF(origUid, origIid, W, H, r):
@@ -7,6 +8,3 @@ def getScoreMF(origUid, origIid, W, H, r):
     iid = r.iidDict.getId(origIid)
 
     return np.dot(W[uid], H[iid])
-
-
-def getRec(
