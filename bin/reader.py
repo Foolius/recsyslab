@@ -15,8 +15,8 @@ class tabSepReader(object):
         for line in self.dbfile:
             self.numberOfTransactions += 1
             split = line.strip().split("\t", 3)
-            origUid = split[0]
-            origIid = split[1]
+            origUid = int(split[0])
+            origIid = int(split[1])
             rating = int(split[2])
 
             if self.numberOfTransactions % 10000 == 0:
