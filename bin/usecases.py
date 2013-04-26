@@ -1,4 +1,4 @@
-# Reading a database file
+# Reading a database file called "u.data"
 import reader
 r = reader.tabSepReader("u.data")
 
