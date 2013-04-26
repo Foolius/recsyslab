@@ -137,6 +137,5 @@ class MFtest(object):
 #        print u,scoredict
 #        import time
 #        time.sleep(4)
-        return scoredict
 
         return helper.sortList(scoredict.iteritems())[:n]

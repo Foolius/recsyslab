@@ -34,6 +34,7 @@ class randomRec(object):
         self.maxIid += 1
 
     def getRec(self, user, n):
+        random.seed(1234567890)
         if self.maxIid < n or n == -1:
             l = range(self.maxIid)
             random.shuffle(l)

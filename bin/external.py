@@ -8,3 +8,22 @@ def getScoreMF(origUid, origIid, W, H, r):
     iid = r.iidDict.getId(origIid)
 
     return np.dot(W[uid], H[iid])
+
+
+def getExternalRec(getRec, r):
+    """ Returns a function with returns
+    the n best recommendations from getRec.
+    The recommendations are with the original IDs"""
+
+    def wrapper(extUid, n):
+        uid = r.uidDict.getId(extUid)
+
+        recs = getRec(uid, n)
+
+        extRecs = []
+        for i in recs:
+            extRecs.append(r.iidDict.getOrig(i))
+
+        return extRecs
+
+    return wrapper
