@@ -1,0 +1,41 @@
+Imagine we want to recommend items for given users in a real world example,
+with the k Nearest-Neighbors algorithm.
+First we have to read the database file. The lines of the database file has to be of the following form:
+    UserID\tItemID\tRating
+The rating can be ommited and anything coming after the rating will be ignored.
+For this example we use the Movielens 100k database which can be found here: http://www.grouplens.org/node/73
+Extract the zip archive and copy the file u.data into the directory recsyslab/bin.
+Now start python in this directory and type:
+    import reader
+    reader = reader.tabSepReader("u.data")
+This will take a moment.
+Now you have a reader object with the database content in it.
+You can look at its content by looking at 
+    reader.getR()
+for example. This method returns a dict with userIDs as a key and a set of (itemID, rating) tuples as values.
+Please note, that these IDs are not the same IDs as in the database but internal ones.
+To map UserIDs from the internal to the original version, run:
+    reader.uidDict.getOrig(UserID)
+or for ItemIDs:
+    reader.iidDict.getOrig(ItemID)
+And for the other directon, run:
+    reader.uidDict.getId(UserID)
+or for ItemIDs
+    reader.iidDict.getId(ItemID)
+
+To get the recommendations you have to instantiate a knn object:
+import knn
+    knn = knn.itemKnn(reader.getMatrix(), neighbors)
+Neighbors is the number of neighbors you want to taken into account by the algorithm. If you don't know what to take, take 30.
+reader.getMatrix() returns a matrix representation of the database.
+The instantion of the object will take quite a while because all the similarities are computed now.
+
+After its done you can get recommendations with:
+knn.getRec(UserID, N)
+This will return the top-N items to recommend to the user according to the algorithm.
+Again, UserID and the returned ItemIDs are internal IDs. To use this comfortly in a real world example you have to call:
+import external
+getRec = external.getExternalRec(knn.getRec, reader)
+getRec(originalUserId, N)
+The returned method getRec will take knn.getRec and return a function which wraps it so you can give it the original user ID 
+and get a list of original item IDs.
