@@ -21,57 +21,28 @@ def hitrate(testR, recommender, n):
     print("Number of hits: %r" % hits)
     print("Number of possible hits: %r" % items)
     print("Hitrate: %r" % (hits / items))
-    return hits / items
+    return hits, items
 
 
 def precision(testR, recommender, n):
-    hits = 0.0
-    for u in testR.iterkeys():
-        if u % 100 == 0:
-            print("%r users tested" % u)
-            print("Hits so far: %r" % hits)
-        recs = recommender(u, n)
-        if len(recs) > n and not n == -1:
-            print("Fatal error: too much recommended items.")
-        hits += len(set(testR[u]).intersection(set(recs)))
-
-    result = hits / n
-    print("Number of hits: %r" % hits)
-    print("Precision: %r" % result)
-    return result
+    hits = hitrate(testR, recommender, n)[0]
+    if n == 0:
+        return 0
+    return hits / n
 
 
 def f1(testR, recommender, n):
-#    result = 0.0
-#    for u in testR.iterkeys():
-#        if u % 100 == 0:
-#            print("%r users tested" % u)
-#        recall = hitrate({u: testR[u]}, recommender, n)
-#        prec = precision({u: testR[u]}, recommender, n)
-#        if recall == 0 or prec == 0:
-#            continue
-#        result += ((2 * recall * prec) /
-#                  (recall + prec))
-#    result /= len(testR)
-#    print("F1: %r" % result)
-#    print("F1: %r" % result)
-#    result /= len(testR)
-
-    recall = hitrate(testR, recommender, n)
+    hits, items = hitrate(testR, recommender, n)
+    recall = hits / items
     if recall == 0:
         return 0
 
-    prec = precision(testR, recommender, n)
-    if prec == 0:
-        return 0
+    prec = hits / n
 
     result = ((2 * recall * prec) /
               (recall + prec))
     print("F1: %r" % result)
     return result
-""" with knn first version: 0.0445
-                    second: 0,48
-"""
 
 
 def mrhr(testR, recommender, n):
@@ -86,7 +57,11 @@ def mrhr(testR, recommender, n):
         if len(recs) > n and not n == -1:
             print("Fatal error: too much recommended items.")
 
-        for i in testR[u]:
+        testSet = set()
+        for t in testR[u]:
+            testSet.add(t[0])
+
+        for i in testSet:
             if i in recs:
                 score += 1.0 / (recs.index(i) + 1)
             items += 1
@@ -111,7 +86,7 @@ def auc(testR, recommender, r):
         score = 0  # how often is the hidden item better
         recs = recommender(u, -1)
         for i in testR[u]:
-            score += r.getMaxIid() - recs.index(i) - 1
+            score += r.getMaxIid() - recs.index(i[0]) - 1
             e += maxIid - 1
         result += score / e
     result /= len(testR.keys())
