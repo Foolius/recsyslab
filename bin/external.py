@@ -11,7 +11,7 @@ def getScoreMF(origUid, origIid, W, H, r):
 
 
 def getExternalRec(getRec, r):
-    """ Returns a function with returns
+    """ Returns a function which returns
     the n best recommendations from getRec.
     The recommendations are with the original IDs"""
 
