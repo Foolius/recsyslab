@@ -17,7 +17,10 @@ class tabSepReader(object):
             split = line.strip().split("\t", 3)
             origUid = int(split[0])
             origIid = int(split[1])
-            rating = int(split[2])
+            try:
+                rating = int(split[2])
+            except IndexError:
+                rating = 1
 
             if self.numberOfTransactions % 10000 == 0:
                 print("%r Lines read." % self.numberOfTransactions)
