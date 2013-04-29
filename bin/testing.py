@@ -26,7 +26,7 @@ def mf():
                                                r.iidDict.getOrig(i), W, H, r)
     print len(scoredict)
 
-mf()
+# mf()
 
 
 def knn():
@@ -39,16 +39,10 @@ def knn():
     import knn
     k = knn.itemKnn(train, 10)
 
-    import cPickle
-    # output = open("knn.npz", "wb")
-    # cPickle.dump(k, output, -1)
-    # output.close()
-    inputfile = open("knn.npz", "rb")
-    k = cPickle.load(inputfile)
-    inputfile.close()
-
     import test
-    test.hitrate(test1, k.getRec, 10)
+    print test.f1(test1, k.getRec, 10)
+
+#knn()
 
 
 def simple():
@@ -62,4 +56,6 @@ def simple():
     c = primitive.randomRec(r.getR())
 
     import test
-    test.hitrate(test1, c.getRec, 10)
+    test.auc(test1, c.getRec, r)
+
+simple()

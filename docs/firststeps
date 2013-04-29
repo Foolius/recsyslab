@@ -26,7 +26,7 @@ or for ItemIDs
 To get the recommendations you have to instantiate a knn object:
 import knn
     knn = knn.itemKnn(reader.getMatrix(), neighbors)
-Neighbors is the number of neighbors you want to taken into account by the algorithm. If you don't know what to take, take 30.
+Neighbors is the number of neighbors you want to taken into account by the algorithm. If you don't know what to take, take 10.
 reader.getMatrix() returns a matrix representation of the database.
 The instantion of the object will take quite a while because all the similarities are computed now.
 
