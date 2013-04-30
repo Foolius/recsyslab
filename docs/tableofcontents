@@ -1,0 +1,28 @@
+Table of contents
+
+1 Summary
+2 Task
+3 Technical Background
+    3.1 Primitive Algorithms
+    3.2 k-Nearest-Neighbor
+    3.3 Matrix Factorization
+        3.3.1 BPRMF
+        3.3.2 RankMFX
+        3.3.3 SVD
+    3.4 Evaluation Methods
+        3.4.1 Leave-one-out Protocol
+    3.5 Evaluation metrics
+        3.5.1 Hitrate/Recall
+        3.5.2 Precision
+        3.5.3 F1
+        3.5.4 Mean Reciprocal Hitrate
+        3.5.5 Area under the ROC 
+4 User manual
+    4.1 Primitive Algorithms
+    4.2 k-Nearest Neighbor
+    4.3 BPRMF
+    4.4 RankMFX
+    4.5 SVD 
+5 Developer guide
+    5.1 General Structure
+    5.2 Intertfaces
