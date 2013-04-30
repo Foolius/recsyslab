@@ -1,28 +1,54 @@
 Table of contents
 
-1 Summary
-2 Task
-3 Technical Background
-    3.1 Primitive Algorithms
-    3.2 k-Nearest-Neighbor
-    3.3 Matrix Factorization
-        3.3.1 BPRMF
-        3.3.2 RankMFX
-        3.3.3 SVD
-    3.4 Evaluation Methods
-        3.4.1 Leave-one-out Protocol
-    3.5 Evaluation metrics
-        3.5.1 Hitrate/Recall
-        3.5.2 Precision
-        3.5.3 F1
-        3.5.4 Mean Reciprocal Hitrate
-        3.5.5 Area under the ROC 
-4 User manual
+1 Abstract
+2 Introduction
+    2.1 Motivation
+    2.2 Task (what a recsys does)
+    2.3 Objective and Motivation
+3 Related Work
+    3.1 MyMediaLite
+    3.2 PREA
+    3.3 more?
+4 Recommendation Algorithms
     4.1 Primitive Algorithms
-    4.2 k-Nearest Neighbor
-    4.3 BPRMF
-    4.4 RankMFX
-    4.5 SVD 
-5 Developer guide
-    5.1 General Structure
-    5.2 Intertfaces
+    4.2 k-Nearest-Neighbor
+    4.3 Matrix Factorization
+        4.3.1 BPRMF
+        4.3.2 RankMFX
+        4.3.3 Ranking SVD (Sparse SVD)
+    4.4 Evaluation Methods
+        4.4.1 Leave-one-out Protocol
+    4.5 Evaluation metrics
+        4.5.1 Hitrate/Recall
+        4.5.2 Precision
+        4.5.3 F1
+        4.5.4 Mean Reciprocal Hitrate
+        4.5.5 Area under the ROC
+5 Datasets for testing
+    5.1 MovieLens
+    5.2 more?
+6 Experiments
+    6.1 Execution
+    6.2 Results
+    6.3 Comparison
+7 Design and Implementation
+    7.1 General structure
+    7.2 Interfaces
+8 User manual
+    8.1 Primitive Algorithms
+    8.2 k-Nearest Neighbor
+    8.3 BPRMF
+    8.4 RankMFX
+    8.5 SVD 
+9 Conclusions
+    9.1 Future work
+    9.2 Outlook
+10 References
+
+
+
+Remarks:
+    -should I have subsection 3.1 and 3.2?
+    -I changed "3 Technical Background" I think "Recommendation Algorithms" describes better what is in this section
+    -Name of SVD: In the paper where I took the code from ("Collaborative Filtering Ensemble for Ranking") they call it just SVD, so I took what you wrote down.
+    -Should section 9 look like above or more like "9 Conclusions" for example?
