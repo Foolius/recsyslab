@@ -81,9 +81,8 @@ def learnModel(n_users, m_items, regU, regI, regJ,
             #    continue
             if len(R[u]) == 0:
                 continue
-            # the positive example
             userItems = [x[0] for x in R[u]]
-#            i = userItems[np.random.random_integers(0, len(userItems) - 1)][0]
+            # the positive example
             i = userItems[np.random.random_integers(0, len(userItems) - 1)]
             # the negative example
             j = np.random.random_integers(0, m_items)
