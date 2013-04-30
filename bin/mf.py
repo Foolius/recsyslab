@@ -69,6 +69,17 @@ def learnModel(n_users, m_items, regU, regI, regJ,
     sum_loss = 0.0
     y = 1.0
 
+    scaling_factorU = 1.0 - (learningRate * regU)
+    scaling_factorI = 1.0 - (learningRate * regI)
+    scaling_factorJ = 1.0 - (learningRate * regJ)
+
+    if scaling_factorU < MIN_SCALING_FACTOR:
+        scaling_factorU = MIN_SCALING_FACTOR
+    if scaling_factorI < MIN_SCALING_FACTOR:
+        scaling_factorI = MIN_SCALING_FACTOR
+    if scaling_factorJ < MIN_SCALING_FACTOR:
+        scaling_factorJ = MIN_SCALING_FACTOR
+
     for e in xrange(0, epochs):
         iter = 0
         t = 0
@@ -119,23 +130,9 @@ def learnModel(n_users, m_items, regU, regI, regJ,
                 H[i] += eta_dloss * wu
                 H[j] += eta_dloss * (-wu)
 
-            scaling_factor = 1.0 - (learningRate * regU)
-            if scaling_factor > MIN_SCALING_FACTOR:
-                W[u] *= (1.0 - learningRate * regU)
-            else:
-                W[u] *= MIN_SCALING_FACTOR
-
-            scaling_factor = 1.0 - (learningRate * regI)
-            if scaling_factor > MIN_SCALING_FACTOR:
-                H[i] *= (1.0 - learningRate * regI)
-            else:
-                H[i] *= MIN_SCALING_FACTOR
-
-            scaling_factor = 1.0 - (learningRate * regJ)
-            if scaling_factor > MIN_SCALING_FACTOR:
-                H[j] *= (1.0 - learningRate * regJ)
-            else:
-                H[j] *= MIN_SCALING_FACTOR
+                W[u] *= scaling_factorU
+                H[i] *= scaling_factorI
+                H[j] *= scaling_factorJ
 
             t += 1  # increment the iteration
             if t % printDelay == 0:
