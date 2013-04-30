@@ -8,7 +8,12 @@ def split(R, seed):
     split = {}
     training = {}
 
+    count = 0
     for user in R.iterkeys():
+        if count % 100 == 0:
+            print("%r Users split." % count)
+        count += 1
+
         item = random.sample(R[user], 1)[0]
         # because random.sample gives a list
         split[user] = set([item])
