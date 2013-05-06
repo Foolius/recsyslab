@@ -12,6 +12,9 @@ def learnModel(n_users, m_items, learningRate, R, features,
     printDelay = 0.1 * numberOfIterations
     sum_loss = 0.0
 
+    import time
+    timer = time.clock()
+
     for e in xrange(0, epochs):
         iter = 0
         t = 0
@@ -57,12 +60,18 @@ def learnModel(n_users, m_items, learningRate, R, features,
                     rui0) or isnan(loss):
                 raise NameError
 
-            for k in xrange(0, features):
-                c = userFeatures[u, k]
-                userFeatures[u, k] -= learningRate * (loss * (
-                    itemFeatures[i, k] - itemFeatures[i0, k]))
-                itemFeatures[i, k] -= learningRate * (loss * c)
-                itemFeatures[i0, k] -= learningRate * (loss * (-c))
+#            for k in xrange(0, features):
+#                c = userFeatures[u, k]
+#                userFeatures[u, k] -= learningRate * (loss * (
+#                    itemFeatures[i, k] - itemFeatures[i0, k]))
+#                itemFeatures[i, k] -= learningRate * (loss * c)
+#                itemFeatures[i0, k] -= learningRate * (loss * (-c))
+
+            c = userFeatures[u]
+            userFeatures -= learningRate * loss * (
+                itemFeatures[i] - itemFeatures[i0])
+            itemFeatures[i] -= learningRate * loss * c
+            itemFeatures[i0] -= learningRate * loss * (-c)
 
             # scalingFactor = 1E-3
             # userFeatures[u] *= scalingFactor
@@ -71,10 +80,13 @@ def learnModel(n_users, m_items, learningRate, R, features,
 
             t += 1  # increment the iteration
             if t % printDelay == 0:
+                timer = time.clock() - timer
                 print("Epoch: %i/%i | iteration %i/%i | learning rate=%f"
-                      " | average_loss for the last %i iterations = %f" %
+                      " | average_loss for the last %i iterations = %f"
+                      " | time needed: %f" %
                      (e + 1, epochs, t, numberOfIterations, learningRate,
-                      printDelay, sum_loss / printDelay))
+                      printDelay, sum_loss / printDelay, timer))
                 sum_loss = 0.0
+                timer = time.clock()
 
     return userFeatures, itemFeatures
