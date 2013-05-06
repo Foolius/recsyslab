@@ -6,8 +6,8 @@ def learnModel(n_users, m_items, learningRate, R, features,
                epochs, numberOfIterations):
     """See pseudocode Collaborative Filtering Ensemble for Ranking."""
     sigma = 0.1
-    userFeatures = sigma * np.random.randn(m_items, features)
-    itemFeatures = sigma * np.random.randn(m_items, features)
+    userFeatures = sigma * np.random.randn(n_users + 1, features)
+    itemFeatures = sigma * np.random.randn(m_items + 1, features)
 
     printDelay = 0.1 * numberOfIterations
     sum_loss = 0.0
