@@ -39,6 +39,7 @@ def learnModel(n_users, m_items, learningRate, R, features,
                 if r[0] == i:
                     rui = r[1]
 
+            # This is actually not the loss, but the derivative of the loss
             loss = (ruipred - rui0pred) - (rui - rui0)
             sum_loss += loss
 #            print "userFeatures[u]", userFeatures[u]
