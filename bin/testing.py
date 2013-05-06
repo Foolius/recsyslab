@@ -7,7 +7,7 @@ def svd():
 
     import svd
     W, H = svd.learnModel(r.getMaxUid(), r.getMaxIid(),
-                          0.0002, train, 10, 1, r.numberOfTransactions)
+                          0.0002, train, 1000, 5, r.numberOfTransactions)
     import numpy as np
     np.savez_compressed(
         "SVDModelFile", W=W, H=H)
