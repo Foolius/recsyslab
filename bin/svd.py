@@ -25,11 +25,14 @@ def learnModel(n_users, m_items, learningRate, R, features,
             userItems = [x[0] for x in R[u]]
             i = random.choice(userItems)
 
+            # Choose an item, the user didn't interacted with
             i0 = np.random.random_integers(0, m_items - 1)
             while i0 in userItems:
                 i0 = np.random.random_integers(0, m_items - 1)
 
+            # Prediction for the first item
             ruipred = userFeatures[u].dot(itemFeatures[i])
+            # Prediction for the second item
             rui0pred = userFeatures[u].dot(itemFeatures[i0])
             rui0 = 0
             for r in R[u]:
@@ -60,10 +63,10 @@ def learnModel(n_users, m_items, learningRate, R, features,
                 itemFeatures[i, k] -= learningRate * (loss * c)
                 itemFeatures[i0, k] -= learningRate * (loss * (-c))
 
-            scalingFactor = 1E-3
-            userFeatures[u] *= scalingFactor
-            itemFeatures[i] *= scalingFactor
-            itemFeatures[i0] *= scalingFactor
+            # scalingFactor = 1E-3
+            # userFeatures[u] *= scalingFactor
+            # itemFeatures[i] *= scalingFactor
+            # itemFeatures[i0] *= scalingFactor
 
             t += 1  # increment the iteration
             if t % printDelay == 0:

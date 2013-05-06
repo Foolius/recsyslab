@@ -7,7 +7,7 @@ def svd():
 
     import svd
     W, H = svd.learnModel(r.getMaxUid(), r.getMaxIid(),
-                          0.00001, train, 75, 1, r.numberOfTransactions)
+                          0.0002, train, 1000, 25, r.numberOfTransactions)
     import numpy as np
     np.savez_compressed(
         "SVDModelFile", W=W, H=H)
@@ -20,7 +20,7 @@ def svd():
     t = test.MFtest(W, H, train)
     test.hitrate(test1, t.getRec, 10)
 
-# svd()
+svd()
 
 
 def mf():
@@ -46,7 +46,7 @@ def mf():
     t = test.MFtest(W, H, train)
     test.hitrate(test1, t.getRec, 10)
 
-mf()
+# mf()
 
 
 def knn():
