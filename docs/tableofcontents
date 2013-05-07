@@ -49,11 +49,3 @@ Table of contents
     9.1 Future work
     9.2 Outlook
 10 References
-
-
-
-Remarks:
-    -should I have subsection 3.1 and 3.2?
-    -I changed "3 Technical Background" I think "Recommendation Algorithms" describes better what is in this section
-    -Name of SVD: In the paper where I took the code from ("Collaborative Filtering Ensemble for Ranking") they call it just SVD, so I took what you wrote down.
-    -Should section 9 look like above or more like "9 Conclusions" for example?
