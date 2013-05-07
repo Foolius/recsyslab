@@ -8,7 +8,10 @@ Table of contents
 3 Related Work
     3.1 MyMediaLite
     3.2 PREA
-    3.3 more?
+    3.3 Mahout
+    3.4 Duine
+    3.5 Cofi
+    3.6 Lenskit
 4 Recommendation Algorithms
     4.1 Primitive Algorithms
     4.2 k-Nearest-Neighbor
@@ -26,6 +29,8 @@ Table of contents
         4.5.5 Area under the ROC
 5 Datasets for testing
     5.1 MovieLens
+    5.2 Million Song Dataset
+    5.3 SNAP
     5.2 more?
 6 Experiments
     6.1 Execution
@@ -34,12 +39,12 @@ Table of contents
 7 Design and Implementation
     7.1 General structure
     7.2 Interfaces
-8 User manual
+8 User Manual
     8.1 Primitive Algorithms
     8.2 k-Nearest Neighbor
     8.3 BPRMF
     8.4 RankMFX
-    8.5 SVD 
+    8.5 Ranking SVD (Sparse SVD)
 9 Conclusions
     9.1 Future work
     9.2 Outlook
