@@ -1,3 +1,28 @@
+def slopeone():
+    import reader
+    r = reader.tabSepReader("u.data")
+
+    import split
+    train, test1 = split.split(r.getR(), 12320894329854567890)
+
+    import slopeone
+    so = slopeone.slopeone(train)
+
+    # import cPickle
+    # output = open("slopeone.npz", "wb")
+    # cPickle.dump(so, output, -1)
+    # output.close()
+
+    # inputfile = open("slopeone.npz", "rb")
+    # so = cPickle.load(inputfile)
+    # inputfile.close()
+
+    import test
+    test.auc(test1, so.getRec, r)
+
+# slopeone()
+
+
 def svd():
     import reader
     r = reader.tabSepReader("u.data")
@@ -20,7 +45,7 @@ def svd():
     t = test.MFtest(W, H, train)
     test.hitrate(test1, t.getRec, 10)
 
-svd()
+# svd()
 
 
 def mf():
@@ -60,9 +85,9 @@ def knn():
     k = knn.itemKnn(train, 10)
 
     import test
-    print test.f1(test1, k.getRec, 10)
+    print test.auc(test1, k.getRec, r)
 
-# knn()
+knn()
 
 
 def simple():
