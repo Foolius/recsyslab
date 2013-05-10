@@ -135,8 +135,6 @@ def sortResults(name):
     outfile.close()
     infile.close()
 
-# sortResults("RankMFXresults.data")
-
 
 def printMatrix(m):
     for i in xrange(0, m.shape[0]):
@@ -157,8 +155,6 @@ def randDataset(x, y, p, seed):
                 f.write("%r\t%r\n" % (i, j))
     f.close
 
-randDataset(10, 10, 0.3, 14890)
-
 
 def dictToMatrix(d):
     import numpy as np
@@ -176,3 +172,31 @@ def dictToMatrix(d):
             m[data[0], item] = 1
 
     return m
+
+
+def getScoreMF(origUid, origIid, W, H, r):
+    """Returns the score of one item for one user.
+    Itemid and Userid are the original IDs."""
+    uid = r.uidDict.getId(origUid)
+    iid = r.iidDict.getId(origIid)
+
+    return np.dot(W[uid], H[iid])
+
+
+def getExternalRec(getRec, r):
+    """ Returns a function which returns
+    the n best recommendations from getRec.
+    The recommendations are with the original IDs"""
+
+    def wrapper(extUid, n):
+        uid = r.uidDict.getId(extUid)
+
+        recs = getRec(uid, n)
+
+        extRecs = []
+        for i in recs:
+            extRecs.append(r.iidDict.getOrig(i))
+
+        return extRecs
+
+    return wrapper
