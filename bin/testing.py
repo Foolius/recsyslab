@@ -45,7 +45,7 @@ def svd():
     t = test.MFtest(W, H, train)
     test.hitrate(test1, t.getRec, 10)
 
-# svd()
+svd()
 
 
 def mf():
@@ -87,7 +87,7 @@ def knn():
     import test
     print test.auc(test1, k.getRec, r)
 
-knn()
+# knn()
 
 
 def simple():
@@ -102,3 +102,5 @@ def simple():
 
     import test
     test.auc(test1, c.getRec, r)
+
+# simple()
