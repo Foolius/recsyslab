@@ -2,9 +2,9 @@ import helper
 import numpy as np
 
 
-class tabSepReader(object):
+class stringSepReader(object):
 
-    def __init__(self, filename):
+    def __init__(self, filename, separator):
         self.R = {}
         self.uidDict = helper.idOrigDict()
         self.iidDict = helper.idOrigDict()
@@ -14,7 +14,7 @@ class tabSepReader(object):
         print("Start reading the database.")
         for line in self.dbfile:
             self.numberOfTransactions += 1
-            split = line.strip().split("\t", 3)
+            split = line.strip().split(separator, 3)
             origUid = int(split[0])
             origIid = int(split[1])
             try:
