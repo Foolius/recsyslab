@@ -1,8 +1,36 @@
-import helper
-import numpy as np
+"""Module with several metrics to test the recommender algorithms.
+
+    hitrate     --  Returns #hits, #items
+    precision   --  Returns #hits / n
+    f1          --  Returns the result of a F1 test
+    mrhr        --  Returns the Mean Reciprocal Hitrate
+    auc         --  Returns the Area under the curve
+    MFtest      --  Returns a recommender function built from a MF model"""
 
 
 def hitrate(testR, recommender, n):
+    """Returns the number of hits and the number of items it was tested with.
+
+    testR is a dict with an internal UserID as a dict and a list of items as
+    values. Normally testR is the second dict split.split returns.
+    The list can have a lenght greater than 1.
+
+    recommender is a function which takes an internal UserID and n and returns
+    n items recommender for the UserID.
+
+    n is the number of items the recommender can recommend.
+
+    hits = number of items from testR the recommender guessed right.
+    items = the number of items in testR.
+
+    hits, items and hits / items will be printed.
+    hits, items will get returned.
+
+    hits / items gives the hitrate or recall.
+
+    See also: "Application of Dimensionality Reduction in Recommender System
+    -- A Case Study" by Badrul M. sarcar et al.
+    """
     hits = 0.0
     items = 0.0
     for u in testR.iterkeys():
@@ -25,6 +53,22 @@ def hitrate(testR, recommender, n):
 
 
 def precision(testR, recommender, n):
+    """Returns the number of hits / n .
+
+    testR is a dict with an internal UserID as a dict and a list of items as
+    values. Normally testR is the second dict split.split returns.
+    The list can have a lenght greater than 1.
+
+    recommender is a function which takes an internal UserID and n and returns
+    n items recommender for the UserID.
+
+    n is the number of items the recommender can recommend.
+
+    hits = number of items from testR the recommender guessed right.
+
+    See also: "Application of Dimensionality Reduction in Recommender System
+    -- A Case Study" by Badrul M. sarcar et al.
+    """
     hits = hitrate(testR, recommender, n)[0]
     if n == 0:
         return 0
@@ -32,6 +76,22 @@ def precision(testR, recommender, n):
 
 
 def f1(testR, recommender, n):
+    """Prints and returns F1 of the recommender.
+
+    testR is a dict with an internal UserID as a dict and a list of items as
+    values. Normally testR is the second dict split.split returns.
+    The list can have a lenght greater than 1.
+
+    recommender is a function which takes an internal UserID and n and returns
+    n items recommender for the UserID.
+
+    n is the number of items the recommender can recommend.
+
+    hits = number of items from testR the recommender guessed right.
+
+    See also: "Application of Dimensionality Reduction in Recommender System
+    -- A Case Study" by Badrul M. sarcar et al.
+    """
     hits, items = hitrate(testR, recommender, n)
     recall = hits / items
     if recall == 0:
@@ -46,6 +106,19 @@ def f1(testR, recommender, n):
 
 
 def mrhr(testR, recommender, n):
+    """Returns the Mean Reciprocal Hitrate of the recommender.
+
+    testR is a dict with an internal UserID as a dict and a list of items as
+    values. Normally testR is the second dict split.split returns.
+    The list can have a lenght greater than 1.
+
+    recommender is a function which takes an internal UserID and n and returns
+    n items recommender for the UserID.
+
+    n is the number of items the recommender can recommend.
+
+    hits = number of items from testR the recommender guessed right.
+    """
     score = 0.0
     items = 0.0
     for u in testR.iterkeys():
@@ -73,8 +146,20 @@ def mrhr(testR, recommender, n):
 
 
 def auc(testR, recommender, r):
-    """Returns the AUC of the recommender function.
-    See BPR paper."""
+    """Returns and prints the AUC of the recommender function.
+
+    testR is a dict with an internal UserID as a dict and a list of items as
+    values. Normally testR is the second dict split.split returns.
+    The list can have a lenght greater than 1.
+
+    recommender is a function which takes an internal UserID and n and returns
+    n items recommender for the UserID.
+
+    r is a reader object with the database read in.
+
+    See also: "BPR: Bayesian Personalized Ranking from Implicit Feedback"
+    from Steffen Rendle et al.
+    """
     maxIid = r.getMaxIid()
 
     result = 0
@@ -92,25 +177,3 @@ def auc(testR, recommender, r):
     result /= len(testR.keys())
     print("AUC: %r" % result)
     return result
-
-
-class MFtest(object):
-
-    def __init__(self, W, H, trainingR):
-        self.W = W
-        self.H = H
-        self.R = trainingR
-
-    def getRec(self, u, n):
-        scoredict = {}
-        for i in range(0, self.H.shape[0]):
-#            if not i in self.R[u]:
-            if not i in [x[0] for x in self.R[u]]:
-                scoredict[i] = np.dot(self.W[u], self.H[i])
-#            else:
-#                print "i in R[u]", i ,u
-#        print u,scoredict
-#        import time
-#        time.sleep(4)
-
-        return helper.sortList(scoredict.iteritems())[:n]

@@ -1,3 +1,4 @@
+"""Contains a class to manage a database."""
 import helper
 import numpy as np
 
@@ -8,7 +9,7 @@ class stringSepReader(object):
     def __init__(self, filename, separator):
         """Reads in a database file.
 
-        The lines of the database file has to look like this:
+        The lines of the database file have to look like this:
             UserID<separator>ItemID<separator>Rating
         If there is just an UserID and an ItemID the rating is set to 1.
         Everything coming after the rating will be ignored,

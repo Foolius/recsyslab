@@ -41,7 +41,7 @@ def split(R, seed):
 def splitMatrix(M, seed):
     """Splits a matrix into two new dicts.
 
-    Returns an User x Item Matrix with one entry set to  item per user missing
+    Returns an User x Item Matrix with one entry set to 0 and a dict item per user missing
     and a User -> Item Dict with the missing entrys.
 
     M is an User x Item Matrix.
@@ -62,6 +62,6 @@ def splitMatrix(M, seed):
             item = random.randint(0, bigSplit.shape[1] - 1)
         temp = bigSplit[user, item]
         bigSplit[user, item] = 0
-        smallSplitDict[user] = set([(item, temp)])
+        smallSplitDict[user] = list([(item, temp)])
 
     return bigSplit, smallSplitDict

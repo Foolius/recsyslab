@@ -201,6 +201,7 @@ def randDataset(user, items, p, seed, filename):
 
 
 def dictToMatrix(d):
+    """Converts a dict like reader.getR() returns to a matrix."""
     import numpy as np
     rows = max(d)
     lines = 0
@@ -219,8 +220,12 @@ def dictToMatrix(d):
 
 
 def getScoreMF(origUid, origIid, W, H, r):
-    """Returns the score of one item for one user.
-    Itemid and Userid are the original IDs."""
+    """Returns the score of one item for one user with an MF model.
+        origUid --  original User ID
+        origIid --  original Item ID
+        W, H    --  The MF model like returned by recommender.mf for example
+        r       --  a reader object with the database
+    """
     uid = r.uidDict.getId(origUid)
     iid = r.iidDict.getId(origIid)
 
@@ -230,10 +235,7 @@ def getScoreMF(origUid, origIid, W, H, r):
 
 
 def getExternalRec(getRec, r):
-    """ Returns a function which returns
-    the n best recommendations from getRec.
-    The recommendations are with the original IDs"""
-
+    """Converts getRec so it takes and returns only the original IDs."""
     def wrapper(extUid, n):
         uid = r.uidDict.getId(extUid)
 
