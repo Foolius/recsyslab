@@ -81,7 +81,7 @@ def cache(fn):
 
 
 def writeOrigToFile(reader, toSave, filename):
-    """Writes a database into a file.
+    """Writes a database into a file with the original IDs.
 
         reader  --  reader object
         toSave  --  Part of the database to write
@@ -100,16 +100,24 @@ def writeOrigToFile(reader, toSave, filename):
 
 
 def writeInternalToFile(reader, toSave, filename):
+    """Writes a database into a file with the internal IDs.
+
+        reader  --  reader object
+        toSave  --  Part of the database to write
+        filename--  Name of the file
+
+    Writes toSave into a file with the name filename.
+    """
+
     f = file(filename, "w")
     for r in toSave.iterkeys():
-        for i in toSave[r]:
-            f.write("%r\t%r\n" % (r, i))
+        for i, rating in toSave[r]:
+            f.write("%r\t%r\t%r\n" % (r, i, rating))
     f.close()
 
 
 def sortList(scorelist):
-    """Gets a list of tuples (itemid, score),
-    sorts by score decreasing."""
+    """Gets a list of tuples (itemid, score), sorts by score decreasing."""
     sortedscorelist = sorted(scorelist,
                              key=lambda(k, v): v,
                              reverse=True)
@@ -121,10 +129,10 @@ def sortList(scorelist):
 
 
 def listToSet(sortedscorelist, n):
-    """Gets a list like sortList returns
-    and returns a set with the first n
-    items, or less, when there are not
-    enough items"""
+    """Converts a list into a set with size n.
+
+    Gets a list like sortList returns and returns a set with the first n
+    items, or less, when there are not enough items"""
     if len(sortedscorelist) < n:
         n = len(sortedscorelist)
     s = set()
@@ -162,6 +170,10 @@ def sortResults(name):
 
 
 def printMatrix(m):
+    """Prints a whole matrix.
+
+    Prints the whole matrix m without replacing stuff with dots
+    like it normally does when the matrix is to large."""
     for i in xrange(0, m.shape[0]):
         s = ""
         for j in xrange(0, m.shape[1]):
@@ -169,14 +181,21 @@ def printMatrix(m):
         print s
 
 
-def randDataset(x, y, p, seed):
-    import random
-#    random.seed(seed)
-    f = open("rand.data", 'w')
+def randDataset(user, items, p, seed, filename):
+    """Generates a random dataset and writes it into a file.
 
-    for i in xrange(0, x):
-        for j in xrange(0, y):
-            if(random.randint(0, 100) < p * 100):
+        user    --  number of users
+        items   --  number of items
+        p       --  percentage of ones in the dataset
+        seed    --  seed for the randomness
+        """
+    import random
+    random.seed(seed)
+    f = open(filename, 'w')
+
+    for i in xrange(0, user):
+        for j in xrange(0, items):
+            if(random.randint(0, 100) < p):
                 f.write("%r\t%r\n" % (i, j))
     f.close
 
