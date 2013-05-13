@@ -1,11 +1,21 @@
+"""Several helper functions and a helper class."""
+
+
 class idOrigDict(object):
+    """Class two map external/original IDs to internal IDs and vice versa."""
 
     def __init__(self):
+        """Initialization."""
         self.orig2id = {}
         self.id2orig = {}
         self.id = 0
 
     def add(self, orig):
+        """Add a new original ID.
+
+        Returns the internal ID the passed original ID got mapped to.
+        If the passed ID is already mapped nothing happens except the
+        mapped internal ID is returned."""
         if not orig in self.orig2id.keys():
             self.orig2id[orig] = self.id
             self.id2orig[self.id] = orig
@@ -13,29 +23,35 @@ class idOrigDict(object):
         return self.getId(orig)
 
     def getOrig(self, id):
+        """Returns the original ID which is mapped to the passed internal ID.
+        """
         return self.id2orig[id]
 
     def getId(self, orig):
+        """Returns the internal ID which is mapped to the passed orinigal ID.
+        """
         return self.orig2id[orig]
 
 
 def normRowNorm(m):
+    """Normalize the matrix in place so each row of the matrix has norm 1."""
     import numpy as np
-    "Normalize in place each row of the matrix so the norm is 1"
     for i in xrange(0, m.shape[0]):
         m[i] /= np.linalg.norm(m[0])
     return m
 
 
 def normRowSum(m):
+    """Normalize the matrix in place so each column of the matrix has norm 1.
+    """
     import numpy as np
-    "Normalize in place each row of the matrix so the sum is 1"
     for i in xrange(0, m.shape[0]):
         m[i] /= np.sum(m[0])
     return m
 
 
 def cache(fn):
+    """Decorator to cache the result of the function fn."""
     import functools
 
     class Namespace():
@@ -65,12 +81,21 @@ def cache(fn):
 
 
 def writeOrigToFile(reader, toSave, filename):
+    """Writes a database into a file.
+
+        reader  --  reader object
+        toSave  --  Part of the database to write
+        filename--  Name of the file
+
+    Writes toSave into a file with the name filename but first the
+    internal IDs in toSave get mapped to the original IDs.
+    """
     f = file(filename, "w")
     for r in toSave.iterkeys():
         ri = reader.getOriginalUid(r)
-        for i in toSave[r]:
+        for i, rating in toSave[r]:
             ii = reader.getOriginalIid(i)
-            f.write("%r\t%r\n" % (ri, ii))
+            f.write("%r\t%r\t%r\n" % (ri, ii, rating))
     f.close()
 
 
@@ -83,7 +108,7 @@ def writeInternalToFile(reader, toSave, filename):
 
 
 def sortList(scorelist):
-    """Gets a list of tuples (itemid,score),
+    """Gets a list of tuples (itemid, score),
     sorts by score decreasing."""
     sortedscorelist = sorted(scorelist,
                              key=lambda(k, v): v,
@@ -179,6 +204,8 @@ def getScoreMF(origUid, origIid, W, H, r):
     Itemid and Userid are the original IDs."""
     uid = r.uidDict.getId(origUid)
     iid = r.iidDict.getId(origIid)
+
+    import numpy as np
 
     return np.dot(W[uid], H[iid])
 
