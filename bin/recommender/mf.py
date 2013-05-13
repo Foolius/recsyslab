@@ -145,6 +145,23 @@ def learnModel(n_users, m_items, regU, regI, regJ,
     return W, H
 
 
+class MFrec(object):
+
+    def __init__(self, W, H, trainingR):
+        self.W = W
+        self.H = H
+        self.R = trainingR
+
+    def getRec(self, u, n):
+        scoredict = {}
+        for i in range(0, self.H.shape[0]):
+            if not i in [x[0] for x in self.R[u]]:
+                scoredict[i] = np.dot(self.W[u], self.H[i])
+
+        import util.helper
+        return util.helper.sortList(scoredict.iteritems())[:n]
+
+
 def slowlearnModel(n_users, m_items, regU, regI, regJ,
                    learningRate, R, k, epochs, numberOfIterations):
     """slower but the learning rate can change"""
