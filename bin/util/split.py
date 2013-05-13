@@ -1,8 +1,23 @@
+"""Methods to split a database with the leave-one-out method.
+
+   split        --  splits a reader into two new dicts
+   splitMatrix  --  splits a matrix into a matrix and a dict
+   """
 import random
 import copy
 
 
 def split(R, seed):
+    """Splits a database into two dicts.
+
+    Splits after the leave-one-out method which means for every user in the
+    database it takes one item out of the database and into a new one.
+    The first returned dict is the database with one item missing for each
+    user. The second returned dict has the missing items.
+
+    R is a reader object with a database read in.
+    seed is a seed for the randomness.
+    """
 
     random.seed(seed)
     split = {}
@@ -24,9 +39,14 @@ def split(R, seed):
 
 
 def splitMatrix(M, seed):
-    """Takes an User x Item Matrix and returns
-    an User x Item Matrix with one item per user missing
-    and a User -> Item Dict with the missing entrys."""
+    """Splits a matrix into two new dicts.
+
+    Returns an User x Item Matrix with one entry set to  item per user missing
+    and a User -> Item Dict with the missing entrys.
+
+    M is an User x Item Matrix.
+    seed is a seed for the randomness.
+    """
     random.seed(seed)
     bigSplit = M.copy(order='A')
     smallSplitDict = {}
@@ -40,7 +60,8 @@ def splitMatrix(M, seed):
         item = random.randint(0, bigSplit.shape[1] - 1)
         while bigSplit[user, item] == 0:
             item = random.randint(0, bigSplit.shape[1] - 1)
+        temp = bigSplit[user, item]
         bigSplit[user, item] = 0
-        smallSplitDict[user] = set([(item, 0)])
+        smallSplitDict[user] = set([(item, temp)])
 
     return bigSplit, smallSplitDict
