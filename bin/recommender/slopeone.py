@@ -1,5 +1,15 @@
 class slopeone(object):
+    """A class to compute recommendations with a Slope One Predictor.
+
+    Based on:
+        "Slope One Predictors for Online Rating-Based Collaborative Filtering"
+        by Daniel Lemire and Anna Maclachlan.
+    """
     def __init__(self, R):
+        """Generate the model.
+
+            R   --  A dict of the form UserID -> (ItemId, Rating)
+        """
         self.diffs = {}
         self.R = R
 
@@ -18,6 +28,7 @@ class slopeone(object):
                     self.diffs[i][i1][1] += 1
 
     def getRec(self, u, n):
+        """Returns the n best recommendations for user u."""
         maxIid = max(self.diffs.keys())
         userItems = [x[0] for x in self.R[u]]
         predictionList = []

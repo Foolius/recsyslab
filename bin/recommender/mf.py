@@ -1,51 +1,12 @@
+"""Module for Matrix Factorization (mf) techniques.
+
+    learnModel  --  learn a mf model
+    MFrec       --  compute recommendations based on a mf model
+"""
 import random
 import numpy as np
 import math
 
-
-# hinge loss
-def hingeLoss(a, y):
-    """
-    hingeLoss(a, y) = max(0, 1 - a*y)
-    """
-    z = a * y
-    if z > 1:
-        return 0
-    return 1 - z
-
-
-def dHingeLoss(a, y):
-    """
-    -dloss(a,y)/da
-    """
-    z = a * y
-    if z > 1:
-        return 0
-    return y
-
-
-def logLoss(a, y):
-    """
-    logLoss(a, y) = log(1 + exp(-a*y))
-    """
-    z = a * y
-    if z > 18:
-        return math.exp(-z)
-    if z < -18:
-        return -z
-    return math.log(1 + math.exp(-z))
-
-
-def dLogLoss(a, y):
-    """
-    -dloss(a,y)/da
-    """
-    z = a * y
-    if z > 18:
-        return y * math.exp(-z)
-    if z < -18:
-        return y
-    return y / (1 + math.exp(z))
 
 # reg=regularization,R=dict uid=>[ii],T=epochs
 #(schedule for learningRate)
@@ -53,6 +14,29 @@ def dLogLoss(a, y):
 
 def learnModel(n_users, m_items, regU, regI, regJ,
                learningRate, R, k, epochs, numberOfIterations, lossF, dlossF):
+    """Learns a mf model with a passed loss function.
+
+        n_users             --  The highest internal assigned User ID
+        m_items             --  The highest internal assigned Item ID
+        regU                --  Regularization for the user vector
+        regI                --  Regularization for the positive item
+        regJ                --  Regularization for the negative item
+        learningRate        --  The learning rate
+        R                   --  A dict of the form UserID -> (ItemId, Rating)
+        k                   --  Number of features of the items and users
+        epochs              --  Number of epochs the model should be learned
+        numberOfIterations  --  Number of iterations in each epoch
+        lossF               --  Loss function
+        dlossF              --  Derivation of lossF
+
+    Returns:
+        W   --  User Features
+        H   --  Item Features
+
+    See also: "BPR: Bayesian Personalized Ranking from Implicit Feedback"
+    from Steffen Rendle et al.
+    """
+
     """Learning rate is constant."""
     MIN_SCALING_FACTOR = 1E-5
     y = 1.0
@@ -146,13 +130,23 @@ def learnModel(n_users, m_items, regU, regI, regJ,
 
 
 class MFrec(object):
+    """Class to compute recommendations with a mf model."""
 
     def __init__(self, W, H, trainingR):
+        """Initialize the class.
+
+            W           --  Matrix of the User features
+            H           --  Matrix of the Item features
+            trainingR   --  The dict the model was trained with
+        """
         self.W = W
         self.H = H
         self.R = trainingR
 
     def getRec(self, u, n):
+        """
+        Returns the n best recommendations for user u based on the mf model.
+        """
         scoredict = {}
         for i in range(0, self.H.shape[0]):
             if not i in [x[0] for x in self.R[u]]:
@@ -160,79 +154,3 @@ class MFrec(object):
 
         import util.helper
         return util.helper.sortList(scoredict.iteritems())[:n]
-
-
-def slowlearnModel(n_users, m_items, regU, regI, regJ,
-                   learningRate, R, k, epochs, numberOfIterations):
-    """slower but the learning rate can change"""
-    MIN_SCALING_FACTOR = 1E-5
-    y = 1.0
-    # loss = logLoss(0, 0)
-
-    sigma = 0.1
-    mu = 0
-    # Random initialization of W and H between mean=0 ; sigma=0.1
-    W = sigma * np.random.randn(n_users, k) + mu
-    H = sigma * np.random.randn(m_items, k) + mu
-
-    for e in xrange(0, epochs):
-        iter = 0
-        print("epoch: %r" % e)
-        while iter <= numberOfIterations:
-            iter += 1
-
-            u = random.choice(R.keys())
-
-            # if not R.has_key(u):
-            #    continue
-            if len(R[u]) == 0:
-                continue
-            # the positive example
-            userItems = list(R[u])
-            i = userItems[np.random.random_integers(0, len(userItems) - 1)]
-            # the negative example
-            j = np.random.random_integers(0, m_items)
-            # if  j is also relevant for u we continue
-            # we need to see a negative example to contrast the positive one
-            while j in R[u]:
-                j = np.random.random_integers(0, m_items)
-
-            X = H[i] - H[j]
-            # rank labels
-            # positive label :
-            # yi = 1.0
-            # negative label :
-            # yj = 0.0
-            # this is equivalent to the sign(yi - yj)
-            # y = 1.0 if (yi > yj) else -1.0 if (yi < yj) else 0.0
-            # since in this case the positive example is always yi, then y =
-            # 1.0
-            y = 1.0
-            wx = np.dot(W[u], X)
-            dloss = dLogLoss(wx, y)
-
-            scaling_factor = 1.0 - (learningRate * regU)
-            if scaling_factor > MIN_SCALING_FACTOR:
-                W[u] *= (1.0 - learningRate * regU)
-            else:
-                W[u] *= MIN_SCALING_FACTOR
-
-            scaling_factor = 1.0 - (learningRate * regI)
-            if scaling_factor > MIN_SCALING_FACTOR:
-                H[i] *= (1.0 - learningRate * regI)
-            else:
-                H[i] *= MIN_SCALING_FACTOR
-
-            scaling_factor = 1.0 - (learningRate * regJ)
-            if scaling_factor > MIN_SCALING_FACTOR:
-                H[j] *= (1.0 - learningRate * regJ)
-            else:
-                H[j] *= MIN_SCALING_FACTOR
-
-            if dloss != 0.0:
-                eta_dloss = learningRate * dloss
-                W[u] += eta_dloss * X
-                H[i] += eta_dloss * W[u]
-                H[j] += eta_dloss * (-W[u])
-
-    return W, H

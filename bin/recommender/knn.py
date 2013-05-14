@@ -1,9 +1,26 @@
+"""Two classes for k-Nearest-Neighbor(knn) recommendation.
+
+    itemKnn --  Item based knn
+    userKnn --  User based knn
+
+    Based on "Evaluation of Item-Based Top-N Recommendation Algortihms"
+    by George Karypis.
+"""
 import numpy as np
 
 
 class itemKnn(object):
+    """Class for item based knn."""
+
     def __init__(self, userItemMatrix, n):
-        """Builds a model for Item based knn."""
+        """Builds a model for Item based knn.
+
+            userItemMatrix  --  A matrix where an entry at i, j is the rating
+                                the ith user gave the jth item.
+            n               --  number of neighbors which get computed.
+
+        Uses the cosine for similarity."""
+
         self.itemUserMatrix = userItemMatrix.transpose()
         self.sim = np.zeros((userItemMatrix.shape[1], userItemMatrix.shape[1]))
         self.sim = computeCosSim(self.sim, self.itemUserMatrix)
@@ -41,7 +58,13 @@ class itemKnn(object):
 
 class userKnn(object):
     def __init__(self, userItemMatrix, n):
-        """Builds a model for User based knn."""
+        """Builds a model for user based knn.
+
+            userItemMatrix  --  A matrix where an entry at i, j is the rating
+                                the ith user gave the jth item.
+            n               --  number of neighbors which get computed.
+
+        Uses the cosine for similarity."""
         self.userItemMatrix = userItemMatrix
         self.sim = np.zeros((userItemMatrix.shape[0], userItemMatrix.shape[0]))
         self.sim = computeCosSim(self.sim, self.userItemMatrix)
@@ -81,6 +104,9 @@ class userKnn(object):
 
 
 def computeCosSim(sim, matrix):
+    """
+    Computes the cos of every two lines in the matrix and writes them into sim.
+    """
     count = 0
     for i in xrange(1, sim.shape[1]):
 
@@ -94,8 +120,7 @@ def computeCosSim(sim, matrix):
 
 
 def cos(a, b):
-    """gets two vectors(onedimensional np.matrix)
-    and computes their cosine"""
+    """Gets two vectors(onedimensional np.matrix) and computes their cosine."""
     dotproduct = np.dot(a.getA()[0], b.getA()[0])
     if dotproduct == 0:
         return 0
@@ -105,28 +130,3 @@ def cos(a, b):
         return 0
 
     return dotproduct / normproduct
-
-
-def computeCondProbSim(sim, itemUserMatrix):
-    count = 0
-    for i in xrange(0, sim.shape[1]):
-        for j in xrange(0, sim.shape[1]):
-            if count % 10000 == 0:
-                print("%r Similarities calculated" % count)
-            count += 1
-
-            if i == j:
-                sim[i, j] = 0
-            else:
-                sim[i, j] = condProb(
-                    itemUserMatrix[i], itemUserMatrix[j])
-
-
-def condProb(a, b):
-    """Returns the similarity of a and b."""
-    fa = a.sum()
-    if fa == 0:
-        return 0
-    fb = b.sum()
-    if fb == 0:
-        return 0

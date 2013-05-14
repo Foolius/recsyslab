@@ -1,10 +1,24 @@
+"""Module to compute the model of Ranking SVD (Sparse SVD)
+
+    Based on: "Collaborative Filtering Ensemble for Ranking"
+    by Michael Jahrer and Andreas Toescher."""
 import random
 import numpy as np
 
 
 def learnModel(n_users, m_items, learningRate, R, features,
                epochs, numberOfIterations):
-    """See pseudocode Collaborative Filtering Ensemble for Ranking."""
+    """Returns the model of a learned svd as two matrices.
+
+        n_users             --  The highest internal assigned User ID
+        m_items             --  The highest internal assigned Item ID
+        learningRate        --  The learning rate
+        R                   --  A dict of the form UserID -> (ItemId, Rating)
+        features            --  Number of features of the items and users
+        epochs              --  Number of epochs the model should be learned
+        numberOfIterations  --  Number of iterations in each epoch
+    """
+
     sigma = 0.1
     userFeatures = sigma * np.random.randn(n_users + 1, features)
     itemFeatures = sigma * np.random.randn(m_items + 1, features)
@@ -45,38 +59,11 @@ def learnModel(n_users, m_items, learningRate, R, features,
             # This is actually not the loss, but the derivative of the loss
             loss = (ruipred - rui0pred) - (rui - rui0)
             sum_loss += loss
-#            print "userFeatures[u]", userFeatures[u]
-#            print "itemFeatures[i]", itemFeatures[i]
-#            print "itemFeatures[i0]", itemFeatures[i0]
-#            print "ruipred", ruipred
-#            print "rui0pred", rui0pred
-#            print "rui", rui
-#            print "rui0", rui0
-#            print "loss", loss
-#            print "-----------------"
-
-            from math import isnan
-            if isnan(ruipred) or isnan(rui0pred) or isnan(rui) or isnan(
-                    rui0) or isnan(loss):
-                raise NameError
-
-#            for k in xrange(0, features):
-#                c = userFeatures[u, k]
-#                userFeatures[u, k] -= learningRate * (loss * (
-#                    itemFeatures[i, k] - itemFeatures[i0, k]))
-#                itemFeatures[i, k] -= learningRate * (loss * c)
-#                itemFeatures[i0, k] -= learningRate * (loss * (-c))
-
             c = userFeatures[u]
             userFeatures -= learningRate * loss * (
                 itemFeatures[i] - itemFeatures[i0])
             itemFeatures[i] -= learningRate * loss * c
             itemFeatures[i0] -= learningRate * loss * (-c)
-
-            # scalingFactor = 1E-3
-            # userFeatures[u] *= scalingFactor
-            # itemFeatures[i] *= scalingFactor
-            # itemFeatures[i0] *= scalingFactor
 
             t += 1  # increment the iteration
             if t % printDelay == 0:
