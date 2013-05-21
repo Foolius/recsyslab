@@ -61,7 +61,7 @@
 \begin_body
 
 \begin_layout Title
-Multi - purpose Library of Recommender System Algorithms for the Item Prediction
+Multi-purpose Library of Recommender System Algorithms for the Item Prediction
  Task
 \end_layout
 
@@ -98,8 +98,28 @@ Motivation
 Task (what a Recommender System does)
 \end_layout
 
+\begin_layout Standard
+A Recommender System works in a scenario with users, items and interactions
+ users can have with items.
+ Such a scenario could be an online shop, where the interactions are purchases
+ of items by users or a video platform, where the users interact with items
+ (videos) by watching them.
+ Based on the past interactions of the users a Recommender System searches
+ for items a user haven't interacted with yet but the probability that he
+ will interact is maximized.
+\end_layout
+
+\begin_layout Standard
+In contrast to this implicit approach you can also use ratings the user
+ gave items explicitly, but in this work the focus lies on implicit feedback.
+ However ratings can be interpreted as the strength of implicit feedback
+ for example how often a user purchased an item.
+ Some algorithms implemented in this library can use this information but
+ none will explicitly predict ratings.
+\end_layout
+
 \begin_layout Section
-Objective and Motivation 
+Objective and Motivation
 \end_layout
 
 \begin_layout Chapter
@@ -115,7 +135,7 @@ PREA
 \end_layout
 
 \begin_layout Section
-3.3 Mahout 
+3.3 Mahout
 \end_layout
 
 \begin_layout Section
@@ -123,7 +143,7 @@ Duine
 \end_layout
 
 \begin_layout Section
-Cofi 
+Cofi
 \end_layout
 
 \begin_layout Section
@@ -131,7 +151,7 @@ Lenskit
 \end_layout
 
 \begin_layout Chapter
-Recommendation Algorithms 
+Recommendation Algorithms
 \end_layout
 
 \begin_layout Section
@@ -139,7 +159,7 @@ Primitive Algorithms
 \end_layout
 
 \begin_layout Section
-k-Nearest-Neighbor 
+k-Nearest-Neighbor
 \end_layout
 
 \begin_layout Section
@@ -155,7 +175,7 @@ RankMFX
 \end_layout
 
 \begin_layout Subsection
-Ranking SVD (Sparse SVD) 
+Ranking SVD (Sparse SVD)
 \end_layout
 
 \begin_layout Section
@@ -163,7 +183,7 @@ Evaluation Methods
 \end_layout
 
 \begin_layout Subsection
-Leave-one-out Protocol 
+Leave-one-out Protocol
 \end_layout
 
 \begin_layout Section
@@ -171,7 +191,7 @@ Evaluation metrics
 \end_layout
 
 \begin_layout Subsection
-Hitrate/Recall 
+Hitrate/Recall
 \end_layout
 
 \begin_layout Subsection
@@ -179,15 +199,15 @@ Precision
 \end_layout
 
 \begin_layout Subsection
-F1 
+F1
 \end_layout
 
 \begin_layout Subsection
-Mean Reciprocal Hitrate 
+Mean Reciprocal Hitrate
 \end_layout
 
 \begin_layout Subsection
-Area under the ROC 
+Area under the ROC
 \end_layout
 
 \begin_layout Chapter
@@ -195,7 +215,7 @@ Datasets for testing
 \end_layout
 
 \begin_layout Section
-MovieLens 
+MovieLens
 \end_layout
 
 \begin_layout Section
@@ -207,11 +227,11 @@ SNAP
 \end_layout
 
 \begin_layout Chapter
-Experiments 
+Experiments
 \end_layout
 
 \begin_layout Section
-Execution 
+Execution
 \end_layout
 
 \begin_layout Section
@@ -219,11 +239,11 @@ Results
 \end_layout
 
 \begin_layout Section
-Comparison 
+Comparison
 \end_layout
 
 \begin_layout Chapter
-Design and Implementation 
+Design and Implementation
 \end_layout
 
 \begin_layout Section
@@ -231,7 +251,7 @@ General structure
 \end_layout
 
 \begin_layout Section
-Interfaces 
+Interfaces
 \end_layout
 
 \begin_layout Chapter
@@ -243,35 +263,35 @@ Primitive Algorithms
 \end_layout
 
 \begin_layout Section
-k-Nearest Neighbor 
+k-Nearest Neighbor
 \end_layout
 
 \begin_layout Section
-BPRMF 
+BPRMF
 \end_layout
 
 \begin_layout Section
-RankMFX 
+RankMFX
 \end_layout
 
 \begin_layout Section
-Ranking SVD (Sparse SVD) 
+Ranking SVD (Sparse SVD)
 \end_layout
 
 \begin_layout Chapter
-Conclusions 
+Conclusions
 \end_layout
 
 \begin_layout Section
-Future work 
+Future work
 \end_layout
 
 \begin_layout Section
-Outlook 
+Outlook
 \end_layout
 
 \begin_layout Chapter
-References 
+References
 \end_layout
 
 \end_body
