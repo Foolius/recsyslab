@@ -76,7 +76,7 @@ def mf():
 
 def knn():
     from util import reader
-    r = reader.tabSepReader("u.data")
+    r = reader.stringSepReader("u.data", "\t")
 
     from util import split
     train, test1 = split.splitMatrix(r.getMatrix(), 1234567890)
@@ -85,9 +85,9 @@ def knn():
     k = knn.itemKnn(train, 10)
 
     from util import test
-    print test.auc(test1, k.getRec, r)
+    print test.hitrate(test1, k.getRec, 10)
 
-# knn()
+knn()
 
 
 def simple():
