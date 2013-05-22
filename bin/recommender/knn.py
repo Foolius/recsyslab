@@ -17,7 +17,7 @@ class itemKnn(object):
 
             userItemMatrix  --  A matrix where an entry at i, j is the rating
                                 the ith user gave the jth item.
-            n               --  number of neighbors which get computed.
+            n               --  number of neighbors which are getting computed.
 
         Uses the cosine for similarity."""
 
@@ -44,7 +44,9 @@ class itemKnn(object):
             n = self.userItemMatrix.shape[1]
 
         x = self.userItemMatrix[u] * self.sim
+        print x.shape
 
+        # Throw out items the user already purchased
         for i in xrange(0, self.sim.shape[0]):
             if self.userItemMatrix[u, i] != 0:
                 x[0, i] = 0
