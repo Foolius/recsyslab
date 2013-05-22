@@ -86,12 +86,38 @@ LatexCommand tableofcontents
 Abstract
 \end_layout
 
+\begin_layout Standard
+In this thesis I will give an introduction to recommender systems, provide
+ an overview over other recommender system libraries and datasets available
+ to try out the algorithms.
+ After that I will describe different recommender algorithms and evaluation
+ metrics I implemented in my work followed by an explanation on how to use
+ them.
+ Additionally I will provide the result of the tests.
+\end_layout
+
 \begin_layout Chapter
 Introduction
 \end_layout
 
 \begin_layout Section
 Motivation
+\end_layout
+
+\begin_layout Standard
+The library together with this document shall provide a 
+\begin_inset Quotes eld
+\end_inset
+
+cookbook
+\begin_inset Quotes erd
+\end_inset
+
+ for recommender systems.
+ With the simple syntax and the interactivity of Python it is aimed at beginners
+ to simply experiment with different algorithms.
+ Especially the interactivity is missing in the already existing libraries
+ because none of them is written in Python.
 \end_layout
 
 \begin_layout Section
@@ -110,44 +136,149 @@ A Recommender System works in a scenario with users, items and interactions
 \end_layout
 
 \begin_layout Standard
-In contrast to this implicit approach you can also use ratings the user
- gave items explicitly, but in this work the focus lies on implicit feedback.
- However ratings can be interpreted as the strength of implicit feedback
- for example how often a user purchased an item.
+The interactions can be implicit like purchases or clicks, then the scenario
+ is also called item prediction.
+ When the feedback is provided explicit like ratings the scenario is called
+ rating prediction.
+ In this work the focus lies on implicit feedback or item prediction.
+ However ratings can be interpreted as the strength of implicit feedback.
+ For example how often a user purchased an item.
  Some algorithms implemented in this library can use this information but
- none will explicitly predict ratings.
+ none will explicitly predict ratings like it's usual in rating prediction
+ scenarios.
 \end_layout
 
 \begin_layout Section
-Objective and Motivation
+Contributions
+\end_layout
+
+\begin_layout Standard
+The main contribution of my work is the interactive library I wrote 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-3"
+
+\end_inset
+
+.
+ Also in this document I provide explanations about the algorithms implemented
+ in the library and an extensive user manual of the library.
 \end_layout
 
 \begin_layout Chapter
 3 Related Work
 \end_layout
 
+\begin_layout Standard
+There is a wide range of projects providing implemantions for recommender
+ system.
+ Some of them are described in this chapter to give a quick overview and
+ comparison.
+\end_layout
+
 \begin_layout Section
 MyMediaLite
 \end_layout
 
+\begin_layout Standard
+MyMediaLite
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-1"
+
+\end_inset
+
+ is an open source project developed at the University of Hildesheim and
+ provides several algorithm for rating prediction and item prediction.
+ It is written in C# and is used with a command line interface.
+ It also provides a graphical interface to demonstrate recommender algorithms
+\end_layout
+
 \begin_layout Section
+PREA (Personalized Recommendation Algorithms Toolkit)
+\end_layout
+
+\begin_layout Standard
 PREA
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-2"
+
+\end_inset
+
+ is an open source project written in Java.
+ It provides a wide range of recommender algorithms and evaluation metrics
+ to test them.
+ It is maintained by the Georgia Institute of Technology.
 \end_layout
 
 \begin_layout Section
-3.3 Mahout
+Apache Mahout
+\end_layout
+
+\begin_layout Standard
+Mahout
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-6"
+
+\end_inset
+
+ is an open source library in java.
+ It is implemented on top of Apache Hadoop, so it uses the map/reduce paradigm.
+ This means it can run on different independent computers.
 \end_layout
 
 \begin_layout Section
-Duine
+Duine Framework
+\end_layout
+
+\begin_layout Standard
+The Duine Framework 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-7"
+
+\end_inset
+
+ is an open source project written in java by the Telematica Instituut/Novay.
+ The recommender of the Duine Framework combines multiple prediction techniques
+ to exploit the strengths of the different techniques and to avoid their
+ weaknesses.
 \end_layout
 
 \begin_layout Section
 Cofi
 \end_layout
 
+\begin_layout Standard
+Cofi 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-8"
+
+\end_inset
+
+provides an algorithm for the rating prediction task called Maximum Margin
+ Matrix Factorization.
+ It is open source and written in C++.
+\end_layout
+
 \begin_layout Section
-Lenskit
+LensKit
+\end_layout
+
+\begin_layout Standard
+Lenskit 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-9"
+
+\end_inset
+
+ is a toolkit which provides several recommender algorithms and an infrastructur
+e to evaluate them.
+ It is an open source project by the University of Minnesota
 \end_layout
 
 \begin_layout Chapter
@@ -158,8 +289,53 @@ Recommendation Algorithms
 Primitive Algorithms
 \end_layout
 
+\begin_layout Subsection
+Constant
+\end_layout
+
+\begin_layout Standard
+The constant recommender algorithm counts the number of interactions for
+ each item and sorts this in decreasing order of interactions.
+ Then it recommends the top items of this list.
+ So it recommends the items which are the most popular over all users and
+ doesn't do any personalizations.
+\end_layout
+
+\begin_layout Subsection
+Random
+\end_layout
+
+\begin_layout Standard
+The random recommender just picks items randomly.
+\end_layout
+
 \begin_layout Section
 k-Nearest-Neighbor
+\end_layout
+
+\begin_layout Subsection
+Item Based
+\end_layout
+
+\begin_layout Standard
+For this algorithm the database has to be represented as a matrix where
+ the rows correspond to the users and the columns to the items.
+ Then the entry (i,j) represents the number of transactions which happened
+ between the ith user and the jth item.
+ 
+\end_layout
+
+\begin_layout Standard
+The algorithm interprets the columns of the matrix i.e.
+ the items as vectors and computes there similarities by computing their
+ cosine.
+ To build the model, for each item, the algorithm computes the n most similar
+ items.
+ To compute recommendations for user U the algorithm 
+\end_layout
+
+\begin_layout Subsection
+User Based
 \end_layout
 
 \begin_layout Section
@@ -182,8 +358,27 @@ Ranking SVD (Sparse SVD)
 Evaluation Methods
 \end_layout
 
+\begin_layout Standard
+To evaluate a recommender algorithm we have to split up the database into
+ one for training and one for evaluation.
+ There are different methods to split the database but in the library only
+ one is implemented.
+\end_layout
+
 \begin_layout Subsection
 Leave-one-out Protocol
+\end_layout
+
+\begin_layout Standard
+The Leave-one-out Protocol means, that we take one interaction of each user
+ out of the database for training and use it for validation.
+ The item the recommender has to predict is also called hidden item.
+ 
+\end_layout
+
+\begin_layout Standard
+Now we can test for each user if the algorithm is capable to predict this
+ missing interaction.
 \end_layout
 
 \begin_layout Section
@@ -191,7 +386,32 @@ Evaluation metrics
 \end_layout
 
 \begin_layout Subsection
-Hitrate/Recall
+Hitrate/Recall@N
+\end_layout
+
+\begin_layout Standard
+This metrics lets the recommender recommend N items.
+ If the hidden item is under the N recommended items, the recommender got
+ a hit 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-4"
+
+\end_inset
+
+.
+ The hitrate is now 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\mathrm{\textrm{hitrate}}=\frac{\mathrm{Number}ofhits}{Numberofhiddenitems}
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
@@ -292,6 +512,88 @@ Outlook
 
 \begin_layout Chapter
 References
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-1"
+
+\end_inset
+
+Zeno Gantner, Steffen Rendle, Christoph Freudenthaler, Lars Schmidt-Thieme:
+ MyMediaLite: A Free Recommender System Library.
+ RecSys 2011
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-2"
+
+\end_inset
+
+http://prea.gatech.edu/
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-6"
+
+\end_inset
+
+http://mahout.apache.org/
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-7"
+
+\end_inset
+
+http://www.duineframework.org/
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-8"
+
+\end_inset
+
+https://sites.google.com/a/cofirank.org/index/
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-9"
+
+\end_inset
+
+http://lenskit.grouplens.org/
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-3"
+
+\end_inset
+
+https://github.com/Foolius/recsyslab
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-4"
+
+\end_inset
+
+Evaluation of Item-Based Top-N Recommendation Algorithms by George Karypis
 \end_layout
 
 \end_body
