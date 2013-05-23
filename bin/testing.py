@@ -87,6 +87,15 @@ def knn():
     from util import test
     print test.hitrate(test1, k.getRec, 10)
 
+    import cPickle
+    output = open("knn.npz", "wb")
+    cPickle.dump(k, output, -1)
+    output.close()
+
+    # inputfile = open("knn.npz", "rb")
+    # so = cPickle.load(inputfile)
+    # inputfile.close()
+
 knn()
 
 

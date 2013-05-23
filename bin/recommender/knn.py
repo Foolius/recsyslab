@@ -44,7 +44,6 @@ class itemKnn(object):
             n = self.userItemMatrix.shape[1]
 
         x = self.userItemMatrix[u] * self.sim
-        print x.shape
 
         # Throw out items the user already purchased
         for i in xrange(0, self.sim.shape[0]):
