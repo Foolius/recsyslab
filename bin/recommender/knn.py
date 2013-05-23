@@ -43,6 +43,8 @@ class itemKnn(object):
         if n > self.userItemMatrix.shape[1] or n == -1:
             n = self.userItemMatrix.shape[1]
 
+        # x are the similarities of each item to the items u bought
+        # w.r.t. only the highest n similarities are saved.
         x = self.userItemMatrix[u] * self.sim
 
         # Throw out items the user already purchased
