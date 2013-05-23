@@ -12,8 +12,6 @@ def learnModel(n_users, m_items, regU, regI, regJ,
         k                   --  Number of features of the items and users
         epochs              --  Number of epochs the model should be learned
         numberOfIterations  --  Number of iterations in each epoch
-        lossF               --  Loss function
-        dlossF              --  Derivation of lossF
 
     Returns:
         W   --  User Features
