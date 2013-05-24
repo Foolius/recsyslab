@@ -110,7 +110,7 @@ def mrhr(testR, recommender, n):
 
     testR is a dict with an internal UserID as a dict and a list of items as
     values. Normally testR is the second dict split.split returns.
-    The list can have a lenght greater than 1.
+    The list can have a length greater than 1.
 
     recommender is a function which takes an internal UserID and n and returns
     n items recommender for the UserID.
