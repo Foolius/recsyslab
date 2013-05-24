@@ -34,10 +34,14 @@ def hitrate(testR, recommender, n):
     hits = 0.0
     items = 0.0
     for u in testR.iterkeys():
+
+        # Progress output
         if u % 100 == 0:
             print("%r users tested" % u)
             print("Hits so far: %r" % hits)
         recs = recommender(u, n)
+
+        # Check if too many items recommended
         if len(recs) != n and not n == -1:
             print("Fatal error: not the right number of items.")
         testSet = set()
@@ -122,11 +126,15 @@ def mrhr(testR, recommender, n):
     score = 0.0
     items = 0.0
     for u in testR.iterkeys():
+
+        # Progress output
         if u % 100 == 0:
             print("%r users tested" % u)
             print("Score so far: %r" % score)
 
         recs = recommender(u, n)
+
+        # Check if too many items recommended
         if len(recs) > n and not n == -1:
             print("Fatal error: too much recommended items.")
 
@@ -164,6 +172,8 @@ def auc(testR, recommender, r):
 
     result = 0
     for u in testR.iterkeys():
+
+        # Progress output
         if u % 100 == 0:
             print("%r users tested" % u)
             print("Score so far: %r" % result)
