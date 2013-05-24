@@ -44,6 +44,7 @@ def hitrate(testR, recommender, n):
         # Check if too many items recommended
         if len(recs) != n and not n == -1:
             print("Fatal error: not the right number of items.")
+
         testSet = set()
         for t in testR[u]:
             testSet.add(t[0])
