@@ -39,12 +39,14 @@ class constant(object):
 class randomRec(object):
     """Recommends items randomly."""
 
-    def __init__(self, dbdict):
+    def __init__(self, dbdict, seed):
         """Initialize the class.
 
             dbdict  --  A dict of the form UserID -> (ItemId, Rating)
+            seed    --  The seed for the randomness
         """
         self.maxIid = 0
+        self.seed = seed
         for data in dbdict.iteritems():
             for itemRating in iter(data[1]):
                 item = itemRating[0]
@@ -56,7 +58,7 @@ class randomRec(object):
         """
         Recommends n random items for user n, which is obsolete in this case.
         """
-        random.seed(1234567890)
+        random.seed(self.seed)
         if self.maxIid < n or n == -1:
             l = range(self.maxIid)
             random.shuffle(l)
