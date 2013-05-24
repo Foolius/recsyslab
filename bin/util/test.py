@@ -178,13 +178,17 @@ def auc(testR, recommender, r):
         if u % 100 == 0:
             print("%r users tested" % u)
             print("Score so far: %r" % result)
+
         e = 0.0  # number of items in E
         score = 0  # how often is the hidden item better
         recs = recommender(u, -1)
+
         for i in testR[u]:
-            score += r.getMaxIid() - recs.index(i[0]) - 1
-            e += maxIid - 1
+            score += r.getMaxIid() - len(r.getR()[u]) - recs.index(i[0]) - 1
+
+        e += maxIid - len(r.getR()[u]) - 1
         result += score / e
+
     result /= len(testR.keys())
     print("AUC: %r" % result)
     return result
