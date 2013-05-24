@@ -166,7 +166,238 @@ key "key-3"
 \end_layout
 
 \begin_layout Chapter
-3 Related Work
+Background
+\end_layout
+
+\begin_layout Section
+Evaluation Methods
+\end_layout
+
+\begin_layout Standard
+To evaluate a recommender algorithm we have to split up the database into
+ one for training and one for evaluation.
+ There are different methods to split the database but in the library only
+ one is implemented.
+\end_layout
+
+\begin_layout Subsection
+Leave-one-out Protocol
+\end_layout
+
+\begin_layout Standard
+The Leave-one-out Protocol means, that we take one interaction of each user
+ out of the database for training and use it for validation.
+ The item the recommender has to predict is also called hidden item.
+ 
+\end_layout
+
+\begin_layout Standard
+Now we can test for each user if the algorithm is capable to predict this
+ missing interaction.
+\end_layout
+
+\begin_layout Subsection
+Evaluation metrics
+\end_layout
+
+\begin_layout Standard
+These are a selection of different metrics to rate the recommendations.
+ By default the evaluations are executed with only one hidden item but generally
+ the metrics should also work with more than just one.
+\end_layout
+
+\begin_layout Subsubsection
+Hitrate/Recall@N
+\end_layout
+
+\begin_layout Standard
+This metrics lets the recommender recommend N items.
+ If the hidden item is under the N recommended items, the recommender got
+ a hit 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-4,key-5"
+
+\end_inset
+
+.
+ So the hitrate is 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\mathrm{\textrm{Hitrate}}=\frac{\mathrm{Number}ofhits}{Numberofhiddenitems}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+This metric is very intuitive you can for example imagine that you show
+ the user 10 items then Recall@10 would be the chance of showing the user
+ an item he will interact with.
+ But this metric doesn't take the number of recommended items into account.
+\end_layout
+
+\begin_layout Subsubsection
+Precision
+\end_layout
+
+\begin_layout Standard
+The precision
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-5"
+
+\end_inset
+
+ is 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula $\textrm{Precision}=\frac{\textrm{numberofhits}}{\textrm{numberofrecommendeditems}}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+As you can clearly see this metric is taken the number of recommended items
+ into account.
+ Which will probably lead to worse results as the number of recommended
+ items increases.
+\end_layout
+
+\begin_layout Subsubsection
+F1
+\end_layout
+
+\begin_layout Standard
+The F1 metric
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-5"
+
+\end_inset
+
+ tries to balance hitrate and precision by taking both into account.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\textrm{F1}=\frac{2*\textrm{Hitrate}*\textrm{Precision}}{(\textrm{Recall}+\textrm{Precision})}
+\]
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Subsubsection
+Mean Reciprocal Hitrate
+\end_layout
+
+\begin_layout Standard
+This metric counts the hits but punishes them the more the lower they appear
+ in the list of recommendations.
+ So if the hidden item appears first in the list of recommendations the
+ hit counts as one, but when it is in the second position the hit already
+ counts only as one half and so on.
+ 
+\end_layout
+
+\begin_layout Subsubsection
+Area under the ROC (AUC)
+\end_layout
+
+\begin_layout Standard
+AUC
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-10"
+
+\end_inset
+
+ counts the number of items the recommender rates higher than the hidden
+ item, normalize it by the number of items the recommender can rate higher.
+ Sum this up for every user and again normalize by the number of users.
+\end_layout
+
+\begin_layout Standard
+To get an implicit score of each item the recommender recommends all items
+ in a list sorted by decreasing score.
+ This is in fact the same as for the other metrics only that the recommender
+ can recommend as many items as possible.
+\end_layout
+
+\begin_layout Section
+Datasets for testing
+\end_layout
+
+\begin_layout Standard
+In the WWW there are several anonymized datasets available to try out recommende
+r systems.
+ Following I will introduce three of them.
+\end_layout
+
+\begin_layout Subsection
+MovieLens
+\end_layout
+
+\begin_layout Standard
+MovieLens
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-12"
+
+\end_inset
+
+ is a database provided by GroupLens, a research lab at the University of
+ Minnesota.
+ One of their research areas is recommender systems and they built an applicatio
+n where users rate movies and then get recommendations for movies the could
+ like.
+ The MovieLens dataset is the ratings gathered by this application.
+ For this work I will interpret the rating as intensity of interaction between
+ users and items for example the number of times the user saw this movie.
+\end_layout
+
+\begin_layout Standard
+The dataset is available in three different sizes:
+\end_layout
+
+\begin_layout Itemize
+100,000 ratings
+\end_layout
+
+\begin_layout Itemize
+1 million ratings
+\end_layout
+
+\begin_layout Itemize
+10 million ratings
+\end_layout
+
+\begin_layout Standard
+For the experiments the smallest dataset is totally sufficient, with the
+ larger datasets the computation time gets too long for just trying something
+ out.
+\end_layout
+
+\begin_layout Subsection
+Million Song Dataset
+\end_layout
+
+\begin_layout Subsection
+SNAP
+\end_layout
+
+\begin_layout Chapter
+Related Work
 \end_layout
 
 \begin_layout Standard
@@ -286,7 +517,12 @@ Recommendation Algorithms
 \end_layout
 
 \begin_layout Section
-Primitive Algorithms
+Non-Personalized Algorithms
+\end_layout
+
+\begin_layout Standard
+In this chapter I will describe two very simple and basic recommendation
+ algorithms I implemented for comparison with the more sophisticated algorithms.
 \end_layout
 
 \begin_layout Subsection
@@ -313,6 +549,12 @@ The random recommender just picks items randomly.
 k-Nearest-Neighbor
 \end_layout
 
+\begin_layout Standard
+This class of recommendation algorithms works by searching neighbors of
+ either items or users based on a similarity function which is the cosine
+ in this library.
+\end_layout
+
 \begin_layout Subsection
 Item Based
 \end_layout
@@ -329,70 +571,19 @@ For this algorithm the database has to be represented as a matrix where
 The algorithm interprets the columns of the matrix i.e.
  the items as vectors and computes there similarities by computing their
  cosine.
- To build the model, for each item, the algorithm computes the n most similar
- items.
- To compute recommendations for user U the algorithm 
-\end_layout
-
-\begin_layout Subsection
-User Based
-\end_layout
-
-\begin_layout Section
-Matrix Factorization
-\end_layout
-
-\begin_layout Subsection
-BPRMF
-\end_layout
-
-\begin_layout Subsection
-RankMFX
-\end_layout
-
-\begin_layout Subsection
-Ranking SVD (Sparse SVD)
-\end_layout
-
-\begin_layout Section
-Evaluation Methods
-\end_layout
-
-\begin_layout Standard
-To evaluate a recommender algorithm we have to split up the database into
- one for training and one for evaluation.
- There are different methods to split the database but in the library only
- one is implemented.
-\end_layout
-
-\begin_layout Subsection
-Leave-one-out Protocol
-\end_layout
-
-\begin_layout Standard
-The Leave-one-out Protocol means, that we take one interaction of each user
- out of the database for training and use it for validation.
- The item the recommender has to predict is also called hidden item.
+ To build the model the algorithm computes the n most similar items of each
+ item.
  
 \end_layout
 
 \begin_layout Standard
-Now we can test for each user if the algorithm is capable to predict this
- missing interaction.
-\end_layout
-
-\begin_layout Section
-Evaluation metrics
-\end_layout
-
-\begin_layout Subsection
-Hitrate/Recall@N
-\end_layout
-
-\begin_layout Standard
-This metrics lets the recommender recommend N items.
- If the hidden item is under the N recommended items, the recommender got
- a hit 
+To compute recommendations for user U the algorithm then computes the union
+ of the n most similar items of each item U interacted with.
+ From this set the items U already interacted with are removed.
+ For each item remaining in this set we compute the sum of its similarities
+ to the items U interacted with.
+ Finally these items are sorted in decreasing order of this sum of similarities
+ and the first n items will be recommended
 \begin_inset CommandInset citation
 LatexCommand cite
 key "key-4"
@@ -400,13 +591,62 @@ key "key-4"
 \end_inset
 
 .
- The hitrate is now 
+\end_layout
+
+\begin_layout Subsection
+User Based
 \end_layout
 
 \begin_layout Standard
+The user based k-Nearest-Neighbor is very similar to the item based.
+ But instead of interpreting the columns as vectors we interpret the lines
+ or users of the matrix as vectors and compute their similarities to other
+ users.
+\end_layout
+
+\begin_layout Standard
+Then for each item i we sum up the similarities between U and the users
+ who interacted with i.
+ Again we remove all items U already interacted with, sort in decreasing
+ order fo the sum and recommend the first n items.
+\end_layout
+
+\begin_layout Section
+Matrix Factorization
+\end_layout
+
+\begin_layout Standard
+All matrix factorization techniques build two matrices in the model building
+ phase.
+ These matrices are supposed to represent abstract features of each item
+ and user.
+ For recommendation the dot product of the feature vector of an user and
+ an item gives a score whith which we can sort the items and recommend the
+ best suitable ones.
+ The process of presenting a large matrix M as two smaller matrices W and
+ H so that M = W*H is also called singular value decomposition.
+\end_layout
+
+\begin_layout Standard
+Each of the implemented algorithms train the model with stochastic gradient
+ descent.
+ In each iteration the model is trained with a randomly chosen user, a randomly
+ chosen item the user interacted with, called the positive item and a randomly
+ chosen item the user didn't interacted with yet, called the negative item.
+ The features of the user and the negative and the positive item are then
+ trained according to the derivative of a loss function.
+\end_layout
+
+\begin_layout Subsection
+BPRMF
+\end_layout
+
+\begin_layout Standard
+BPMRF uses the logloss to train the model.
+ The logloss is defined as
 \begin_inset Formula 
 \[
-\mathrm{\textrm{hitrate}}=\frac{\mathrm{Number}ofhits}{Numberofhiddenitems}
+\textrm{logLoss}(a,y)=\log(1+\exp(-ay))
 \]
 
 \end_inset
@@ -414,36 +654,86 @@ key "key-4"
 
 \end_layout
 
-\begin_layout Subsection
-Precision
+\begin_layout Standard
+And the derivative of the log loss is
+\begin_inset Formula 
+\[
+\frac{\partial}{\partial y}(\log(1+\exp(-ay)))=-\frac{a}{\exp(ay)+1}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For further informations please refer to 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-10"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
-F1
+RankMFX
+\end_layout
+
+\begin_layout Standard
+RankMFX uses the hingeLoss.
+ It is defined as
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\mathrm{\textrm{hingeLoss}(a,y)=\max(0,1-ay)}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+And its derivative
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\frac{\partial}{\partial y}(\max(0,1-ay))=\begin{cases}
+-y & ay<1\\
+0 & \textrm{otherwise}
+\end{cases}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+See also [Paper for citation?]
 \end_layout
 
 \begin_layout Subsection
-Mean Reciprocal Hitrate
+Ranking SVD (Sparse SVD)
 \end_layout
 
-\begin_layout Subsection
-Area under the ROC
-\end_layout
+\begin_layout Standard
+Ranking SVD uses the quadratic loss and the difference between the predicted
+ score of the positive item and the negative minus the actual score of the
+ positive item.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "key-11"
 
-\begin_layout Chapter
-Datasets for testing
-\end_layout
+\end_inset
 
-\begin_layout Section
-MovieLens
-\end_layout
 
-\begin_layout Section
-Million Song Dataset
-\end_layout
-
-\begin_layout Section
-SNAP
 \end_layout
 
 \begin_layout Chapter
@@ -594,6 +884,50 @@ key "key-4"
 \end_inset
 
 Evaluation of Item-Based Top-N Recommendation Algorithms by George Karypis
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-5"
+
+\end_inset
+
+Application of Dimensionality Reduction in Recommender System -- A Case
+ Study by Badrul M.
+ Sarwar et al
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-10"
+
+\end_inset
+
+BPR: Bayesian Personalized Ranking from Implicit Feedback from Steffen Rendle
+ et al
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-11"
+
+\end_inset
+
+Collaborative Filtering Ensemble for Ranking by Michael Jahrer, Andreas
+ Töscher
+\end_layout
+
+\begin_layout Bibliography
+\begin_inset CommandInset bibitem
+LatexCommand bibitem
+key "key-12"
+
+\end_inset
+
+http://grouplens.org/node/73
 \end_layout
 
 \end_body
