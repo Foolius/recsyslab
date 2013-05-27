@@ -227,7 +227,7 @@ key "key-4,key-5"
 \begin_layout Standard
 \begin_inset Formula 
 \[
-\mathrm{\textrm{Hitrate}}=\frac{\mathrm{Number}ofhits}{Numberofhiddenitems}
+\mathrm{\textrm{Hitrate}}=\frac{\textrm{\mathrm{Number}ofhits}}{\textrm{Numberofhiddenitems}}
 \]
 
 \end_inset
@@ -258,7 +258,11 @@ key "key-5"
 \end_layout
 
 \begin_layout Standard
-\begin_inset Formula $\textrm{Precision}=\frac{\textrm{numberofhits}}{\textrm{numberofrecommendeditems}}$
+\begin_inset Formula 
+\[
+\textrm{Precision}=\frac{\textrm{numberofhits}}{\textrm{numberofrecommendeditems}}
+\]
+
 \end_inset
 
 

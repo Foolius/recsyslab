@@ -1,0 +1,127 @@
+%*******************************************************
+% Titlepage
+%*******************************************************
+%%%
+%%% title page (german)
+%%%
+\pdfbookmark[0]{Titelblatt}{title}
+\begin{titlepage}
+  \changetext{}{19mm}{}{19mm}{}
+  \vspace{1cm}
+  \begin{center}
+    \includegraphics[width=13.8cm]{gfx/welfenschloss} \\ 
+  \end{center}
+  \medskip
+  \begin{center}
+    \textbf{\huge\spacedallcaps{L}\LARGE\spacedallcaps{eibniz}}
+    \textbf{\huge\spacedallcaps{U}\LARGE\spacedallcaps{niversit\"{a}t}}
+    \textbf{\huge\spacedallcaps{H}\LARGE\spacedallcaps{annover}} \\
+  \end{center}
+
+  \begin{center}
+    \normalsize
+    \spacedallcaps{Fakult\"{a}t}
+    \spacedallcaps{f\"{u}r}
+    \spacedallcaps{Elektrotechnik}
+    \spacedallcaps{und}
+    \spacedallcaps{Informatik} \\
+    \smallskip
+    \spacedallcaps{Institut}
+    \spacedallcaps{f\"{u}r}
+    \spacedallcaps{Kommunikationstechnik}
+  \end{center}
+  \vfill
+  \vfill
+
+  % Start condWIWI
+  \condWIWI{
+  %*******************************************************
+  % Titlepage for Wirtschaftingenieur
+  %*******************************************************
+  \begin{center}
+    \Large \myTitle
+  \end{center}
+  \vfill
+  \vfill
+
+  \begin{center}
+    \LARGE \textbf{\myDegree}
+  \end{center}
+  \vfill
+
+  \begin{center}
+    \large zur Erlangung des Grades eines Diplom-Wirtschaftsingenieurs der \\
+    \large Fakult\"{a}t f\"{u}r Elektrotechnik und Informatik, Fakult\"{a}t f\"{u}r Maschinenbau und \\
+    \large Wirtschaftswissenschaftlichen Fakult\"{a}t der Leibniz Universit\"{a}t Hannover
+  \end{center}
+  \vfill
+
+  \begin{center}
+    \large vorgelegt von \\
+  \end{center}
+  \medskip
+
+  \begin{center}
+    \large \spacedallcaps{\myName}
+  \end{center}
+  \medskip
+
+  \begin{center}
+    \large geb. am \myBirthdate in \myBirthplace \\
+  \end{center}
+
+  \vfill
+  \vfill
+
+  Pr\"{u}fer: \myProf
+  \bigskip
+
+  Hannover, den \myTime
+  } 
+  {
+  %*******************************************************
+  % Titlepage for everyone else 
+  %*******************************************************
+  \begin{center}
+    \LARGE \myTitle
+  \end{center} 
+  \vfill
+  \vfill
+
+  \begin{center}
+    \LARGE \textbf{\myDegree}
+  \end{center}
+  \vfill
+
+  \begin{center}
+    \large eingereicht von \\
+  \end{center}
+
+  \begin{center}
+    \large \spacedallcaps{\myName}
+  \end{center}
+
+  \begin{center}
+    \large am \myTime \\
+  \end{center} 
+  \vfill
+
+  \begin{center}
+    \begin{tabular}{lll}
+      Erstpr\"{u}fer  & : & \myProf \\
+      Zweitpr\"{u}fer & : & \myOtherProf \\
+      Betreuer        & : & \mySupervisor
+    \end{tabular}
+  \end{center} 
+
+  }  % end condWIWI
+
+%  \vfill
+
+%  \begin{center}
+%    \large \selectedthesisnumber \\
+%  \end{center}
+
+  \changetext{}{-19mm}{}{-19mm}{}
+
+\end{titlepage}

@@ -1,0 +1,10 @@
+To use the IKT-Thesis template on Ubuntu you need to install the following packages
+
+ - texmaker
+ - texlive-bibtex-extra
+ - texlive-fonts-recommended
+ - texlive-fonts-extra
+
+using the following command:
+
+sudo apt-get install texmaker texlive-bibtex-extra texlive-fonts-recommended texlive-fonts-extra

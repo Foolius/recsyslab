@@ -1,0 +1,15 @@
+%*******************************************************
+% List of Figures
+%*******************************************************    
+\automark[section]{chapter}
+\renewcommand{\chaptermark}[1]{\markboth{\spacedlowsmallcaps{#1}}{\spacedlowsmallcaps{#1}}}
+\renewcommand{\sectionmark}[1]{\markright{\thesection\enspace\spacedlowsmallcaps{#1}}}
+%\phantomsection 
+\refstepcounter{dummy}
+%\addcontentsline{toc}{chapter}{\listfigurename}
+\pdfbookmark[1]{\listfigurename}{lof}
+\listoffigures
+
+\vspace*{8ex}
+
+\cleardoublepage

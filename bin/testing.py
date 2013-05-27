@@ -82,7 +82,7 @@ def knn():
     train, test1 = split.splitMatrix(r.getMatrix(), 1234567890)
 
     from recommender import knn
-    k = knn.itemKnn(train, 10)
+    k = knn.userKnn(train, 10)
 
     from util import test
     print test.hitrate(test1, k.getRec, 10)
@@ -96,20 +96,20 @@ def knn():
     # so = cPickle.load(inputfile)
     # inputfile.close()
 
-knn()
+# knn()
 
 
 def simple():
     from util import reader
-    r = reader.tabSepReader("u.data")
+    r = reader.stringSepReader("u.data", "\t")
 
     from util import split
     train, test1 = split.split(r.getR(), 1234567890)
 
-    from recommender import primitive
-    c = primitive.randomRec(r.getR())
+    from recommender import nonpersonalized
+    c = nonpersonalized.randomRec(r.getR(), 3284092)
 
     from util import test
     test.auc(test1, c.getRec, r)
 
-# simple()
+simple()
