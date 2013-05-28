@@ -25,8 +25,8 @@ class stringSepReader(object):
         for line in self.dbfile:
             self.numberOfTransactions += 1
             split = line.strip().split(separator, 3)
-            origUid = int(split[0])
-            origIid = int(split[1])
+            origUid = split[0]
+            origIid = split[1]
             try:
                 rating = int(split[2])
             except IndexError:
