@@ -1,4 +1,4 @@
-% **************************************************************************************************************
+	% **************************************************************************************************************
 % A Classic Thesis Style
 % An Homage to The Elements of Typographic Style
 %
@@ -54,24 +54,24 @@
 % ********************************************************************
 % Re-usable information
 % ********************************************************************
-\newcommand{\myTitle}{A Classic Thesis Style\xspace}
-\newcommand{\myDegree}{Diplomarbeit\xspace}
-\newcommand{\myName}{Max Mustermann\xspace}
-\newcommand{\myProf}{Prof. Dr.-Ing. M. Fidler\xspace}
-\newcommand{\myOtherProf}{Prof. Dr.-Ing. T. Kaiser\xspace}
-\newcommand{\mySupervisor}{Dipl.-Ing. M. Bredel\xspace}
+\newcommand{\myTitle}{Multi-purpose Library of Recommender System Algorithms for the Item Prediction Task\xspace}
+\newcommand{\myDegree}{Bachelor Thesis\xspace}
+\newcommand{\myName}{Julius Kolbe\xspace}
+\newcommand{\myProf}{Prof. Dr. techn. Wolfgang Nejdl\xspace}
+\newcommand{\myOtherProf}{Jun.-Prof. Dr. rer. nat. Robert J\"{a}schke\xspace}
+\newcommand{\mySupervisor}{Ernesto Diaz-Aviles\xspace}
 \newcommand{\myFaculty}{Fakult\"{a}t f\"{u}Elektrotechnik und Informationstechnik\xspace}
-\newcommand{\myDepartment}{Institut f\"{u}r Kommunikationstechnik\xspace}
+\newcommand{\myDepartment}{Institut f\"{u}r Verteilte Systeme\xspace}
 \newcommand{\myUni}{\protect{Leibniz Universit\"{a}}t Hannover\xspace}
 \newcommand{\myLocation}{Hannover\xspace}
-\newcommand{\myTime}{01. Mai 2009\xspace}
-\newcommand{\myBirthdate}{01.Januar. 1970\xspace}
-\newcommand{\myBirthplace}{Linuxhausen\xspace}
-\newcommand{\myVersion}{Version 2.6.1\xspace}
+\newcommand{\myTime}{11. Juni 2013\xspace}
+\newcommand{\myBirthdate}{10.Oktober. 1989\xspace}
+\newcommand{\myBirthplace}{Hannover\xspace}
+\newcommand{\myVersion}{Version 0.0.1\xspace}
 % ********************************************************************
 % Packages with options that might require adjustments
 % ********************************************************************
-\usepackage[latin1]{inputenc} 
+\usepackage[latin1]{inputenc}
 \usepackage[ngerman,american]{babel}           
 \usepackage[square,numbers]{natbib} 
 \usepackage[fleqn]{amsmath} % math environments and more by the AMS 
@@ -196,7 +196,7 @@
 \begin{document}
 \frenchspacing
 \raggedbottom
-\selectlanguage{ngerman} % american ngerman
+\selectlanguage{american} % american ngerman
 %\renewcommand*{\bibname}{new name}
 %\setbibpreamble{}
 \pagenumbering{roman}
@@ -210,27 +210,34 @@
 \cleardoublepage\include{FrontBackmatter/Abstract}
 \pagestyle{scrheadings}
 \cleardoublepage\include{FrontBackmatter/Contents}
-\cleardoublepage\include{FrontBackmatter/Figures}
-\cleardoublepage\include{FrontBackmatter/Tables}
-\cleardoublepage\include{FrontBackmatter/Listings}
-\cleardoublepage\include{FrontBackmatter/Acronyms}
+%\cleardoublepage\include{FrontBackmatter/Figures}
+%\cleardoublepage\include{FrontBackmatter/Tables}
+%\cleardoublepage\include{FrontBackmatter/Listings}
+%\cleardoublepage\include{FrontBackmatter/Acronyms}
 % ********************************************************************
 % Mainmatter
 % ********************************************************************
 \pagenumbering{arabic}
 % use \cleardoublepage here to avoid problems with pdfbookmark
 % insert your chapters here
-\cleardoublepage\part{Beispiel einer Arbeit}
-\include{Chapters/examples/chapter01}
-\include{Chapters/examples/chapter02}
-\include{Chapters/examples/chapter03}
+%\cleardoublepage\part{Beispiel einer Arbeit}
+\include{Chapters/chapter01}
+\include{Chapters/chapter02}
+\include{Chapters/chapter03}
+\include{Chapters/chapter04}
+\include{Chapters/chapter05}
+\include{Chapters/chapter06}
+\include{Chapters/chapter07}
+\include{Chapters/chapter08}
+%\include{Chapters/examples/chapter02}
+%\include{Chapters/examples/chapter03}
 % ********************************************************************
 % Backmatter
 % ********************************************************************
-\appendix
+%\appendix
 % insert your appendix here
-\cleardoublepage\part{Appendix - Some Kind of Manual}
-\include{Chapters/examples/appendix01}
+%\cleardoublepage\part{Appendix - Some Kind of Manual}
+%\include{Chapters/examples/appendix01}
 %********************************************************************
 % Other Stuff in the Back
 % ********************************************************************´

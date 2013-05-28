@@ -1,0 +1,128 @@
+
+\chapter{Background}
+
+
+\section{Evaluation Methods}
+
+To evaluate a recommender algorithm we have to split up the database
+into one for training and one for evaluation. There are different
+methods to split the database but in the library only one is implemented.
+
+
+\subsection{Leave-one-out Protocol}
+
+The Leave-one-out Protocol means, that we take one interaction of
+each user out of the database for training and use it for validation.
+The item the recommender has to predict is also called hidden item. 
+
+Now we can test for each user if the algorithm is capable to predict
+this missing interaction.
+
+
+\subsection{Evaluation metrics}
+
+These are a selection of different metrics to rate the recommendations.
+By default the evaluations are executed with only one hidden item
+but generally the metrics should also work with more than just one.
+
+
+\subsubsection{Hitrate/Recall@N}
+
+This metrics lets the recommender recommend N items. If the hidden
+item is under the N recommended items, the recommender got a hit \cite{Karypis:2001:EIT:502585.502627, Sarwar00applicationof}.
+So the hitrate is 
+
+\[
+\mathrm{\textrm{Hitrate}}=\frac{\textrm{\ensuremath{\mathrm{Number}}ofhits}}{\textrm{Numberofhiddenitems}}
+\]
+
+
+This metric is very intuitive you can for example imagine that you
+show the user 10 items then Recall@10 would be the chance of showing
+the user an item he will interact with. But this metric doesn't take
+the number of recommended items into account.
+
+
+\subsubsection{Precision}
+
+The precision\cite{Sarwar00applicationof} is 
+
+\[
+\textrm{Precision}=\frac{\textrm{numberofhits}}{\textrm{numberofrecommendeditems}}
+\]
+
+
+As you can clearly see this metric is taken the number of recommended
+items into account. Which will probably lead to worse results as the
+number of recommended items increases.
+
+
+\subsubsection{F1}
+
+The F1 metric\cite{Sarwar00applicationof} tries to balance hitrate and precision
+by taking both into account.
+
+\[
+\textrm{F1}=\frac{2*\textrm{Hitrate}*\textrm{Precision}}{(\textrm{Recall}+\textrm{Precision})}
+\]
+ 
+
+
+\subsubsection{Mean Reciprocal Hitrate}
+
+This metric counts the hits but punishes them the more the lower they
+appear in the list of recommendations. So if the hidden item appears
+first in the list of recommendations the hit counts as one, but when
+it is in the second position the hit already counts only as one half
+and so on. 
+
+
+\subsubsection{Area under the ROC (AUC)}
+
+AUC\cite{Rendle:2009:BBP:1795114.1795167} counts the number of items the recommender rates
+higher than the hidden item, normalize it by the number of items the
+recommender can rate higher. Sum this up for every user and again
+normalize by the number of users.
+
+To get an implicit score of each item the recommender recommends all
+items in a list sorted by decreasing score. This is in fact the same
+as for the other metrics only that the recommender can recommend as
+many items as possible.
+
+
+\section{Datasets for testing}
+
+In the WWW there are several anonymized datasets available to try
+out recommender systems. Following I will introduce three of them.
+
+
+\subsection{MovieLens}
+
+MovieLens\cite{movielensdatasets} is a database provided by GroupLens, a research
+lab at the University of Minnesota. One of their research areas is
+recommender systems and they built an application where users rate
+movies and then get recommendations for movies the could like. The
+MovieLens dataset is the ratings gathered by this application. For
+this work I will interpret the rating as intensity of interaction
+between users and items for example the number of times the user saw
+this movie.
+
+The dataset is available in three different sizes:
+\begin{itemize}
+\item 100,000 ratings
+\item 1 million ratings
+\item 10 million ratings
+\end{itemize}
+For the experiments the smallest dataset is totally sufficient, with
+the larger datasets the computation time gets too long for just trying
+something out.
+
+
+\subsection{Million Song Dataset}
+The million song dataset\cite{Bertin-Mahieux2011} is a large database of features and media data
+of a million songs. For a challenge they also provided the listening history of over 1 million
+user. To present I will use a subset of this dataset to keep the computing time required
+reasonable low so it's easier for others to retrace the results.
+
+
+\subsection{SNAP}

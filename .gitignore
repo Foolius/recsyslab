@@ -5,3 +5,11 @@
 .ropeproject/
 *~
 *#
+*aux
+*log
+*bbl
+*blg
+*lof
+*lol
+*lot
+*out
