@@ -6,7 +6,10 @@ how to test them with the provided test metrics. For informations about
 the recommendation algorithms, please refer to \ref{recommendationalgorithms}.
 For informations about the test metrics refer to \ref{evaluationmetrics}.
 Also for help you can use the inline documentation available as docstrings.
-You can display them with the command line utility pydoc\footnote{I will use \$ to indicate a bash prompt.}. So for example when you're in the
+The following python code is also in the file manual.py in the bin directory of the library
+so you don't have to copy the code out of this pdf document.
+You can display them with the command line utility
+pydoc\footnote{I will use \$ to indicate a bash prompt.}. So for example when you're in the
 bin directory of the library call
 
 \begin{lstlisting}
@@ -89,8 +92,231 @@ You do this by calling
 This will split a dict like r.getR() returns into a trainingDict where one transaction
 per user is missing and an evaluationDict with these missing transactions.
 
+
+\section{Non-Personalized Algorithms}
+To make our first simple recommendations with the constant recommender
+we need to initialize an object of the constant class.
+As parameter the constructor needs a dict for training
 \begin{lstlisting}
->>> trainingMatrix, matrixEvaluationDict = util.splitMatrix(r, 123456789)
+import recommender.nonpersonalized
+constant = recommender.nonpersonalized.constant(r.getR())
+constant.getRec(0, 10)
+\end{lstlisting}
+Every recommender has a getRec function with this signature. The first paramater is the internal
+UserID, the second is the number of items to be recommended. If n = -1 all items get recommendend.
+Also the IDs of the recommended items are internal ones.
+If you want to pass external UserIDs and get external ItemIDs back you don't have
+to map them all by yourself. Instead you can use a helper function called
+getExternalRec.
+\begin{lstlisting}
+import util.helper
+externalConstantgetRec = 
+    util.helper.getExternalRec(constant.getRec, r)
+externalConstantgetRec("196", 10)
+\end{lstlisting}
+You pass the getRec function and the reader object and you get a new function
+which takes and returns only the original IDs.
+
+Now we want to find out how good this algorithm is performing.
+Excpet AUC the functions for computing the metrics work by letting the recommender recommend
+for every user as much items as specified in the third parameter.
+With these recommendations and the hidden items the methods then calculate the
+performance according to the respective metric.
+The other parameters are a dict with the hidden items and the getRec function of the 
+respective recommender algorithm.
+
+First we will compute the hitrate
+\begin{lstlisting}
+>>> import util.test
+>>> hits, items = util.test.hitrate(evaluationDict, constant.getRec, 10)
+0 users tested
+Hits so far: 0.0
+100 users tested
+Hits so far: 4.0
+200 users tested
+Hits so far: 14.0
+300 users tested
+Hits so far: 26.0
+400 users tested
+Hits so far: 31.0
+500 users tested
+Hits so far: 40.0
+600 users tested
+Hits so far: 49.0
+700 users tested
+Hits so far: 52.0
+800 users tested
+Hits so far: 61.0
+900 users tested
+Hits so far: 67.0
+Number of hits: 69.0
+Number of possible hits: 943.0
+Hitrate: 0.07317073170731707
+\end{lstlisting}
+After some progress output it prints the number of hits and the number of 
+possible hits which is in our case also the number of users. The hitrate
+is then its quotient.
+
+
+Next we will calculate the precision
+\begin{lstlisting}
+>>> precision = util.test.precision(evaluationDict, constant.getRec, 10)
+0 users tested
+Hits so far: 0.0
+100 users tested
+Hits so far: 4.0
+200 users tested
+Hits so far: 14.0
+300 users tested
+Hits so far: 26.0
+400 users tested
+Hits so far: 31.0
+500 users tested
+Hits so far: 40.0
+600 users tested
+Hits so far: 49.0
+700 users tested
+Hits so far: 52.0
+800 users tested
+Hits so far: 61.0
+900 users tested
+Hits so far: 67.0
+Number of hits: 69.0
+Number of possible hits: 943.0
+Precision: 6.9
+\end{lstlisting}
+The output looks similar to the one of hitrate and also means quite the same.
+
+Very similar we can calculate the F1 metric
+\begin{lstlisting}
+0 users tested
+Hits so far: 0.0
+100 users tested
+Hits so far: 4.0
+200 users tested
+Hits so far: 14.0
+300 users tested
+Hits so far: 26.0
+400 users tested
+Hits so far: 31.0
+500 users tested
+Hits so far: 40.0
+600 users tested
+Hits so far: 49.0
+700 users tested
+Hits so far: 52.0
+800 users tested
+Hits so far: 61.0
+900 users tested
+Hits so far: 67.0
+Number of hits: 69.0
+Number of possible hits: 943.0
+F1: 0.14480587618048268
+\end{lstlisting}
+
+Also the Mean reciprocal hitrate
+\begin{lstlisting}
+0 users tested
+Score so far: 0.0
+100 users tested
+Score so far: 0.675
+200 users tested
+Score so far: 2.9972222222222227
+300 users tested
+Score so far: 7.290079365079365
+400 users tested
+Score so far: 8.34404761904762
+500 users tested
+Score so far: 10.305158730158729
+600 users tested
+Score so far: 12.464682539682537
+700 users tested
+Score so far: 12.982539682539679
+800 users tested
+Score so far: 18.332539682539675
+900 users tested
+Score so far: 19.56825396825396
+Score: 19.79325396825396
+Number of possible hits: 943.0
+Mean Reciprocal Hitrate: 0.02098966486559275
+\end{lstlisting}
+
+
+To compute the AUC the third parameters has to be our reader object because
+the function needs additional information to compute its metric.
+We don't need to specify the number of items to recommend because
+the AUC works by comparing all items so it needs the recommender
+to recommend all available items.
+The first two parameters don't change.
+\begin{lstlisting}
+>>> util.test.auc(evaluationDict, constant.getRec, r)
+0 users tested
+Score so far: 0
+100 users tested
+Score so far: 77.97155778327935
+200 users tested
+Score so far: 163.24761858534592
+300 users tested
+Score so far: 247.0700325949549
+400 users tested
+Score so far: 329.3602045603418
+500 users tested
+Score so far: 413.3631291487538
+600 users tested
+Score so far: 498.4268891693222
+700 users tested
+Score so far: 581.1334125793506
+800 users tested
+Score so far: 663.7179944721634
+900 users tested
+Score so far: 746.0474962705288
+AUC: 0.828894041097185
+\end{lstlisting}
+
+These are all evaluation metrics. They work the same for all 
+recommendation algorithms. You just need to provide the getRec function.
+
+The second non-personalized algorithm is the random recommender.
+You can use it like this
+\begin{lstlisting}
+>>> randomRec = recommender.nonpersonalized.randomRec(r.getR(), 1234567890)
+>>> randomRec.getRec(0, 10)
+[1548, 1068, 746, 1357, 1501, 1359, 428, 141, 233, 726]
+>>> util.test.hitrate(evaluationDict, randomRec.getRec, 10)
+0 users tested
+Hits so far: 0.0
+100 users tested
+Hits so far: 2.0
+200 users tested
+Hits so far: 3.0
+300 users tested
+Hits so far: 3.0
+400 users tested
+Hits so far: 4.0
+500 users tested
+Hits so far: 4.0
+600 users tested
+Hits so far: 4.0
+700 users tested
+Hits so far: 4.0
+800 users tested
+Hits so far: 5.0
+900 users tested
+Hits so far: 5.0
+Number of hits: 5.0
+Number of possible hits: 943.0
+Hitrate: 0.005302226935312832
+\end{lstlisting}
+The second paratemer of the constructor is the seed for the random function.
+From now on I will only show the hitrate because the other metric are computed
+similarly. But feel free to also compute the other metrics as well.
+
+\section{k-Nearest Neighbor}
+Now we want to try the first more sophisticated algorithm, namely the item based
+k-Nearest Neighbor. The k-Nearest Neighbor algorithms need the database as a matrix so we have to
+first split the matrix provided by the reader object.
+\begin{lstlisting}
+>>> trainingMatrix, matrixEvaluationDict = util.split.splitMatrix(r.getMatrix, 123456789)
 0 Users split.
 100 Users split.
 200 Users split.
@@ -107,36 +333,254 @@ So here we pass a matrix like r.getMatrix() returns and get a trainingMatrix whe
 entry per user is set to 0 and a dict with these missing entries.
 To understand the matrix represention of the dataset refer to \ref{itembasedknn}
 
-
-\section{Non-Personalized Algorithms}
-To make our first simple recommendations with the constant recommender
-we need to initialize an object of the constant class.
-As parameter the constructor needs a dict for training
+So we initialize an itemKnn object. The initialization builds the model yet
+so it will need some time until the constructor has finished.
 \begin{lstlisting}
-import recommender.nonpersonalized
-constant = recommender.nonpersonalized.constant(r.getR())
-constant.getRec(0, 10)
+import recommender.knn
+itemKnn = recommender.knn.itemKnn(trainingMatrix, 10)
+0 Similarities calculated
+10000 Similarities calculated
+20000 Similarities calculated
+30000 Similarities calculated
+...
+1400000 Similarities calculated
+1410000 Similarities calculated
 \end{lstlisting}
-Every recommender has a getRec function with this signature. The first paramater is the internal
-UserID, the second is the number of items to be recommended. Also the IDs of
-the recommended items are internal ones.
-If you want to pass external UserIDs and get external ItemIDs back you don't have
-to map them all by yourself. Instead you can use a helper function called
-getExternalRec.
+Please note that you pass the the right dict for evaluation as the first parameter
+in this case it's matrixEvaluationDict.
+The second parameter is the number of neighbors to include into the neighborhood.
+During the model building phase the algorithm will compute the similarity of each
+item to each other item. But because this similarity is associative it's only
+necessary to compute the half. The 100k movieLens dataset I use for these examples
+has 1682 items so we get about \begin{math} \frac{1682^2}{2} = 1414562 \end{math} 
+similarities to compute.
+
+Now you can test this algorithm with the test metrics for example the hitrate
 \begin{lstlisting}
-import util.helper
-externalConstantgetRec = util.helper.getExternalRec(constant.getRec, r)
-externalConstantgetRec("196", 10)
+util.test.hitrate(matrixEvaluationDict, itemKnn.getRec, 10)
+0 users tested
+Hits so far: 0.0
+100 users tested
+Hits so far: 21.0
+200 users tested
+Hits so far: 54.0
+300 users tested
+Hits so far: 78.0
+400 users tested
+Hits so far: 97.0
+500 users tested
+Hits so far: 126.0
+600 users tested
+Hits so far: 152.0
+700 users tested
+Hits so far: 181.0
+800 users tested
+Hits so far: 211.0
+900 users tested
+Hits so far: 239.0
+Number of hits: 248.0
+Number of possible hits: 943.0
+Hitrate: 0.26299045599151644
 \end{lstlisting}
+As you can see this algorithm achieves much better performance than the
+non-personalized algorithms.
 
-
-\section{k-Nearest Neighbor}
-
+For user based k-Nearest Neighbors the call to build the model looks like this
+\begin{lstlisting}
+>>> userKnn = recommender.knn.userKnn(trainingMatrix, 10)
+0 Similarities calculated
+10000 Similarities calculated
+20000 Similarities calculated
+30000 Similarities calculated
+...
+430000 Similarities calculated
+440000 Similarities calculated
+\end{lstlisting}
+The dataset has 943 users so this time we have to compute approximately
+\begin{math} \frac{943^2}{2} = 444624 \end{math} similarities.
+To get the hitrate for this algorithm just like before we call the hitrate
+function with the getRec function.
+\begin{lstlisting}
+>>> util.test.hitrate(matrixEvaluationDict, userKnn.getRec, 10)
+0 users tested
+Hits so far: 0.0
+100 users tested
+Hits so far: 21.0
+200 users tested
+Hits so far: 45.0
+300 users tested
+Hits so far: 72.0
+400 users tested
+Hits so far: 91.0
+500 users tested
+Hits so far: 120.0
+600 users tested
+Hits so far: 142.0
+700 users tested
+Hits so far: 164.0
+800 users tested
+Hits so far: 196.0
+900 users tested
+Hits so far: 223.0
+Number of hits: 230.0
+Number of possible hits: 943.0
+Hitrate: 0.24390243902439024
+\end{lstlisting}
 
 \section{BPRMF}
+For the matrix factorization algorithms like BPRMF RankMFX
+and Ranking SVD you need to specify some meta parameters.
+\begin{lstlisting}
+>>> import recommender.BPRMF
+>>> W, H = recommender.BPRMF.learnModel(r.getMaxUid(), r.getMaxIid(),
+                        0.01, 0.01, 0.01,   # regularization parameter
+                        0.1,                # learning rate
+                        trainingMatrix,
+                        150,                # number of features
+                        3,                  # number of epochs
+                        r.numberOfTransactions)
+Epoch: 1/3 | iteration 1000/100000 | learning rate=0.100000 | average_loss for the last 1000 iterations = 0.697530
+Epoch: 1/3 | iteration 2000/100000 | learning rate=0.100000 | average_loss for the last 1000 iterations = 0.694108
+Epoch: 1/3 | iteration 3000/100000 | learning rate=0.100000 | average_loss for the last 1000 iterations = 0.695815
+...
+Epoch: 3/3 | iteration 99000/100000 | learning rate=0.100000 | average_loss for the last 1000 iterations = 0.124050
+Epoch: 3/3 | iteration 100000/100000 | learning rate=0.100000 | average_loss for the last 1000 iterations = 0.125070
+\end{lstlisting}
+This will output quite a much so you can observe how the loss is behaving.
+With a short search I found these values for the regularization parameters
+and the learning rate to be quite good, although they aren't probably the
+best. But above all the results will get better with more epochs but then
+it will naturally take longer to compute so three is alright for a short
+experiment.
 
+The learnModel returns a model in the form of two matrices. Two get a 
+getRec method you have to instantiate a Mfrec class from the mf module
+in recommender.mf which offers such a method.
+\begin{lstlisting}
+>>> BPRMF = recommender.mf.MFrec(W, H, trainingDict)
+>>> util.test.hitrate(evaluationDict, BPRMF.getRec, 10)
+0 users tested
+Hits so far: 0.0
+100 users tested
+Hits so far: 26.0
+200 users tested
+Hits so far: 51.0
+300 users tested
+Hits so far: 78.0
+400 users tested
+Hits so far: 95.0
+500 users tested
+Hits so far: 122.0
+600 users tested
+Hits so far: 148.0
+700 users tested
+Hits so far: 171.0
+800 users tested
+Hits so far: 203.0
+900 users tested
+Hits so far: 224.0
+Number of hits: 235.0
+Number of possible hits: 943.0
+Hitrate: 0.2492046659597031
+\end{lstlisting}
+As noted above the results get better with more epochs. As you can see
+in \ref{experiments}
 
 \section{RankMFX}
+\begin{lstlisting}
+>>> import recommender.RankMFX
+>>> W, H = recommender.RankMFX.learnModel(r.getMaxUid(), r.getMaxIid(),
+                    0.01, 0.01, 0.01, # regularization parameter
+                    0.1,              # learning rate
+                    trainingDict,
+                    150,              # number of features
+                    3,                # number of epochs
+                    r.numberOfTransactions)
+Epoch: 1/3 | iteration 1000/100000 | learning rate=0.100000 | average_loss for the last 1000 iterations = 1.000484
+Epoch: 1/3 | iteration 2000/100000 | learning rate=0.100000 | average_loss for the last 1000 iterations = 0.987704
+Epoch: 1/3 | iteration 3000/100000 | learning rate=0.100000 | average_loss for the last 1000 iterations = 0.986371
+\end{lstlisting}
+Again there is much output to monitor the algorithm.
+
+As above we have to generate a getRec method. Before we can evaluate the algorithm.
+\begin{lstlisting}
+>>> BPRMF = recommender.mf.MFrec(W, H, trainingDict)
+>>> util.test.hitrate(evaluationDict, BPRMF.getRec, 10)
+0 users tested
+Hits so far: 0.0
+100 users tested
+Hits so far: 14.0
+200 users tested
+Hits so far: 32.0
+300 users tested
+Hits so far: 54.0
+400 users tested
+Hits so far: 71.0
+500 users tested
+Hits so far: 89.0
+600 users tested
+Hits so far: 105.0
+700 users tested
+Hits so far: 120.0
+800 users tested
+Hits so far: 138.0
+900 users tested
+Hits so far: 152.0
+Number of hits: 162.0
+Number of possible hits: 943.0
+Hitrate: 0.17179215270413573
+\end{lstlisting}
+What applied to BPRMF in terms of performance also applies to RankMFX:
+With better tuned meta parameters and more time the results will likely
+be better.
 
 
 \section{Ranking SVD (Sparse SVD)}
+Lastly the Ranking SVD or Sparse SVD algorithm
+\begin{lstlisting}
+>>> import recommender.svd
+>>> W, H = recommender.svd.learnModel(r.getMaxUid(), r.getMaxIid(),
+                    0.0002,         # learning rate
+                    trainingDict,   # training dict
+                    1000,           # number of features
+                    1,              # number of epochs
+                    1000)           # number of iterations
+Epoch: 1/1 | iteration 100/1000 | learning rate=0.000200 | average_loss for the last 100 iterations = -3.713911 | time needed: 0.560000
+Epoch: 1/1 | iteration 200/1000 | learning rate=0.000200 | average_loss for the last 100 iterations = -3.507542 | time needed: 0.580000
+Epoch: 1/1 | iteration 300/1000 | learning rate=0.000200 | average_loss for the last 100 iterations = -3.626713 | time needed: 0.610000
+Epoch: 1/1 | iteration 400/1000 | learning rate=0.000200 | average_loss for the last 100 iterations = -3.717652 | time needed: 0.570000
+Epoch: 1/1 | iteration 500/1000 | learning rate=0.000200 | average_loss for the last 100 iterations = -3.535933 | time needed: 0.580000
+Epoch: 1/1 | iteration 600/1000 | learning rate=0.000200 | average_loss for the last 100 iterations = -3.572086 | time needed: 0.580000
+Epoch: 1/1 | iteration 700/1000 | learning rate=0.000200 | average_loss for the last 100 iterations = -3.682302 | time needed: 0.580000
+Epoch: 1/1 | iteration 800/1000 | learning rate=0.000200 | average_loss for the last 100 iterations = -3.731191 | time needed: 0.580000
+Epoch: 1/1 | iteration 900/1000 | learning rate=0.000200 | average_loss for the last 100 iterations = -3.507198 | time needed: 0.580000
+Epoch: 1/1 | iteration 1000/1000 | learning rate=0.000200 | average_loss for the last 100 iterations = -3.663757 | time needed: 0.570000
+\end{lstlisting}
+
+\begin{lstlisting}
+>>> svd = recommender.mf.MFrec(W, H, trainingDict)
+>>> util.test.hitrate(evaluationDict, svd.getRec, 10)
+0 users tested
+Hits so far: 0.0
+100 users tested
+Hits so far: 1.0
+200 users tested
+Hits so far: 2.0
+300 users tested
+Hits so far: 2.0
+400 users tested
+Hits so far: 2.0
+500 users tested
+Hits so far: 3.0
+600 users tested
+Hits so far: 4.0
+700 users tested
+Hits so far: 6.0
+800 users tested
+Hits so far: 6.0
+900 users tested
+Hits so far: 6.0
+Number of hits: 7.0
+Number of possible hits: 943.0
+Hitrate: 0.007423117709437964
+\end{lstlisting}
