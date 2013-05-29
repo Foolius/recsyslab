@@ -15,7 +15,7 @@ def split(R, seed):
     The first returned dict is the database with one item missing for each
     user. The second returned dict has the missing items.
 
-    R is a reader object with a database read in.
+    R is a dict of the database.
     seed is a seed for the randomness.
     """
 
@@ -41,7 +41,7 @@ def split(R, seed):
 def splitMatrix(M, seed):
     """Splits a matrix into two new dicts.
 
-    Returns an User x Item Matrix with one entry set to 0 and a dict item per user missing
+    Returns an User x Item Matrix with one entry of each user set to 0
     and a User -> Item Dict with the missing entrys.
 
     M is an User x Item Matrix.

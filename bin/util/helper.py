@@ -235,7 +235,9 @@ def getScoreMF(origUid, origIid, W, H, r):
 
 
 def getExternalRec(getRec, r):
-    """Converts getRec so it takes and returns only the original IDs."""
+    """Converts getRec so it takes and returns only the original IDs.
+
+        r   --  reader object"""
     def wrapper(extUid, n):
         uid = r.uidDict.getId(extUid)
 

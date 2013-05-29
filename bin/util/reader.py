@@ -79,11 +79,15 @@ class stringSepReader(object):
 
     def getInternalUid(self, originalUid):
         """Maps the given original UserID to the corresponding internal UserID.
+
+        The passed original UserID has to be a string.
         """
         return self.uidDict.getId(originalUid)
 
     def getInternalIid(self, originalIid):
         """Maps the given original ItemID to the corresponding internal ItemID.
+
+        The passed original UserID has to be a string.
         """
         return self.iidDict.getId(originalIid)
 
