@@ -1,8 +1,133 @@
-
 \chapter{User Manual}
+In this chapter I will provide a user manual for the library I implemented\cite{recsyslab}.
+First, I will explain how to load a dataset, second I
+will explain how to use the different recommendation algorithms and
+how to test them with the provided test metrics. For informations about
+the recommendation algorithms, please refer to \ref{recommendationalgorithms}.
+For informations about the test metrics refer to \ref{evaluationmetrics}.
+Also for help you can use the inline documentation available as docstrings.
+You can display them with the command line utility pydoc\footnote{I will use \$ to indicate a bash prompt.}. So for example when you're in the
+bin directory of the library call
+
+\begin{lstlisting}
+$ pydoc __init__
+$ pydoc util 
+$ pydoc recommender.BPRMF
+\end{lstlisting}
+
+Each of these commands will show the documentation of the specified module.
 
 
-\section{Primitive Algorithms}
+\section{Load the Dataset}
+To load the dataset it has to be a textfile where each line is of the following format:
+\begin{lstlisting}
+UserID<string>ItemID<string>NumberOfInteractions
+\end{lstlisting}
+<string> is an arbitrary string but it has to be the same throughout the whole dataset.
+NumberOfInteractions is optional and can be omitted and one will be assumed.
+Everything coming after NumberOfInteractions<string> will be ignored.
+Please note that when you're omitting NumberOfInteractions but have something else after
+the ItemId, this will be recognized as NumberOfInteractions.
+I recommend to use the MovieLens database\ref{movielens} with 100,000 ratings.
+It is easy to get, doesn't need any modifications to work with my library and has a
+reasonable size. Also I will use this dataset in the following examples.
+
+When you have a suiting database, start up a python interpreter of version 2.7.x.
+\begin{lstlisting}
+$ python
+\end{lstlisting}
+
+Now import the util.reader module and initialize a new reader object with
+\footnote{I will use >>> to indicate the python prompt.}
+\begin{lstlisting}
+>>> import util.reader
+>>> r=util.reader.stringSepReader("u.data","\t")
+Start reading the database.
+10000 Lines read.
+20000 Lines read.
+30000 Lines read.
+40000 Lines read.
+50000 Lines read.
+60000 Lines read.
+70000 Lines read.
+80000 Lines read.
+90000 Lines read.
+100000 Lines read.
+\end{lstlisting}
+Note that it outputs the progress it has already made.
+The first parameter of the constructor is the name of the file containing the dataset,
+the second the string which is separating the values, here it is a tab. 
+When you are using another dataset you probably have to change the filename and perhaps
+also the separating string.
+The constructor creates a mapping from the original IDs to internal IDs both for the users
+and the items to make sure that the IDs are consecutive. So to get the items a user interacted
+with we have to first find out the internal UserID.
+\begin{lstlisting}
+internalID=r.getInternalUid("196")
+>>> r.getR()[internalID]
+set([(521, 1), (377, 4), (365, 3), (438, 5), (86, 4), (649, 4), (0, 3), (522, 3), (423, 3), (389, 5), (751, 3), (656, 4), (947, 4), (432, 2), (632, 2), (431, 5), (221, 5), (92, 4), (291, 3), (528, 4), (83, 4), (363, 3), (466, 4), (289, 5), (512, 5), (179, 3), (329, 4), (672, 4), (834, 5), (665, 3), (321, 2), (487, 3), (380, 4), (1006, 4), (1045, 3), (491, 3), (302, 4), (550, 5), (10, 2)])
+\end{lstlisting}
+r.getR() returns a dict with internal UserIDs as keys and sets of (ItemID, NumberOfInteractions) tuples.
+Please note that the original ID is a string.
+
+To evaluate the algorithms you have to split the datasets like described at \ref{leaveoneout}.
+You do this by calling
+\begin{lstlisting}
+>>> import util.split
+>>> trainingDict, evaluationDict = util.split(r, 1234567890)
+0 Users split.
+100 Users split.
+200 Users split.
+300 Users split.
+400 Users split.
+500 Users split.
+600 Users split.
+700 Users split.
+800 Users split.
+900 Users split.
+\end{lstlisting}
+This will split a dict like r.getR() returns into a trainingDict where one transaction
+per user is missing and an evaluationDict with these missing transactions.
+
+\begin{lstlisting}
+>>> trainingMatrix, matrixEvaluationDict = util.splitMatrix(r, 123456789)
+0 Users split.
+100 Users split.
+200 Users split.
+300 Users split.
+400 Users split.
+500 Users split.
+600 Users split.
+700 Users split.
+800 Users split.
+900 Users split.
+\end{lstlisting}
+Depending on the recommendation algorithm we need a matrix or a dict.
+So here we pass a matrix like r.getMatrix() returns and get a trainingMatrix where one
+entry per user is set to 0 and a dict with these missing entries.
+To understand the matrix represention of the dataset refer to \ref{itembasedknn}
+
+
+\section{Non-Personalized Algorithms}
+To make our first simple recommendations with the constant recommender
+we need to initialize an object of the constant class.
+As parameter the constructor needs a dict for training
+\begin{lstlisting}
+import recommender.nonpersonalized
+constant = recommender.nonpersonalized.constant(r.getR())
+constant.getRec(0, 10)
+\end{lstlisting}
+Every recommender has a getRec function with this signature. The first paramater is the internal
+UserID, the second is the number of items to be recommended. Also the IDs of
+the recommended items are internal ones.
+If you want to pass external UserIDs and get external ItemIDs back you don't have
+to map them all by yourself. Instead you can use a helper function called
+getExternalRec.
+\begin{lstlisting}
+import util.helper
+externalConstantgetRec = util.helper.getExternalRec(constant.getRec, r)
+externalConstantgetRec("196", 10)
+\end{lstlisting}
 
 
 \section{k-Nearest Neighbor}

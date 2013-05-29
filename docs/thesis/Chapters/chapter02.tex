@@ -10,6 +10,7 @@ methods to split the database but in the library only one is implemented.
 
 
 \subsection{Leave-one-out Protocol}
+\label{leaveoneout}
 
 The Leave-one-out Protocol means, that we take one interaction of
 each user out of the database for training and use it for validation.
@@ -20,6 +21,7 @@ this missing interaction.
 
 
 \subsection{Evaluation metrics}
+\label{evaluationmetrics}
 
 These are a selection of different metrics to rate the recommendations.
 By default the evaluations are executed with only one hidden item
@@ -97,6 +99,7 @@ out recommender systems. Following I will introduce three of them.
 
 
 \subsection{MovieLens}
+\label{movielens}
 
 MovieLens\cite{movielensdatasets} is a database provided by GroupLens, a research
 lab at the University of Minnesota. One of their research areas is
@@ -109,9 +112,9 @@ this movie.
 
 The dataset is available in three different sizes:
 \begin{itemize}
-\item 100,000 ratings
-\item 1 million ratings
-\item 10 million ratings
+\item 100,000 interactions
+\item 1 million interactions
+\item 10 million interactions
 \end{itemize}
 For the experiments the smallest dataset is totally sufficient, with
 the larger datasets the computation time gets too long for just trying
@@ -126,3 +129,8 @@ reasonable low so it's easier for others to retrace the results.
 
 
 \subsection{SNAP}
+The Stanford Network Analysis Project provided a twitter dataset with about 467 million tweets from 17.000 users
+\cite{snap}.
+Unfortunately the dataset is no more available. [further explanation or deletion]
+To convert the tweets two user item interactions I will interpret the hashtags[explanation necessary?] as items.
+So tweets of a user with a hashtag is a interaction between the user and the hashtag.

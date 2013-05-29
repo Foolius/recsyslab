@@ -44,13 +44,14 @@
 \contentsline {section}{\numberline {6.1}General structure}{15}{section.6.1}
 \contentsline {section}{\numberline {6.2}Interfaces}{15}{section.6.2}
 \contentsline {chapter}{\numberline {7}\spacedlowsmallcaps {User Manual}}{17}{chapter.7}
-\contentsline {section}{\numberline {7.1}Primitive Algorithms}{17}{section.7.1}
-\contentsline {section}{\numberline {7.2}k-Nearest Neighbor}{17}{section.7.2}
-\contentsline {section}{\numberline {7.3}BPRMF}{17}{section.7.3}
-\contentsline {section}{\numberline {7.4}RankMFX}{17}{section.7.4}
-\contentsline {section}{\numberline {7.5}Ranking SVD (Sparse SVD)}{17}{section.7.5}
-\contentsline {chapter}{\numberline {8}\spacedlowsmallcaps {Conclusions}}{19}{chapter.8}
-\contentsline {section}{\numberline {8.1}Future work}{19}{section.8.1}
-\contentsline {section}{\numberline {8.2}Outlook}{19}{section.8.2}
+\contentsline {section}{\numberline {7.1}Load the Dataset}{17}{section.7.1}
+\contentsline {section}{\numberline {7.2}Non-Personalized Algorithms}{19}{section.7.2}
+\contentsline {section}{\numberline {7.3}k-Nearest Neighbor}{19}{section.7.3}
+\contentsline {section}{\numberline {7.4}BPRMF}{19}{section.7.4}
+\contentsline {section}{\numberline {7.5}RankMFX}{19}{section.7.5}
+\contentsline {section}{\numberline {7.6}Ranking SVD (Sparse SVD)}{19}{section.7.6}
+\contentsline {chapter}{\numberline {8}\spacedlowsmallcaps {Conclusions}}{21}{chapter.8}
+\contentsline {section}{\numberline {8.1}Future work}{21}{section.8.1}
+\contentsline {section}{\numberline {8.2}Outlook}{21}{section.8.2}
 \vspace {\beforebibskip }
-\contentsline {chapter}{\spacedlowsmallcaps {Bibliography}}{21}{dummy.3}
+\contentsline {chapter}{\spacedlowsmallcaps {Bibliography}}{23}{dummy.3}
