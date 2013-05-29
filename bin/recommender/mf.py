@@ -12,7 +12,7 @@ import numpy as np
 
 
 def learnModel(n_users, m_items, regU, regI, regJ,
-               learningRate, R, k, epochs, numberOfIterations, lossF, dlossF):
+               learningRate, R, features, epochs, numberOfIterations, lossF, dlossF):
     """Learns a mf model with a passed loss function.
 
         n_users             --  The highest internal assigned User ID
@@ -22,7 +22,7 @@ def learnModel(n_users, m_items, regU, regI, regJ,
         regJ                --  Regularization for the negative item
         learningRate        --  The learning rate
         R                   --  A dict of the form UserID -> (ItemId, Rating)
-        k                   --  Number of features of the items and users
+        features            --  Number of features of the items and users
         epochs              --  Number of epochs the model should be learned
         numberOfIterations  --  Number of iterations in each epoch
         lossF               --  Loss function
@@ -45,8 +45,8 @@ def learnModel(n_users, m_items, regU, regI, regJ,
     sigma = 0.1
     mu = 0
     # Random initialization of W and H between mean=0 ; sigma=0.1
-    W = sigma * np.random.randn(n_users + 1, k) + mu
-    H = sigma * np.random.randn(m_items + 1, k) + mu
+    W = sigma * np.random.randn(n_users + 1, features) + mu
+    H = sigma * np.random.randn(m_items + 1, features) + mu
 
     printDelay = 0.01 * numberOfIterations
     sum_loss = 0.0

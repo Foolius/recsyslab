@@ -2,7 +2,7 @@ import math
 
 
 def learnModel(n_users, m_items, regU, regI, regJ,
-               learningRate, R, k, epochs, numberOfIterations):
+               learningRate, R, features, epochs, numberOfIterations):
     """Learns a model with the BPRMF algorithm, actually just calls mf.
 
         n_users             --  The highest internal assigned User ID
@@ -12,7 +12,7 @@ def learnModel(n_users, m_items, regU, regI, regJ,
         regJ                --  Regularization for the negative item
         learningRate        --  The learning rate
         R                   --  A dict of the form UserID -> (ItemId, Rating)
-        k                   --  Number of features of the items and users
+        features            --  Number of features of the items and users
         epochs              --  Number of epochs the model should be learned
         numberOfIterations  --  Number of iterations in each epoch
 
@@ -25,7 +25,7 @@ def learnModel(n_users, m_items, regU, regI, regJ,
     """
     import mf
     return mf.learnModel(n_users, m_items, regU, regI, regJ, learningRate, R,
-                         k, epochs, numberOfIterations, logLoss,
+                         features, epochs, numberOfIterations, logLoss,
                          dLogLoss)
 
 
