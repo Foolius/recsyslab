@@ -557,7 +557,7 @@ Epoch: 1/1 | iteration 800/1000 | learning rate=0.000200 | average_loss for the 
 Epoch: 1/1 | iteration 900/1000 | learning rate=0.000200 | average_loss for the last 100 iterations = -3.507198 | time needed: 0.580000
 Epoch: 1/1 | iteration 1000/1000 | learning rate=0.000200 | average_loss for the last 100 iterations = -3.663757 | time needed: 0.570000
 \end{lstlisting}
-The evaluation works the same as the other algorithms
+The evaluation works the same as for the other algorithms
 \begin{lstlisting}
 >>> svd = recommender.mf.MFrec(W, H, trainingDict)
 >>> util.test.hitrate(evaluationDict, svd.getRec, 10)
