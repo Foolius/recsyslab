@@ -8,9 +8,10 @@
     MFtest      --  Returns a recommender function built from a MF model"""
 
 
-def hitrate(testR, recommender, n):
+def countHits(testR, recommender, n):
     """Returns the number of hits and the number of items it was tested with.
 
+    Is a helper function for the other metrics
     testR is a dict with an internal UserID as a dict and a list of items as
     values. Normally testR is the second dict split.split returns.
     The list can have a lenght greater than 1.
@@ -23,13 +24,8 @@ def hitrate(testR, recommender, n):
     hits = number of items from testR the recommender guessed right.
     items = the number of items in testR.
 
-    hits, items and hits / items will be printed.
+    hits, items will be printed.
     hits, items will get returned.
-
-    hits / items gives the hitrate or recall.
-
-    See also: "Application of Dimensionality Reduction in Recommender System
-    -- A Case Study" by Badrul M. sarcar et al.
     """
     hits = 0.0
     items = 0.0
@@ -53,8 +49,35 @@ def hitrate(testR, recommender, n):
 
     print("Number of hits: %r" % hits)
     print("Number of possible hits: %r" % items)
-    print("Hitrate: %r" % (hits / items))
     return hits, items
+
+
+def hitrate(testR, recommender, n):
+    """Returns the number of hits and the number of items it was tested with.
+
+    testR is a dict with an internal UserID as a dict and a list of items as
+    values. Normally testR is the second dict split.split returns.
+    The list can have a lenght greater than 1.
+
+    recommender is a function which takes an internal UserID and n and returns
+    n items recommender for the UserID.
+
+    n is the number of items the recommender can recommend.
+
+    hits = number of items from testR the recommender guessed right.
+    items = the number of items in testR.
+
+    hits, items and hits / items will be printed.
+    hits, items will get returned.
+
+    hits / items gives the hitrate or recall.
+
+    See also: "Application of Dimensionality Reduction in Recommender System
+    -- A Case Study" by Badrul M. sarcar et al.
+    """
+    hits, items = countHits(testR, recommender, n)
+    print("Hitrate: %r" % (hits / items))
+    return hits / items
 
 
 def precision(testR, recommender, n):
@@ -74,9 +97,10 @@ def precision(testR, recommender, n):
     See also: "Application of Dimensionality Reduction in Recommender System
     -- A Case Study" by Badrul M. sarcar et al.
     """
-    hits = hitrate(testR, recommender, n)[0]
+    hits = countHits(testR, recommender, n)[0]
     if n == 0:
         return 0
+    print("Precision: %r" % (hits / n))
     return hits / n
 
 
@@ -97,7 +121,7 @@ def f1(testR, recommender, n):
     See also: "Application of Dimensionality Reduction in Recommender System
     -- A Case Study" by Badrul M. sarcar et al.
     """
-    hits, items = hitrate(testR, recommender, n)
+    hits, items = countHits(testR, recommender, n)
     recall = hits / items
     if recall == 0:
         return 0
