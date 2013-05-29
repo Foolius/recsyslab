@@ -107,6 +107,7 @@ def precision(testR, recommender, n):
 def f1(testR, recommender, n):
     """Prints and returns F1 of the recommender.
 
+    F1 = (2 * hitrate * precision) / (hitrate + precision)
     testR is a dict with an internal UserID as a dict and a list of items as
     values. Normally testR is the second dict split.split returns.
     The list can have a lenght greater than 1.
