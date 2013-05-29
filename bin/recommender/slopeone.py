@@ -28,7 +28,9 @@ class slopeone(object):
                     self.diffs[i][i1][1] += 1
 
     def getRec(self, u, n):
-        """Returns the n best recommendations for user u."""
+        """Returns the n best recommendations for user u.
+
+        Set n = -1 to get all items recommended"""
         maxIid = max(self.diffs.keys())
         userItems = [x[0] for x in self.R[u]]
         predictionList = []

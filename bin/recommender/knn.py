@@ -38,8 +38,9 @@ class itemKnn(object):
                 self.sim[j, order[j, i]] = 0
 
     def getRec(self, u, n):
-        """Returns the n best recommendations for user u"""
+        """Returns the n best recommendations for user u.
 
+        Set n = -1 to get all items recommended"""
         if n > self.userItemMatrix.shape[1] or n == -1:
             n = self.userItemMatrix.shape[1]
 
@@ -84,8 +85,9 @@ class userKnn(object):
                 self.sim[j, order[j, i]] = 0
 
     def getRec(self, u, n):
-        """Returns the n best recommendations for user u"""
+        """Returns the n best recommendations for user u.
 
+        Set n = -1 to get all items recommended"""
         if n > self.userItemMatrix.shape[1] or n == -1:
             n = self.userItemMatrix.shape[1]
 

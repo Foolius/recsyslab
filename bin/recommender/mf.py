@@ -5,7 +5,6 @@
 """
 import random
 import numpy as np
-import math
 
 
 # reg=regularization,R=dict uid=>[ii],T=epochs
@@ -146,11 +145,14 @@ class MFrec(object):
     def getRec(self, u, n):
         """
         Returns the n best recommendations for user u based on the mf model.
-        """
+
+        Set n = -1 to get all items recommended"""
         scoredict = {}
         for i in range(0, self.H.shape[0]):
             if not i in [x[0] for x in self.R[u]]:
                 scoredict[i] = np.dot(self.W[u], self.H[i])
 
+        if n == -1:
+            n = len(scoredict)
         import util.helper
         return util.helper.sortList(scoredict.iteritems())[:n]

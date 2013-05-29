@@ -30,7 +30,9 @@ class constant(object):
         self.sortedList = helper.sortList(self.dictionary.iteritems())
 
     def getRec(self, user, n):
-        """Recommends n items for user n, which is obsolete in this case."""
+        """Recommends n items for user n, which is obsolete in this case.
+
+        Set n = -1 to get all items recommended"""
         if len(self.sortedList) < n or n == -1:
             n = len(self.sortedList)
         return self.sortedList[:n]
@@ -57,7 +59,8 @@ class randomRec(object):
     def getRec(self, user, n):
         """
         Recommends n random items for user n, which is obsolete in this case.
-        """
+
+        Set n = -1 to get all items recommended"""
         random.seed(self.seed)
         if self.maxIid < n or n == -1:
             l = range(self.maxIid)
