@@ -435,7 +435,7 @@ and Ranking SVD you need to specify some meta parameters.
 >>> W, H = recommender.BPRMF.learnModel(r.getMaxUid(), r.getMaxIid(),
                         0.01, 0.01, 0.01,   # regularization parameter
                         0.1,                # learning rate
-                        trainingMatrix,
+                        trainingMatrix,     # training dict
                         150,                # number of features
                         3,                  # number of epochs
                         r.numberOfTransactions)
@@ -492,7 +492,7 @@ in \ref{experiments}
 >>> W, H = recommender.RankMFX.learnModel(r.getMaxUid(), r.getMaxIid(),
                     0.01, 0.01, 0.01, # regularization parameter
                     0.1,              # learning rate
-                    trainingDict,
+                    trainingDict,     # training dict
                     150,              # number of features
                     3,                # number of epochs
                     r.numberOfTransactions)
@@ -536,7 +536,8 @@ be better.
 
 
 \section{Ranking SVD (Sparse SVD)}
-Lastly the Ranking SVD or Sparse SVD algorithm
+Lastly the Ranking SVD or Sparse SVD algorithm. To build the model we have 
+a method similar to RankMFX and BPRMF, only without regularization parameters
 \begin{lstlisting}
 >>> import recommender.svd
 >>> W, H = recommender.svd.learnModel(r.getMaxUid(), r.getMaxIid(),
@@ -556,7 +557,7 @@ Epoch: 1/1 | iteration 800/1000 | learning rate=0.000200 | average_loss for the 
 Epoch: 1/1 | iteration 900/1000 | learning rate=0.000200 | average_loss for the last 100 iterations = -3.507198 | time needed: 0.580000
 Epoch: 1/1 | iteration 1000/1000 | learning rate=0.000200 | average_loss for the last 100 iterations = -3.663757 | time needed: 0.570000
 \end{lstlisting}
-
+The evaluation works the same as the other algorithms
 \begin{lstlisting}
 >>> svd = recommender.mf.MFrec(W, H, trainingDict)
 >>> util.test.hitrate(evaluationDict, svd.getRec, 10)
