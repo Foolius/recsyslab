@@ -1,4 +1,20 @@
-"""Several helper functions and a helper class."""
+"""Several helper functions and a helper class.
+
+    idOrigDict          --  two way dict
+    normRowNorm         --  normalize a matrix by the norm
+    normRowSum          --  normalize a matrix by the sum
+    cache               --  cache results of a function
+    writeOrigToFile     --  save a DB with original IDs
+    writeInternalToFile --  save a DB with internal IDs
+    sortList            --  sort a list with scores and IDs
+    listToSet           --  convert a list into a set
+    sortResults         --  sort test results
+    printMatrix         --  print a matrix
+    randDataset         --  generate a random DB
+    dictToMatrix        --  convert a dict to a matrix
+    getScoreMF          --  compute the score of an item
+    getExternalRec      --  convert getRec for original IDs
+"""
 
 
 class idOrigDict(object):
@@ -42,7 +58,7 @@ def normRowNorm(m):
 
 
 def normRowSum(m):
-    """Normalize the matrix in place so each column of the matrix has norm 1.
+    """Normalize the matrix in place so each row of the matrix has sum 1.
     """
     import numpy as np
     for i in xrange(0, m.shape[0]):
@@ -142,6 +158,7 @@ def listToSet(sortedscorelist, n):
 
 
 def sortResults(name):
+    """Sort test results written to a file."""
     infile = open(name, 'r')
     outfile = open("out" + name, 'w')
     b = True
