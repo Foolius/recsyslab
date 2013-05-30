@@ -32,14 +32,14 @@ util.test.hitrate(evaluationDict, randomRec.getRec, 10)
 trainingMatrix, matrixEvaluationDict = (
     util.split.splitMatrix(r.getMatrix(), 123456789))
 
-# import recommender.knn
-# itemKnn = recommender.knn.itemKnn(trainingMatrix, 10)
+import recommender.knn
+itemKnn = recommender.knn.itemKnn(trainingMatrix, 10)
 
-# util.test.hitrate(matrixEvaluationDict, itemKnn.getRec, 10)
+util.test.hitrate(matrixEvaluationDict, itemKnn.getRec, 10)
 
-# userKnn = recommender.knn.userKnn(trainingMatrix, 10)
+userKnn = recommender.knn.userKnn(trainingMatrix, 10)
 
-# util.test.hitrate(matrixEvaluationDict, userKnn.getRec, 10)
+util.test.hitrate(matrixEvaluationDict, userKnn.getRec, 10)
 
 import recommender.BPRMF
 W, H = recommender.BPRMF.learnModel(r.getMaxUid(), r.getMaxIid(),
@@ -52,7 +52,7 @@ W, H = recommender.BPRMF.learnModel(r.getMaxUid(), r.getMaxIid(),
 
 import recommender.mf
 BPRMF = recommender.mf.MFrec(W, H, trainingDict)
-#util.test.hitrate(evaluationDict, BPRMF.getRec, 10)
+util.test.hitrate(evaluationDict, BPRMF.getRec, 10)
 
 import recommender.RankMFX
 W, H = recommender.RankMFX.learnModel(r.getMaxUid(), r.getMaxIid(),
@@ -64,7 +64,7 @@ W, H = recommender.RankMFX.learnModel(r.getMaxUid(), r.getMaxIid(),
                                       r.numberOfTransactions)
 
 BPRMF = recommender.mf.MFrec(W, H, trainingDict)
-#util.test.hitrate(evaluationDict, BPRMF.getRec, 10)
+util.test.hitrate(evaluationDict, BPRMF.getRec, 10)
 
 import recommender.svd
 W, H = recommender.svd.learnModel(r.getMaxUid(), r.getMaxIid(),
