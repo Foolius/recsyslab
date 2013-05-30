@@ -36,6 +36,7 @@
 \contentsline {subsection}{\numberline {4.3.1}BPRMF}{10}{subsection.4.3.1}
 \contentsline {subsection}{\numberline {4.3.2}RankMFX}{10}{subsection.4.3.2}
 \contentsline {subsection}{\numberline {4.3.3}Ranking SVD (Sparse SVD)}{11}{subsection.4.3.3}
+\contentsline {subsection}{\numberline {4.3.4}Slope One}{11}{subsection.4.3.4}
 \contentsline {chapter}{\numberline {5}\spacedlowsmallcaps {Experiments}}{13}{chapter.5}
 \contentsline {section}{\numberline {5.1}Execution}{13}{section.5.1}
 \contentsline {section}{\numberline {5.2}Results}{13}{section.5.2}
@@ -50,8 +51,8 @@
 \contentsline {section}{\numberline {7.4}BPRMF}{25}{section.7.4}
 \contentsline {section}{\numberline {7.5}RankMFX}{26}{section.7.5}
 \contentsline {section}{\numberline {7.6}Ranking SVD (Sparse SVD)}{27}{section.7.6}
-\contentsline {chapter}{\numberline {8}\spacedlowsmallcaps {Conclusions}}{29}{chapter.8}
-\contentsline {section}{\numberline {8.1}Future work}{29}{section.8.1}
-\contentsline {section}{\numberline {8.2}Outlook}{29}{section.8.2}
+\contentsline {chapter}{\numberline {8}\spacedlowsmallcaps {Conclusions}}{31}{chapter.8}
+\contentsline {section}{\numberline {8.1}Future work}{31}{section.8.1}
+\contentsline {section}{\numberline {8.2}Outlook}{31}{section.8.2}
 \vspace {\beforebibskip }
-\contentsline {chapter}{\spacedlowsmallcaps {Bibliography}}{31}{dummy.3}
+\contentsline {chapter}{\spacedlowsmallcaps {Bibliography}}{33}{dummy.3}

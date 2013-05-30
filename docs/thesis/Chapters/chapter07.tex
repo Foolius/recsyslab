@@ -2,13 +2,16 @@
 In this chapter I will provide a step by step user manual for the library I implemented\cite{recsyslab}.
 First, I will explain how to load a dataset, second I
 will explain how to use the different recommendation algorithms and
-how to test them with the provided test metrics. \\
+how to test them with the provided test metrics. 
+
 For informations about the recommendation algorithms, please refer to \ref{recommendationalgorithms}.
-For informations about the test metrics refer to \ref{evaluationmetrics}.\\
+For informations about the test metrics refer to \ref{evaluationmetrics}.
+
 The following python code is also in the file manual.py in the bin directory of the library
 so you don't have to copy the code out of this pdf document. But if you're working through these examples
 nevertheless please note that you perhaps miss the import of a module when you skip an example because
-I won't write each needed import in each new example.\\
+I won't write each needed import in each new example.
+
 Also for help you can use the inline documentation available as docstrings.
 You can display them with the command line utility\footnote{I will use \$ to indicate a bash prompt.} pydoc.
 So for example when you're in the bin directory of the library call
@@ -18,7 +21,6 @@ $ pydoc __init__
 $ pydoc util 
 $ pydoc recommender.BPRMF
 \end{lstlisting}
-
 Each of these commands will show the documentation of the specified module.
 
 
@@ -32,15 +34,14 @@ NumberOfInteractions is optional and can be omitted and one will be assumed.
 Everything coming after NumberOfInteractions<string> will be ignored.
 Please note that when you're omitting NumberOfInteractions but have something else after
 the ItemId, this will be recognized as NumberOfInteractions.
+
 I recommend to use the MovieLens database\ref{movielens} with 100,000 ratings.
 It is easy to get, doesn't need any modifications to work with my library and has a
 reasonable size. Also I will use this dataset in the following examples.
-
 When you have a suiting database, start up a python interpreter of version 2.7.x.
 \begin{lstlisting}
 $ python
 \end{lstlisting}
-
 Now import the util.reader module and initialize a new reader object with
 \footnote{I will use >>> to indicate the python prompt.}
 \begin{lstlisting}
@@ -63,6 +64,7 @@ The first parameter of the constructor is the name of the file containing the da
 the second the string which is separating the values, here it is a tab. 
 When you are using another dataset you probably have to change the filename and perhaps
 also the separating string.
+
 The constructor creates a mapping from the original IDs to internal IDs both for the users
 and the items to make sure that the IDs are consecutive. So to get the items a user interacted
 with we have to first find out the internal UserID.
@@ -100,7 +102,7 @@ we need to initialize an object of the constant class.
 As parameter the constructor needs a dict for training
 \begin{lstlisting}
 import recommender.nonpersonalized
-constant = recommender.nonpersonalized.constant(r.getR())
+constant = recommender.nonpersonalized.constant(trainingDict)
 constant.getRec(0, 10)
 \end{lstlisting}
 Every recommender has a getRec function with this signature. The first paramater is the internal
@@ -280,7 +282,7 @@ recommendation algorithms. You just need to provide the getRec function.
 The second non-personalized algorithm is the random recommender.
 You can use it like this
 \begin{lstlisting}
->>> randomRec = recommender.nonpersonalized.randomRec(r.getR(), 1234567890)
+>>> randomRec = recommender.nonpersonalized.randomRec(trainingDict, 1234567890)
 >>> randomRec.getRec(0, 10)
 [1548, 1068, 746, 1357, 1501, 1359, 428, 141, 233, 726]
 >>> util.test.hitrate(evaluationDict, randomRec.getRec, 10)
@@ -429,7 +431,7 @@ Hitrate: 0.24390243902439024
 \end{lstlisting}
 
 \section{BPRMF}
-For the matrix factorization algorithms like BPRMF RankMFX
+For the matrix factorization algorithms like BPRMF, RankMFX
 and Ranking SVD you need to specify some meta parameters.
 \begin{lstlisting}
 >>> import recommender.BPRMF
@@ -505,7 +507,7 @@ Again there is much output to monitor the algorithm.
 
 As above we have to generate a getRec method. Before we can evaluate the algorithm.
 \begin{lstlisting}
->>> BPRMF = recommender.mf.MFrec(W, H, trainingDict)
+>>> RankMFX = recommender.mf.MFrec(W, H, trainingDict)
 >>> util.test.hitrate(evaluationDict, BPRMF.getRec, 10)
 0 users tested
 Hits so far: 0.0
@@ -537,7 +539,7 @@ be better.
 
 
 \section{Ranking SVD (Sparse SVD)}
-Lastly the Ranking SVD or Sparse SVD algorithm. To build the model we have 
+Next the Ranking SVD or Sparse SVD algorithm. To build the model we have 
 a method similar to RankMFX and BPRMF, only without regularization parameters
 \begin{lstlisting}
 >>> import recommender.svd
@@ -585,4 +587,44 @@ Hits so far: 6.0
 Number of hits: 7.0
 Number of possible hits: 943.0
 Hitrate: 0.007423117709437964
+\end{lstlisting}
+
+Lastly the slopeone recommender
+\begin{lstlisting}
+import recommender.slopeone
+slopeone = recommender.slopeone.slopeone(trainingDict)
+100000 differences computed
+200000 differences computed
+300000 differences computed
+...
+20000000 differences computed
+20100000 differences computed
+\end{lstlisting}
+
+And its evaluation
+\begin{lstlisting}
+0 users tested
+Hits so far: 0.0
+100 users tested
+Hits so far: 0.0
+200 users tested
+Hits so far: 0.0
+300 users tested
+Hits so far: 0.0
+400 users tested
+Hits so far: 0.0
+500 users tested
+Hits so far: 0.0
+600 users tested
+Hits so far: 0.0
+700 users tested
+Hits so far: 0.0
+800 users tested
+Hits so far: 0.0
+900 users tested
+Hits so far: 0.0
+Number of hits: 0.0
+Number of possible hits: 943.0
+Hitrate: 0.0
+# I really hope we can get better 
 \end{lstlisting}
