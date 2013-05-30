@@ -12,6 +12,7 @@ class slopeone(object):
         """
         self.diffs = {}
         self.R = R
+        count = 0
 
         for u in R.keys():
             for i, r in R[u]:
@@ -26,6 +27,9 @@ class slopeone(object):
 
                     self.diffs[i][i1][0] += r - r1
                     self.diffs[i][i1][1] += 1
+                    count += 1
+                    if count % 100000 == 0:
+                        print("%r differences computed" % count)
 
     def getRec(self, u, n):
         """Returns the n best recommendations for user u.
@@ -54,8 +58,8 @@ class slopeone(object):
             ratingSum /= count
             predictionList.append((i, ratingSum))
 
-        import helper
-        sortedList = helper.sortList(predictionList)
+        import util.helper
+        sortedList = util.helper.sortList(predictionList)
 
         if n > len(sortedList) or n == -1:
             return sortedList
