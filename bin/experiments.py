@@ -88,10 +88,11 @@ for rec in recommenderList:
 
 s = "recommender "
 for test in testMetricsList:
-    s += "& " + test.__name__
+    s += " & " + test.__name__
 s += " \\\\\n"
 
 for rec in recommenderList:
+    s += type(rec.__self__).__name__
     for test in testMetricsList:
-        s += "& " + str(results[rec][test])
+        s += " & " + str(results[rec][test])
     s += " \\\\\n"

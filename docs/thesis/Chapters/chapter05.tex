@@ -7,19 +7,16 @@
 
 
 \section{Results}
-\begin{tabular}{@{}llr@{}} \toprule
-    \multicolumn{2}{c}{Test metric} \\ \cmidrule(r){1-2}
-    Animal & Description & Price (\$)\\ \midrule
-    Gnat & per gram & 13.65 \\
-         & each
-    & 0.01 \\
-    Gnu
-    & stuffed
-    & 92.50 \\
-    Emu
-    & stuffed
-    & 33.33 \\
-    Armadillo & frozen & 8.99 \\ \bottomrule
+\begin{tabular}{lrrrrr} \toprule
+    recommender  & hitrate & precision & f1 & mrhr & auc \\ \midrule
+    constant & 0.0731707317073 & 6.9 & 0.14480587618 & 0.0207687387433 & 0.826383065429 \\
+    randomRec & 0.00530222693531 & 0.5 & 0.0104931794334 & 0.00110463061152 & 0.479019845932 \\
+    itemKnn & 0.00530222693531 & 0.5 & 0.0104931794334 & 0.00207670554966 & 0.56107542212 \\
+    userKnn & 0.0084835630965 & 0.8 & 0.0167890870934 & 0.00382054907506 & 0.53129413142 \\
+    BPRMF& 0.24920466596 & 23.5 & 0.493179433368 & 0.0996574593075 & 0.929450479792 \\
+    RankMFX & 0.18769883351 & 17.7 & 0.371458551941 & 0.0852135198371 & 0.867928869256 \\
+    Ranking SVD & 0.00742311770944 & 0.7 & 0.0146904512067 & 0.00162138733189 & 0.517177605189 \\
+    slopeone & 0.0 & 0.0 & 0 & 0.0 & 0.669577426536 \\ \bottomrule
 \end{tabular}
 
 \section{Comparison}
