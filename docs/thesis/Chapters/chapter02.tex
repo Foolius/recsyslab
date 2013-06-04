@@ -1,23 +1,34 @@
 
 \chapter{Background}
+In this chapter we will provide a short overview over the techniques
+used to evaluate recommender algorithms.
 
 
 \section{Evaluation Methods}
 
 To evaluate a recommender algorithm we have to split up the database
 into one for training and one for evaluation. There are different
-methods to split the database but in the library only one is implemented.
+methods to split the database but in the library only one is implemented
+which is the Leave-one-out protocol~\cite{leaveoneout}.
+You can use the Leave-one-out protocol with many different metrics
+which are also explained here.
 
 
 \subsection{Leave-one-out Protocol}
 \label{leaveoneout}
 
-The Leave-one-out Protocol means, that we take one interaction of
+The Leave-one-out protocol means, that we take one interaction of
 each user out of the database for training and use it for validation.
 The item the recommender has to predict is also called hidden item. 
-
 Now we can test for each user if the algorithm is capable to predict
-this missing interaction.
+this missing interaction. Most of the test metrics described below are counting
+how many of the hidden items the algorithm recommends while being
+restricted to only recommend a certain number of items. But all
+of them take recommendations for each user. This wouldn't be possible
+if we would for example just take out 1\% of the interactions it's
+likely that there are some users without a hidden item. Then the metrics
+wouldn't work anymore.
+
 
 
 \subsection{Evaluation metrics}
@@ -31,7 +42,10 @@ but generally the metrics should also work with more than just one.
 \subsubsection{Hitrate/Recall@N}
 
 This metrics lets the recommender recommend N items. If the hidden
-item is under the N recommended items, the recommender got a hit~\cite{Karypis:2001:EIT:502585.502627, Sarwar00applicationof}.
+item is under the N recommended items, the recommender got a 
+hit~\cite{Karypis:2001:EIT:502585.502627, Sarwar00applicationof}.
+So the Recall@N is the fraction of users who get recommended a
+relevant item when the recommender can recommend N items.
 So the hitrate is 
 
 \[
@@ -95,7 +109,7 @@ many items as possible.
 \section{Datasets for testing}
 
 In the WWW there are several anonymized datasets available to try
-out recommender systems. Following I will introduce three of them.
+out recommender systems. Following we will introduce three of them.
 
 
 \subsection{MovieLens}
@@ -106,7 +120,7 @@ lab at the University of Minnesota. One of their research areas is
 recommender systems and they built an application where users rate
 movies and then get recommendations for movies the could like. The
 MovieLens dataset is the ratings gathered by this application. For
-this work I will interpret the rating as intensity of interaction
+this work we will interpret the rating as intensity of interaction
 between users and items for example the number of times the user saw
 this movie.
 
@@ -128,7 +142,7 @@ user. To present I will use a subset of this dataset to keep the computing time 
 reasonable low so it's easier for others to retrace the results.
 
 
-\subsection{SNAP}
+\subsection{476 Million Twitter Tweets Dataset}
 The Stanford Network Analysis Project provided a twitter dataset with about 467 million tweets from 17.000 users~\cite{snap}.
 Unfortunately the dataset is no more available. [further explanation or deletion]
 To convert the tweets two user item interactions I will interpret the hashtags[explanation necessary?] as items.

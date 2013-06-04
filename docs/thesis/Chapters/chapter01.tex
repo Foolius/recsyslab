@@ -1,14 +1,17 @@
 \chapter{Introduction}
-\automark[section]{chapter}
 
 
 \section{Motivation}
 
 The library together with this document shall provide a "cookbook"
-for recommender systems. With the simple syntax and the interactivity
-of Python it is aimed at beginners to simply experiment with different
-algorithms. Especially the interactivity is missing in the already
-existing libraries because none of them is written in Python.
+for recommender systems. Recommender systems are widely used in ecommerce
+and are an active field of research so an easy accessible library will be 
+useful in the future.
+With the simple syntax and the interactivity
+of Python recsyslab is aimed at beginners to simply experiment with different
+algorithms and comprehend them. Together with this document everybody
+should be able to get started to try out different recommender algorithms
+without needing any previous knowledge or long configuration.
 
 
 \section{Task (what a Recommender System does)}
@@ -32,8 +35,30 @@ predict ratings like it's usual in rating prediction scenarios.
 
 \section{Contributions}
 
-The main contribution of my work is the interactive library I wrote~\cite{recsyslab}. 
-Also in this document I provide explanations about
-the algorithms implemented in the library and an extensive user manual
-of the library.
+\begin{enumerate}
+    \item recsyslab with state of the art algorithms
+    \item supporting infrastructure for testing recommender algorithms
+    \item easy to use library
+    \item easy readable source code
+    \item extensive user manual
+    \item test results of the algorithms computed with recsyslab
+    \item explanations of the technical background
+\end{enumerate}
+
+
+\section{Structure of this Document}
+In the next chapter is an overview over the research area of recommender systems
+together with explanations of different evaluation metrics and the Leave-one-out
+Protocol used to evaluate recommender algorithms.
+After that we provide short descriptions over already existing 
+projects providing something similar to recsyslab.
+In chapter \ref{recommendationalgorithms} we present the implemented recommender
+algorithms. Followed by a chapter with results and explanations about how the
+results have been obtained. After that we'll show the inner structure of recsyslab
+to make it easy for developer to extend or change the library.
+In chapter \ref{usermanual} is an extensive guide for recsyslab explaining
+how the library is used.
+In the last chapter are the conclusions and an outlook to future work.
+
+
 

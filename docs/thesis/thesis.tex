@@ -85,7 +85,7 @@
 % subfig nochapters beramono eulermath parts minionpro pdfspacing 
 % dottedtoc minionprospacing manychapters floatperchapter
 \usepackage[eulerchapternumbers,listings,%linedheaders,%pdfspacing,
-            subfig,beramono,eulermath,parts,dottedtoc,floatperchapter]{classicthesis}
+            subfig,beramono,eulermath,dottedtoc,floatperchapter]{classicthesis}
 
 %*******************************************************
 % Some font experiments
@@ -221,13 +221,21 @@
 % use \cleardoublepage here to avoid problems with pdfbookmark
 % insert your chapters here
 %\cleardoublepage\part{Beispiel einer Arbeit}
+\automark[section]{chapter}
 \include{Chapters/chapter01}
+\automark[section]{chapter}
 \include{Chapters/chapter02}
+\automark[section]{chapter}
 \include{Chapters/chapter03}
+\automark[section]{chapter}
 \include{Chapters/chapter04}
+\automark[section]{chapter}
 \include{Chapters/chapter05}
+\automark[section]{chapter}
 \include{Chapters/chapter06}
+\automark[section]{chapter}
 \include{Chapters/chapter07}
+\automark[section]{chapter}
 \include{Chapters/chapter08}
 %\include{Chapters/examples/chapter02}
 %\include{Chapters/examples/chapter03}
