@@ -31,7 +31,7 @@ but generally the metrics should also work with more than just one.
 \subsubsection{Hitrate/Recall@N}
 
 This metrics lets the recommender recommend N items. If the hidden
-item is under the N recommended items, the recommender got a hit \cite{Karypis:2001:EIT:502585.502627, Sarwar00applicationof}.
+item is under the N recommended items, the recommender got a hit~\cite{Karypis:2001:EIT:502585.502627, Sarwar00applicationof}.
 So the hitrate is 
 
 \[
@@ -47,7 +47,7 @@ the number of recommended items into account.
 
 \subsubsection{Precision}
 
-The precision\cite{Sarwar00applicationof} is 
+The precision~\cite{Sarwar00applicationof} is 
 
 \[
 \textrm{Precision}=\frac{\textrm{numberofhits}}{\textrm{numberofrecommendeditems}}
@@ -61,7 +61,7 @@ number of recommended items increases.
 
 \subsubsection{F1}
 
-The F1 metric\cite{Sarwar00applicationof} tries to balance hitrate and precision
+The F1 metric~\cite{Sarwar00applicationof} tries to balance hitrate and precision
 by taking both into account.
 
 \[
@@ -81,7 +81,7 @@ and so on.
 
 \subsubsection{Area under the ROC (AUC)}
 
-AUC\cite{Rendle:2009:BBP:1795114.1795167} counts the number of items the recommender rates
+AUC~\cite{Rendle:2009:BBP:1795114.1795167} counts the number of items the recommender rates
 higher than the hidden item, normalize it by the number of items the
 recommender can rate higher. Sum this up for every user and again
 normalize by the number of users.
@@ -101,7 +101,7 @@ out recommender systems. Following I will introduce three of them.
 \subsection{MovieLens}
 \label{movielens}
 
-MovieLens\cite{movielensdatasets} is a database provided by GroupLens, a research
+MovieLens~\cite{movielensdatasets} is a database provided by GroupLens, a research
 lab at the University of Minnesota. One of their research areas is
 recommender systems and they built an application where users rate
 movies and then get recommendations for movies the could like. The
@@ -122,15 +122,14 @@ something out.
 
 
 \subsection{Million Song Dataset}
-The million song dataset\cite{Bertin-Mahieux2011} is a large database of features and media data
+The million song dataset~\cite{Bertin-Mahieux2011} is a large database of features and media data
 of a million songs. For a challenge they also provided the listening history of over 1 million
 user. To present I will use a subset of this dataset to keep the computing time required
 reasonable low so it's easier for others to retrace the results.
 
 
 \subsection{SNAP}
-The Stanford Network Analysis Project provided a twitter dataset with about 467 million tweets from 17.000 users
-\cite{snap}.
+The Stanford Network Analysis Project provided a twitter dataset with about 467 million tweets from 17.000 users~\cite{snap}.
 Unfortunately the dataset is no more available. [further explanation or deletion]
 To convert the tweets two user item interactions I will interpret the hashtags[explanation necessary?] as items.
 So tweets of a user with a hashtag is a interaction between the user and the hashtag.

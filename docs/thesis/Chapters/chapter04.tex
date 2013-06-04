@@ -23,7 +23,10 @@ personalizations.
 
 \subsection{Random}
 
-The random recommender just picks items randomly.
+The random recommender algorithm chooses items to recommend randomly.
+Even though this algorithm will recommend different items for different
+users it is not personalized because it the recommendations are
+independent of the previous interactions of the user.
 
 
 \section{k-Nearest-Neighbor}
@@ -52,7 +55,7 @@ From this set the items U already interacted with are removed. For
 each item remaining in this set we compute the sum of its similarities
 to the items U interacted with. Finally these items are sorted in
 decreasing order of this sum of similarities and the first n items
-will be recommended\cite{Karypis:2001:EIT:502585.502627}.
+will be recommended~\cite{Karypis:2001:EIT:502585.502627}.
 
 
 \subsection{User Based}
@@ -102,7 +105,7 @@ And the derivative of the log loss is
 \]
 
 
-For further informations please refer to \cite{Rendle:2009:BBP:1795114.1795167}
+For further informations please refer to~\cite{Rendle:2009:BBP:1795114.1795167}
 
 
 \subsection{RankMFX}
@@ -131,11 +134,11 @@ See also {[}Paper for citation?{]}
 
 Ranking SVD uses the quadratic loss and the difference between the
 predicted score of the positive item and the negative minus the actual
-score of the positive item\cite{jahrer2011collaborative}.
+score of the positive item~\cite{jahrer2011collaborative}.
 
 \subsection{Slope One}
 
 The Slope One recommendation algorithm computes the differences of
 interaction intensity between items and uses these differences to 
 predict indirectly the interaction intensity between users and items
-without any interaction yet\cite{DBLP:journals/corr/abs-cs-0702144}.
+without any interaction yet~\cite{DBLP:journals/corr/abs-cs-0702144}.

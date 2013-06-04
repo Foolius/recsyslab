@@ -1,9 +1,31 @@
 
 \chapter{Design and Implementation}
+In this chapter I want to give a quick overview over the library
+by explaining the overall structure of the library and how to extend it.
 
 
 \section{General structure}
+One important part is the reader class in the util package.
+While the reader reads the dataset it maps the UserIDs and 
+ItemIDs from the original IDs in the dataset to internal IDs 
+starting at zero and counting up to guarantee that the IDs are consecutive. 
+When the IDs are consecutive it's for example possible to use them as
+indices in a matrix. \\Furthermore the reader constructs a dict and a matrix
+out of the data using the internal IDs. The dict has the internal 
+UserIDs as keys and the values are tuples representing the 
+interactions of the corresponding user. The first value of these tuples is the internal
+ItemID of the interaction, the second is the intensity or
+quantity of the interaction. You get the dict by calling \lstinline!getR()!
+of the reader object.\\
+The matrix offered by a reader has as much lines as the dataset
+has users and as much columns as items are present in the dataset.
+The entry at the ith line and jth column is then the intensity of the interaction
+between user i and item j. A zero means that there hasn't been any
+interaction yet.
 
+The k-Nearest-Neighbor algorithms need a matrix like it is provided by a
+reader. All other recommendation algorithms need a dict of the 
+form described above.
 
 \section{Interfaces}
 
