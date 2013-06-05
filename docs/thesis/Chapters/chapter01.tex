@@ -23,14 +23,27 @@ platform, where the users interact with items (videos) by watching
 them e.g. youtube.com~\cite{youtube}. Based on the past interactions of the users
 a Recommender System presents them with a ranked list of items, which meets their interest.
 
-The interactions can be implicit like purchases or clicks, then the
-scenario is also called item prediction. When the feedback is provided
-explicit like ratings the scenario is called rating prediction. In
-this work the focus lies on implicit feedback or item prediction.
-However ratings can be interpreted as the strength of implicit feedback.
+Two common scenarios are:
+\begin{itemize}
+    \item Rating Prediction:
+When the feedback is provided explicitly like ratings the scenario is called rating prediction. 
+The rating prediction task got very popular when netflix announced a prize~\cite{netflixprize}
+in September 2009. The algorithm which performs best in predicting ratings 
+would be granted the prize money.
+    \item Item Prediction:
+When the interactions are implicit like purchases or clicks, then the
+scenario is called item prediction. But in this work the focus lies on implicit feedback or item prediction.
+However ratings can also be interpreted as the strength of implicit feedback.
 For example how often a user purchased an item. Some algorithms implemented
 in this library can use this information but none will explicitly
-predict ratings like it's usual in rating prediction scenarios.
+predict ratings like it's usual in rating prediction scenarios because
+it's normally not useful to predict explicit absolute ratings when
+you want to propose items a user could find interesting. In this case
+it's sufficient to only have a ranked list of items according to the 
+preferences of the users. Most of the recommender algorithms in recsyslab
+compute a score which is used to rank the items relative to each other.
+But this score is not an absolute rating.
+\end{itemize}
 
 
 \section{Contributions}

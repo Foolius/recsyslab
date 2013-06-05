@@ -38,6 +38,16 @@ These are a selection of different metrics to rate the recommendations.
 By default the evaluations are executed with only one hidden item
 but generally the metrics should also work with more than just one.
 
+For the notation: U is the set of users, H is the set of hidden items
+and \(H_u\) is the set of hidden items for user u. T is the set used for 
+training. \(\text{TopN}_u\)
+is the set of top N recommendations for user u so the number of items
+the recommender is allowed to recommend is N. For the metrics where
+the order in which the items are recommended count \(\text{TopN}_u\)
+is a list sorted by score in decreasing order.
+To get an implicit score of each item the recommender recommends all
+items.
+
 
 \subsubsection{Hitrate/Recall@N}
 
@@ -48,9 +58,9 @@ So the Recall@N is the fraction of users who get recommended a
 relevant item when the recommender can recommend N items.
 So the hitrate is 
 
-\[
-\mathrm{\textrm{Hitrate}}=\frac{\textrm{\ensuremath{\mathrm{Number}}ofhits}}{\textrm{Numberofhiddenitems}}
-\]
+\begin{equation} 
+\text{Recall@N}=\frac{\sum_{u \in U} H_u \cap \text{topN}_u}{|H|}
+\end{equation}
 
 
 This metric is very intuitive you can for example imagine that you
@@ -63,9 +73,9 @@ the number of recommended items into account.
 
 The precision~\cite{Sarwar00applicationof} is 
 
-\[
-\textrm{Precision}=\frac{\textrm{numberofhits}}{\textrm{numberofrecommendeditems}}
-\]
+\begin{equation} 
+\text{Precision}=\frac{\sum_{u \in U} H_u \cap \text{topN}_u}{N \times |U|}
+\end{equation}
 
 
 As you can clearly see this metric is taken the number of recommended
@@ -78,19 +88,26 @@ number of recommended items increases.
 The F1 metric~\cite{Sarwar00applicationof} tries to balance hitrate and precision
 by taking both into account.
 
-\[
-\textrm{F1}=\frac{2*\textrm{Hitrate}*\textrm{Precision}}{(\textrm{Recall}+\textrm{Precision})}
-\]
- 
+\begin{equation}
+\text{F1}=\frac{2 \times \text{Recall@N} \times \text{Precision}}{\text{Recall@N} + \text{Precision}}
+\end{equation}
 
 
 \subsubsection{Mean Reciprocal Hitrate}
 
-This metric counts the hits but punishes them the more the lower they
+The mean reciprocal hitrate or more general mean reciprocal
+rank~\cite{mrhr} counts the hits but punishes them the more the lower they
 appear in the list of recommendations. So if the hidden item appears
 first in the list of recommendations the hit counts as one, but when
 it is in the second position the hit already counts only as one half
-and so on. 
+and so on.
+
+\begin{equation}
+\text{MRHR}=\frac{1}{|U|} \sum_{u \in U} \frac{1}{\text{pos}(\text{topN}_{u},H_{u})}
+\end{equation}
+
+Where N is the number of items in the dataset and \(\text{pos}(\text{topN}_{u},H_{u})\)
+is the position of the hidden item in the recommendation.
 
 
 \subsubsection{Area under the ROC (AUC)}
@@ -101,15 +118,33 @@ recommender can rate higher. Sum this up for every user and again
 normalize by the number of users.
 
 To get an implicit score of each item the recommender recommends all
-items in a list sorted by decreasing score. This is in fact the same
+items in a list sorted by score in decreasing order. This is in fact the same
 as for the other metrics only that the recommender can recommend as
 many items as possible.
+
+\begin{equation}
+\text{AUC}=\frac{1}{|U|}\sum_{u \in U} \frac{1}{|E(u)|} \sum_{(i,j) \in E(u)} \delta(x_{ui}>x_{uj})
+\end{equation}
+
+Where \(x_{ui}\) is the predicted score of the interaction between User u and item i.
+\(\delta\) is defined as follows
+\begin{equation}
+\delta(x)=\begin{cases}1, & \text{if x is true} \\
+                       0, & \text{otherwise}
+\end{cases}
+\end{equation}
+
+And \(E(u)\) is 
+\begin{equation}
+E(u) =\{(i,j)|(u,i) \in H \land (u,j) \not\in (H \cup T)\}
+\end{equation}
 
 
 \section{Datasets for testing}
 
 In the WWW there are several anonymized datasets available to try
-out recommender systems. Following we will introduce three of them.
+out recommender systems and to evaluate their performance. 
+Following we will introduce three of them.
 
 
 \subsection{MovieLens}

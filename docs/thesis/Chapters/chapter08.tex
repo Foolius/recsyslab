@@ -1,14 +1,42 @@
 
 \chapter{Conclusions}
-As we saw in \ref{usermanual} recsyslab is quite easy to use.
-Also we saw in \ref{results} that our library achieves acceptable results.
-However the results could probably get improved by searching better 
-hyperparameters.
+In this document I provided
+\begin{itemize}
+\item an overview over the research area
+\item explanations of the implemented recommender algorithms
+\item explanations of the implemented test metrics
+\item a user manual explaining how to use every recommonder algorithm and test metric
+\item explanations of the internal structure of recsyslab
+\item test results
+\end{itemize}
 
-
-\section{Future work}
-For future work we could implement more algorithms and evaluation metrics.
-
+While recsyslab provides
+\begin{itemize}
+\item several state of the art recommender algorithms
+\item several widely used test metrics
+\item a simple infrastructure to use these together
+\item easy extendable with new recommender algorithms or test metrics
+\item acceptable test results
+\end{itemize}
+After reading this document every beginner should be able to use and understand recsyslab.
+We hope this will help students start working in this field and researchers to compare their new algorithms
+with already existing algorithms without wasting much time implementing something else
+then their own algorithms.
 
 
 \section{Outlook}
+For future work we could
+\begin{itemize}
+\item implement more recommender algorithms
+\item implement more test metrics
+\item visualize test results graphically
+\item update the model with new interactions so we don't have to train the model from ground up again
+\end{itemize}
+
+But apart of that we hope to get feedback from users to improve recsyslab.
+It will be interesting to see in which parts students have problems to 
+understand what's going on. When such parts are discovered we want to make
+them easier to understand. Also which new features, test metrics and recommender algorithms
+get implemented will depend on the user feedback. For the recommender algorithms
+we will observe the research in this area and implement new popular recommender algorithms
+to keep recsyslab up to date.
