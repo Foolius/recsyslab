@@ -1,33 +1,79 @@
 
 \chapter{Design and Implementation}
+\label{design}
 In this chapter we'd like to give a quick overview over the library
 by explaining the overall structure of the library and how to extend it.
 
 
 \section{General structure}
-One important part is the reader class in the util package.
+\subsection*{Dependencies}
+To run recsyslab you need a Python 2.7.x interpreter~\cite{python} and NumPy~\cite{numpy},
+a package for scientific computing with Python.
+
+\subsection*{Input Dataset Format}
+Right now only one type of datasets is supported. The dataset has to be
+a textfile where each line is of this form:
+\begin{lstlisting}
+UserID<separator>ItemID<separator>NumberOfInteractions
+\end{lstlisting}
+<separator> is an arbitrary string but it has to be the same throughout the whole dataset.
+NumberOfInteractions is optional and can be omitted. In this case one will be assumed.
+Everything coming after NumberOfInteractions<separator> will be ignored.
+Please note that when you're omitting NumberOfInteractions but have something else after
+the ItemId, this will be recognized as NumberOfInteractions.
+
+We recommend to use the MovieLens database\ref{movielens} with 100,000 ratings.
+It is easy to get, doesn't need any modifications to work with our library and has a
+reasonable size. Also we will use this dataset in the examples of the user manual in 
+chapter \ref{usermanual}.
+
+\subsection*{The util Package}
+The util package contains several modules for the things happening around the 
+recommender algorithms and the methods for the test metrics.
+The modules in the util package are:
+\begin{description}
+\item[reader] manages the data
+\item[split] splits up the dataset following the leave-one-out protocol, see also chapter~\ref{background}
+\item[helper] contains several helper functions
+\item[test] contains the methods for computing the test metrics
+\end{description}
+The reader module is a very central part in recsyslab.
+The class reader in the module reader takes care of reading the dataset and 
+supplies the other parts of recsyslab with every kind of data they need.
 While the reader reads the dataset it maps the UserIDs and 
 ItemIDs from the original IDs in the dataset to internal IDs 
 starting at zero and counting up to guarantee that the IDs are consecutive. 
 When the IDs are consecutive it's for example possible to use them as
-indices in a matrix. \\Furthermore the reader constructs a dict and a matrix
+indices in a matrix. \\
+Furthermore the reader constructs a dict and a matrix
 out of the data using the internal IDs. The dict has the internal 
 UserIDs as keys and the values are tuples representing the 
 interactions of the corresponding user. The first value of these tuples is the internal
 ItemID of the interaction, the second is the intensity or
 quantity of the interaction. You get the dict by calling \lstinline!getR()!
-of the reader object.\\
+of the reader object. \\
 The matrix offered by a reader has as much lines as the dataset
 has users and as much columns as items are present in the dataset.
 The entry at the ith line and jth column is then the intensity of the interaction
 between user i and item j. A zero means that there hasn't been any
-interaction yet.
-
+interaction yet.\\
 The k-Nearest-Neighbor algorithms need a matrix like it is provided by a
 reader. All other recommendation algorithms need a dict of the 
 form described above.
 
-\section{Interfaces}
+\subsection*{The recommender Package}
+In the recommender package are all recommender algorithms.
+They are separated into the following modules:
+\begin{description}
+\item[nonpersonalized] simple, nonpersonalized algorithms
+\item[knn] k-Nearest-Neighbors algorithms
+\item[mf] Pairwise matrix factorization algorithms
+\item[BPRMF] Bayesian Personalized Ranking Matrix Factorization algorithm
+\item[RankMFX] RankMFX algorithm
+\item[slopeone] Slope One algorithm
+\item[svd] Ranking SVD (Sparse SVD)
+\end{description}
+For descriptions of the algorithms please refer to chapter~\ref{recommendationalgorithms}.
 To implement new recommender algorithms which integrate nicely into the infrastructure
 the only thing you have
 to take care of is to provide a getRec function which has an 

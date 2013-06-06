@@ -9,8 +9,8 @@ First, we will explain how to load a dataset, second we
 will explain how to use the different recommendation algorithms and
 how to test them with the provided evaluation metrics. 
 
-For informations about the recommendation algorithms, please refer to \ref{recommendationalgorithms}.
-For informations about the test metrics refer to \ref{evaluationmetrics}.
+For informations about the recommendation algorithms, please refer to chapter~\ref{recommendationalgorithms}.
+For informations about the test metrics refer to chapter~\ref{background}.
 
 The following python code is also in the file manual.py in the bin directory of the library
 so you don't have to copy the code out of this pdf document. But if you're working through these examples
@@ -30,20 +30,10 @@ Each of these commands will show the documentation of the specified module.
 
 
 \section{Load the Dataset}
-To load the dataset it has to be a textfile where each line is of the following format:
-\begin{lstlisting}
-UserID<separator>ItemID<separator>NumberOfInteractions
-\end{lstlisting}
-<separator> is an arbitrary string but it has to be the same throughout the whole dataset.
-NumberOfInteractions is optional and can be omitted and one will be assumed.
-Everything coming after NumberOfInteractions<separator> will be ignored.
-Please note that when you're omitting NumberOfInteractions but have something else after
-the ItemId, this will be recognized as NumberOfInteractions.
-
-We recommend to use the MovieLens database\ref{movielens} with 100,000 ratings.
-It is easy to get, doesn't need any modifications to work with our library and has a
-reasonable size. Also we will use this dataset in the following examples.
-When you have a suiting database, start up a python interpreter of version 2.7.x.
+In chapter \ref{design} we explained how the dataset has to look like.
+For trying things out the MovieLens dataset~\cite{movielensdatasets} would work just fine.
+When you have a dataset, place it into the bin directory of recsyslab and start the
+python interpreter from the command line with
 \begin{lstlisting}
 $ python
 \end{lstlisting}

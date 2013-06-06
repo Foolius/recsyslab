@@ -47,7 +47,7 @@ W, H = recommender.BPRMF.learnModel(r.getMaxUid(), r.getMaxIid(),
                                     0.1,                # learning rate
                                     trainingDict,       # training dict
                                     150,                # number of features
-                                    3,                  # number of epochs
+                                    30,                 # number of epochs
                                     r.numberOfTransactions)
 
 import recommender.mf
@@ -60,7 +60,7 @@ W, H = recommender.RankMFX.learnModel(r.getMaxUid(), r.getMaxIid(),
                                       0.1,              # learning rate
                                       trainingDict,     # training dict
                                       150,              # number of features
-                                      3,                # number of epochs
+                                      30,               # number of epochs
                                       r.numberOfTransactions)
 
 RankMFX = recommender.mf.MFrec(W, H, trainingDict)
@@ -70,8 +70,8 @@ import recommender.svd
 W, H = recommender.svd.learnModel(r.getMaxUid(), r.getMaxIid(),
                                   0.0002,         # learning rate
                                   trainingDict,   # training dict
-                                  1000,           # number of features
-                                  1,              # number of epochs
+                                  170,            # number of features
+                                  10,             # number of epochs
                                   1000)           # number of iterations
 
 svd = recommender.mf.MFrec(W, H, trainingDict)

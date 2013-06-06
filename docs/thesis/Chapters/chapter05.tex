@@ -14,23 +14,37 @@ algorithm is iterating trough both in two nested for loops
 to guarantee that every algorithm is tested with every metric.
 The code which generated the table in \ref{results} is in 
 the experiments.py file in the bin directory of recsyslab.
-So chech it out for further implementation details.
+So check it out for further implementation details.
 
 
 \section{Results}
 \label{results}
+
 \begin{tabular}{rlllll} \toprule
     recommender  & hitrate & precision & f1 & mrhr & auc \\ \midrule
-    constant & 0.0731707317073 & 6.9 & 0.14480587618 & 0.0207687387433 & 0.826383065429 \\
-    randomRec & 0.00530222693531 & 0.5 & 0.0104931794334 & 0.00110463061152 & 0.479019845932 \\
-    itemKnn & 0.00530222693531 & 0.5 & 0.0104931794334 & 0.00207670554966 & 0.56107542212 \\
-    userKnn & 0.0084835630965 & 0.8 & 0.0167890870934 & 0.00382054907506 & 0.53129413142 \\
-    BPRMF& 0.24920466596 & 23.5 & 0.493179433368 & 0.0996574593075 & 0.929450479792 \\
-    RankMFX & 0.18769883351 & 17.7 & 0.371458551941 & 0.0852135198371 & 0.867928869256 \\
-    Ranking SVD & 0.00742311770944 & 0.7 & 0.0146904512067 & 0.00162138733189 & 0.517177605189 \\
-    slopeone & 0.0 & 0.0 & 0 & 0.0 & 0.669577426536 \\ \bottomrule
+    constant & 0.0731 & 6.9 & 0.1448 & 0.0207 & 0.8263 \\
+    randomRec & 0.0053 & 0.5 & 0.0104 & 0.0011 & 0.4790 \\
+    itemKnn & 0.2576 & 24.3 & 0.5099 & 0.1151 & 0.8687 \\
+    userKnn & 0.2619 & 24.7 & 0.5183 & 0.1203 & 0.9279 \\
+    BPRMF& 0.2990 & 28.2 & 0.5918 & 0.1261 & 0.9434 \\
+    RankMFX & 0.1389 & 13.1 & 0.2749 & 0.0538 & 0.7447 \\
+    Ranking SVD & 0.0084 & 0.8 & 0.0167 & 0.0030 & 0.5503 \\
+    slopeone & 0.0 & 0.0 & 0 & 0.0 & 0.6695 \\ \bottomrule
 \end{tabular}
 
 \section{Comparison}
+To show the performance of recsyslab we compare our test results with results 
+from this paper:~\cite{deshpande2004item}
 
 
+\begin{tabular}{rllll} \toprule
+ & \multicolumn{2}{c}{hitrate} & \multicolumn{2}{c}{mrhr} \\ \cmidrule(r){2-3} \cmidrule(r){4-5}
+ & recsyslab & \cite{deshpande2004item} & recsyslab & \cite{deshpande2004item} \\ \midrule
+    constant & 0.0731 & 0.131 & 0.0207 & 0.046 \\
+    itemKnn & 0.2576 & 0.271 & 0.1151 & 0.119 \\
+    userKnn & 0.2619 & 0.281 & 0.1203 & 0.128 \\ \bottomrule
+\end{tabular}
+
+It can be seen that recsyslab performs almost as good as the reference.
+The small advantage probably comes from normalization we did not use when
+we were computing these results.
