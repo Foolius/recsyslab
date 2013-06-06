@@ -31,11 +31,11 @@
 \contentsline {subsection}{\numberline {4.1.1}Constant}{9}{subsection.4.1.1}
 \contentsline {subsection}{\numberline {4.1.2}Random}{9}{subsection.4.1.2}
 \contentsline {section}{\numberline {4.2}k-Nearest-Neighbor}{9}{section.4.2}
-\contentsline {subsection}{\numberline {4.2.1}Item Based}{9}{subsection.4.2.1}
+\contentsline {subsection}{\numberline {4.2.1}Item Based}{10}{subsection.4.2.1}
 \contentsline {subsection}{\numberline {4.2.2}User Based}{10}{subsection.4.2.2}
 \contentsline {section}{\numberline {4.3}Matrix Factorization}{10}{section.4.3}
 \contentsline {subsection}{\numberline {4.3.1}BPRMF}{10}{subsection.4.3.1}
-\contentsline {subsection}{\numberline {4.3.2}RankMFX}{10}{subsection.4.3.2}
+\contentsline {subsection}{\numberline {4.3.2}RankMFX}{11}{subsection.4.3.2}
 \contentsline {subsection}{\numberline {4.3.3}Ranking SVD (Sparse SVD)}{11}{subsection.4.3.3}
 \contentsline {subsection}{\numberline {4.3.4}Slope One}{11}{subsection.4.3.4}
 \contentsline {chapter}{\numberline {5}\spacedlowsmallcaps {Experiments}}{13}{chapter.5}
@@ -54,5 +54,6 @@
 \contentsline {section}{\numberline {7.6}Ranking SVD (Sparse SVD)}{27}{section.7.6}
 \contentsline {chapter}{\numberline {8}\spacedlowsmallcaps {Conclusions}}{31}{chapter.8}
 \contentsline {section}{\numberline {8.1}Outlook}{31}{section.8.1}
+\contentsline {chapter}{\numberline {9}\spacedlowsmallcaps {Appendix - Docstrings}}{33}{chapter.9}
 \vspace {\beforebibskip }
-\contentsline {chapter}{\spacedlowsmallcaps {Bibliography}}{33}{dummy.3}
+\contentsline {chapter}{\spacedlowsmallcaps {Bibliography}}{35}{dummy.3}

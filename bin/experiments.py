@@ -27,8 +27,8 @@ trainingMatrix, matrixEvaluationDict = (
     util.split.splitMatrix(r.getMatrix(), 123456789))
 
 import recommender.knn
-recommenderList.append(recommender.knn.itemKnn(trainingMatrix, 10).getRec)
-recommenderList.append(recommender.knn.userKnn(trainingMatrix, 10).getRec)
+recommenderList.append(recommender.knn.itemKnn(trainingMatrix, 20).getRec)
+recommenderList.append(recommender.knn.userKnn(trainingMatrix, 50).getRec)
 
 import recommender.BPRMF
 W, H = recommender.BPRMF.learnModel(r.getMaxUid(), r.getMaxIid(),
@@ -36,8 +36,8 @@ W, H = recommender.BPRMF.learnModel(r.getMaxUid(), r.getMaxIid(),
                                     # regularization parameter
                                     0.1,                # learning rate
                                     trainingDict,       # training dict
-                                    150,                # number of features
-                                    3,                  # number of epochs
+                                    350,                # number of features
+                                    30,                  # number of epochs
                                     r.numberOfTransactions)
 
 import recommender.mf
@@ -50,8 +50,8 @@ W, H = recommender.RankMFX.learnModel(r.getMaxUid(), r.getMaxIid(),
                                       # regularization parameter
                                       0.1,              # learning rate
                                       trainingDict,     # training dict
-                                      150,              # number of features
-                                      3,                # number of epochs
+                                      350,              # number of features
+                                      30,                # number of epochs
                                       r.numberOfTransactions)
 
 RankMFX = recommender.mf.MFrec(W, H, trainingDict)
@@ -61,8 +61,8 @@ import recommender.svd
 W, H = recommender.svd.learnModel(r.getMaxUid(), r.getMaxIid(),
                                   0.0002,         # learning rate
                                   trainingDict,   # training dict
-                                  1000,           # number of features
-                                  1,              # number of epochs
+                                  170,           # number of features
+                                  10,              # number of epochs
                                   1000)           # number of iterations
 
 svd = recommender.mf.MFrec(W, H, trainingDict)
@@ -94,5 +94,7 @@ s += " \\\\\n"
 for rec in recommenderList:
     s += type(rec.__self__).__name__
     for test in testMetricsList:
-        s += " & " + str(results[rec][test])
+        s += " & " + str(results[rec][test])[0:6]
     s += " \\\\\n"
+
+print s

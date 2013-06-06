@@ -1,7 +1,7 @@
 
 \chapter{Recommendation Algorithms}
 \label{recommendationalgorithms}
-In this chapter I will roughly explain how the algorithms I've implemented
+In this chapter I will provide an overview on how the algorithms I've implemented
 work. For further explanations please refer to the cited papers.
 
 
@@ -18,7 +18,10 @@ The constant recommender algorithm counts the number of interactions
 for each item and sorts this in decreasing order of interactions.
 Then it recommends the top items of this list. So it recommends the
 items which are the most popular over all users and doesn't do any
-personalizations.
+personalizations. The intuition here is that the most popular items
+will be interesting for everyone. However the results show that
+algorithms which personalize the recommendation based on the 
+interaction history of the users perform much better.
 
 
 \subsection{Random}
@@ -33,7 +36,17 @@ independent of the previous interactions of the user.
 
 This class of recommendation algorithms works by searching neighbors
 of either items or users based on a similarity function which is the
-cosine in this library.
+cosine in this library. The similarity function is interchangeable 
+for example in
+\cite{Karypis:2001:EIT:502585.502627} two similarity functions are
+compared. The cosine similarity performs best so in recsyslab only the cosine similarity
+is implemented. For two vectors \(\overrightarrow{v},\overrightarrow{u}\)
+The cosine similarity is defined as follows:
+
+\begin{equation}
+\cos(\overrightarrow{v}, \overrightarrow{u})=\frac{\overrightarrow{v} \cdot \overrightarrow{u}}{||\overrightarrow{v}||_{2} ||\overrightarrow{u}||_{2}}
+\end{equation}
+
 
 
 \subsection{Item Based}
@@ -60,7 +73,7 @@ will be recommended~\cite{Karypis:2001:EIT:502585.502627}.
 
 \subsection{User Based}
 
-The user based k-Nearest-Neighbor is very similar to the item based.
+The user based k-Nearest-Neighbor~\cite{userbasedknn} is very similar to the item based.
 But instead of interpreting the columns as vectors we interpret the
 lines or users of the matrix as vectors and compute their similarities
 to other users.
@@ -78,8 +91,8 @@ building phase. These matrices are supposed to represent abstract
 features of each item and user. For recommendation the dot product
 of the feature vector of an user and an item gives a score whith which
 we can sort the items and recommend the best suitable ones. The process
-of presenting a large matrix M as two smaller matrices W and H so
-that M = W{*}H is also called singular value decomposition.
+of presenting a large matrix \(M\) as two smaller matrices \(W\) and \(H\) so
+that \(M = W \times H\) is also called singular value decomposition.
 
 Each of the implemented algorithms train the model with stochastic
 gradient descent. In each iteration the model is trained with a randomly
@@ -127,7 +140,7 @@ And its derivative
 \]
 
 
-See also {[}Paper for citation?{]}
+See also~\cite{diaz2012happening}.
 
 
 \subsection{Ranking SVD (Sparse SVD)}

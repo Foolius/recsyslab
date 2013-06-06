@@ -1,6 +1,10 @@
 \chapter{User Manual}
 \label{usermanual}
 In this chapter we will provide a step by step user manual for recsyslab.
+
+To run recsyslab you need to install Python~\cite{python} and NumPy~\cite{numpy}.
+Please refer to their sites for informations on how to install them.
+
 First, we will explain how to load a dataset, second we
 will explain how to use the different recommendation algorithms and
 how to test them with the provided evaluation metrics. 
@@ -11,7 +15,7 @@ For informations about the test metrics refer to \ref{evaluationmetrics}.
 The following python code is also in the file manual.py in the bin directory of the library
 so you don't have to copy the code out of this pdf document. But if you're working through these examples
 please note that you perhaps miss the import of a module when you skip an example because
-I won't write each needed import in each new example.
+We won't write each needed import in each new example.
 
 Also for help you can use the inline documentation available as docstrings.
 You can display them with the command line utility\footnote{We will use \lstinline!$! to indicate a bash prompt.} pydoc.
@@ -36,9 +40,9 @@ Everything coming after NumberOfInteractions<separator> will be ignored.
 Please note that when you're omitting NumberOfInteractions but have something else after
 the ItemId, this will be recognized as NumberOfInteractions.
 
-I recommend to use the MovieLens database\ref{movielens} with 100,000 ratings.
-It is easy to get, doesn't need any modifications to work with my library and has a
-reasonable size. Also I will use this dataset in the following examples.
+We recommend to use the MovieLens database\ref{movielens} with 100,000 ratings.
+It is easy to get, doesn't need any modifications to work with our library and has a
+reasonable size. Also we will use this dataset in the following examples.
 When you have a suiting database, start up a python interpreter of version 2.7.x.
 \begin{lstlisting}
 $ python
@@ -66,6 +70,7 @@ the second the string which is separating the values, here it is a tab.
 When you are using another dataset you probably have to change the filename and perhaps
 also the separating string.
 
+\subsubsection*{Mapping}
 The constructor creates a mapping from the original IDs to internal IDs both for the users
 and the items to make sure that the IDs are consecutive. So to get the items a user interacted
 with we have to first find out the internal UserID.
@@ -312,7 +317,7 @@ Number of possible hits: 943.0
 Hitrate: 0.005302226935312832
 \end{lstlisting}
 The second paratemer of the constructor is the seed for the random function.
-From now on I will only show the hitrate because the other metric are computed
+From now on we will only show the hitrate because the other metric are computed
 similarly. But feel free to also compute the other metrics as well.
 
 \section{k-Nearest Neighbor}
@@ -355,7 +360,7 @@ in this case it's matrixEvaluationDict.
 The second parameter is the number of neighbors to include into the neighborhood.
 During the model building phase the algorithm will compute the similarity of each
 item to each other item. But because this similarity is associative it's only
-necessary to compute the half. The 100k movieLens dataset I use for these examples
+necessary to compute the half. The 100k movieLens dataset We use for these examples
 has 1682 items so we get about \begin{math} \frac{N(N-1)}{2}=\frac{1682^2}{2} = 1413721 \end{math} 
 similarities to compute.
 
@@ -451,7 +456,7 @@ Epoch: 3/3 | iteration 99000/100000 | learning rate=0.100000 | average_loss for 
 Epoch: 3/3 | iteration 100000/100000 | learning rate=0.100000 | average_loss for the last 1000 iterations = 0.125070
 \end{lstlisting}
 This will output quite a much so you can observe how the loss is behaving.
-With a short search I found these values for the regularization parameters
+With a short search we found these values for the regularization parameters
 and the learning rate to be quite good, although they aren't probably the
 best. But above all the results will get better with more epochs but then
 it will naturally take longer to compute so three is alright for a short

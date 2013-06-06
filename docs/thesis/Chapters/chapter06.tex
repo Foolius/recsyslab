@@ -28,5 +28,9 @@ reader. All other recommendation algorithms need a dict of the
 form described above.
 
 \section{Interfaces}
-
-
+To implement new recommender algorithms which integrate nicely into the infrastructure
+the only thing you have
+to take care of is to provide a getRec function which has an 
+internal UserID as first parameter and the number of items to recommend
+as the second parameter. Also it should return a list of internal ItemIDs of the
+length which got specified in the second parameter.

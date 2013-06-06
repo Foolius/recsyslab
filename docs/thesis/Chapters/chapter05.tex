@@ -1,14 +1,25 @@
-
 \chapter{Experiments}
 \label{experiments}
+In this chapter we will show test results of every metric with every
+recommender algorithm and how they were computed.
 
 
 \section{Execution}
+The results were computed using the recommender algorithms and 
+the test metrics implemented in recsyslab. It was done 
+like it is shown in the user manual in~\ref{usermanual}.
+Only difference is that for simplification the different
+getRec methods and metric methods were each in a list and the 
+algorithm is iterating trough both in two nested for loops
+to guarantee that every algorithm is tested with every metric.
+The code which generated the table in \ref{results} is in 
+the experiments.py file in the bin directory of recsyslab.
+So chech it out for further implementation details.
 
 
 \section{Results}
 \label{results}
-\begin{tabular}{lrrrrr} \toprule
+\begin{tabular}{rlllll} \toprule
     recommender  & hitrate & precision & f1 & mrhr & auc \\ \midrule
     constant & 0.0731707317073 & 6.9 & 0.14480587618 & 0.0207687387433 & 0.826383065429 \\
     randomRec & 0.00530222693531 & 0.5 & 0.0104931794334 & 0.00110463061152 & 0.479019845932 \\
