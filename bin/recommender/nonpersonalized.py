@@ -1,4 +1,4 @@
-""""Two non-personalized algorithms to compare the results.
+"""Two non-personalized algorithms to compare the results.
 
     constant    --  recommends the overall most popular items.
     randomRec   --  recommends randomly
