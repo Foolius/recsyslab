@@ -4,8 +4,7 @@
     precision   --  Returns #hits / n
     f1          --  Returns the result of a F1 test
     mrhr        --  Returns the Mean Reciprocal Hitrate
-    auc         --  Returns the Area under the curve
-    MFtest      --  Returns a recommender function built from a MF model"""
+    auc         --  Returns the Area under the curve"""
 
 
 def countHits(testR, recommender, n):
