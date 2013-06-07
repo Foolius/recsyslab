@@ -35,7 +35,7 @@ def hingeLoss(a, y):
 
 def dHingeLoss(a, y):
     """
-    -dloss(a,y)/da
+    Derivative of the hingeLoss.
     """
     z = a * y
     if z > 1:

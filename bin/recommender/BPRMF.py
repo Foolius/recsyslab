@@ -43,7 +43,7 @@ def logLoss(a, y):
 
 def dLogLoss(a, y):
     """
-    -dloss(a,y)/da
+    Derivative of the logLoss.
     """
     z = a * y
     if z > 18:
