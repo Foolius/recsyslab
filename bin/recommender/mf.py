@@ -32,8 +32,12 @@ def learnModel(n_users, m_items, regU, regI, regJ,
         W   --  User Features
         H   --  Item Features
 
-    See also: "BPR: Bayesian Personalized Ranking from Implicit Feedback"
-    from Steffen Rendle et al.
+    Based on:
+    Steffen Rendle, Christoph Freudenthaler, Zeno Gantner, and
+    Lars Schmidt-Thieme. 2009. BPR: Bayesian personalized ranking from
+    implicit feedback. In Proceedings of the Twenty-Fifth Conference on
+    Uncertainty in Artificial Intelligence (UAI '09).
+    AUAI Press, Arlington, Virginia, United States, 452-461.
     """
 
     """Learning rate is constant."""

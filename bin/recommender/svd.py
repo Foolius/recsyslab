@@ -1,7 +1,11 @@
 """Module to compute the model of Ranking SVD (Sparse SVD)
 
-    Based on: "Collaborative Filtering Ensemble for Ranking"
-    by Michael Jahrer and Andreas Toescher."""
+    Based on:
+    Jahrer, Michael, and Andreas Töscher.
+    "Collaborative filtering ensemble for ranking."
+    Proc. of KDD Cup Workshop at 17th ACM SIGKDD Int. Conf.
+    on Knowledge Discovery and Data Mining, KDD. Vol. 11. 2011."""
+
 import random
 import numpy as np
 

@@ -72,8 +72,10 @@ def hitrate(testR, recommender, n):
 
     hits / items gives the hitrate or recall.
 
-    See also: "Application of Dimensionality Reduction in Recommender System
-    -- A Case Study" by Badrul M. sarcar et al.
+    See also:
+    Sarwar, Badrul, et al. Application of dimensionality reduction in
+    recommender system-a case study. No. TR-00-043.
+    MINNESOTA UNIV MINNEAPOLIS DEPT OF COMPUTER SCIENCE, 2000.
     """
     hits, items = countHits(testR, recommender, n)
     print("Hitrate: %r" % (hits / items))
@@ -94,8 +96,10 @@ def precision(testR, recommender, n):
 
     hits = number of items from testR the recommender guessed right.
 
-    See also: "Application of Dimensionality Reduction in Recommender System
-    -- A Case Study" by Badrul M. sarcar et al.
+    See also:
+    Sarwar, Badrul, et al. Application of dimensionality reduction in
+    recommender system-a case study. No. TR-00-043.
+    MINNESOTA UNIV MINNEAPOLIS DEPT OF COMPUTER SCIENCE, 2000.
     """
     hits = countHits(testR, recommender, n)[0]
     if n == 0:
@@ -191,8 +195,12 @@ def auc(testR, recommender, r):
 
     r is a reader object with the database read in.
 
-    See also: "BPR: Bayesian Personalized Ranking from Implicit Feedback"
-    from Steffen Rendle et al.
+    Based on:
+    Steffen Rendle, Christoph Freudenthaler, Zeno Gantner, and
+    Lars Schmidt-Thieme. 2009. BPR: Bayesian personalized ranking from
+    implicit feedback. In Proceedings of the Twenty-Fifth Conference on
+    Uncertainty in Artificial Intelligence (UAI '09).
+    AUAI Press, Arlington, Virginia, United States, 452-461.
     """
     maxIid = r.getMaxIid()
 

@@ -3,8 +3,12 @@
     itemKnn --  Item based knn
     userKnn --  User based knn
 
-    Based on "Evaluation of Item-Based Top-N Recommendation Algortihms"
-    by George Karypis.
+    Based on:
+    George Karypis. 2001. Evaluation of Item-Based Top-N Recommendation
+    Algorithms. In Proceedings of the tenth international conference on
+    Information and knowledge management (CIKM '01), Henrique Paques,
+    Ling Liu, and David Grossman (Eds.). ACM, New York, NY, USA, 247-254.
+    DOI=10.1145/502585.502627 http://doi.acm.org/10.1145/502585.502627
 """
 import numpy as np
 
