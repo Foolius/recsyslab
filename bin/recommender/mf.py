@@ -86,7 +86,6 @@ def learnModel(n_users, m_items, regU, regI, regJ,
             j = np.random.random_integers(0, m_items)
             # if  j is also relevant for u we continue
             # we need to see a negative example to contrast the positive one
-#            while [x for x in R[u] if x[0] == j]:
             while j in userItems:
                 j = np.random.random_integers(0, m_items)
 
