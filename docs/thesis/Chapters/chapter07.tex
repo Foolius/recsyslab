@@ -13,13 +13,13 @@ For informations about the recommendation algorithms, please refer to chapter~\r
 For informations about the test metrics refer to chapter~\ref{background}.
 
 The following python code is also in the file manual.py in the bin directory of the library
-so you don't have to copy the code out of this pdf document. But if you're working through these examples
+so you do not have to copy the code out of this pdf document. But if you are working through these examples
 please note that you perhaps miss the import of a module when you skip an example because
-We won't write each needed import in each new example.
+We will not write each needed import in each new example.
 
 Also for help you can use the inline documentation available as docstrings.
 You can display them with the command line utility\footnote{We will use \lstinline!$! to indicate a bash prompt.} pydoc.
-So for example when you're in the bin directory of the library call
+So for example when you are in the bin directory of the library call
 
 \begin{lstlisting}
 $ pydoc __init__
@@ -104,7 +104,7 @@ constant.getRec(0, 10)
 Every recommender has a getRec function with this signature. The first paramater is the internal
 UserID, the second is the number of items to be recommended. If n = -1 all items get recommendend.
 Also the IDs of the recommended items are internal ones.
-If you want to pass external UserIDs and get external ItemIDs back you don't have
+If you want to pass external UserIDs and get external ItemIDs back you do not have
 to map them all by yourself. Instead you can use a helper function called
 getExternalRec.
 \begin{lstlisting}
@@ -243,10 +243,10 @@ Mean Reciprocal Hitrate: 0.02098966486559275
 
 To compute the AUC the third parameters has to be our reader object because
 the function needs additional information to compute its metric.
-We don't need to specify the number of items to recommend because
+We do not need to specify the number of items to recommend because
 the AUC works by comparing all items so it needs the recommender
 to recommend all available items.
-The first two parameters don't change.
+The first two parameters do not change.
 \begin{lstlisting}
 >>> util.test.auc(evaluationDict, constant.getRec, r)
 0 users tested
@@ -346,10 +346,10 @@ itemKnn = recommender.knn.itemKnn(trainingMatrix, 10)
 1410000 Similarities calculated
 \end{lstlisting}
 Please note that you pass the the right dict for evaluation as the first parameter
-in this case it's matrixEvaluationDict.
+in this case it is matrixEvaluationDict.
 The second parameter is the number of neighbors to include into the neighborhood.
 During the model building phase the algorithm will compute the similarity of each
-item to each other item. But because this similarity is associative it's only
+item to each other item. But because this similarity is associative it is only
 necessary to compute the half. The 100k movieLens dataset We use for these examples
 has 1682 items so we get about \begin{math} \frac{N(N-1)}{2}=\frac{1682^2}{2} = 1413721 \end{math} 
 similarities to compute.
@@ -447,7 +447,7 @@ Epoch: 3/3 | iteration 100000/100000 | learning rate=0.100000 | average_loss for
 \end{lstlisting}
 This will output quite a much so you can observe how the loss is behaving.
 With a short search we found these values for the regularization parameters
-and the learning rate to be quite good, although they aren't probably the
+and the learning rate to be quite good, although they are not probably the
 best. But above all the results will get better with more epochs but then
 it will naturally take longer to compute so three is alright for a short
 experiment.

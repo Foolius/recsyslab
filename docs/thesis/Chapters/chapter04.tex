@@ -1,8 +1,9 @@
 
 \chapter{Recommendation Algorithms}
 \label{recommendationalgorithms}
-In this chapter I will provide an overview on how the algorithms I've implemented
-work. For further explanations please refer to the cited papers.
+In this chapter we will provide an overview on how the algorithms we have implemented
+work. And show the core part of their source code in recsyslab to illustrate the 
+simplicity of the code. For further explanations please refer to the cited papers.
 
 
 \section{Non-Personalized Algorithms}
@@ -17,11 +18,40 @@ algorithms.
 The constant recommender algorithm counts the number of interactions
 for each item and sorts this in decreasing order of interactions.
 Then it recommends the top items of this list. So it recommends the
-items which are the most popular over all users and doesn't do any
+items which are the most popular over all users and does not do any
 personalizations. The intuition here is that the most popular items
 will be interesting for everyone. However the results show that
 algorithms which personalize the recommendation based on the 
 interaction history of the users perform much better.
+In pseudocode this algorithm will look like this:
+\begin{lstlisting}
+countDict = dict initialized with all ItemIDs as keys and 0 as values
+
+for interaction in dataset:
+    countDict(ItemID(interaction))++
+
+ranking = list(ItemIDs in decreasing order of their values)
+
+return first N items of ranking
+\end{lstlisting}
+And the implementation:
+\begin{lstlisting}
+def __init__(self, dbdict):
+    self.dictionary = {}
+    self.sortedList = []
+    for data in dbdict.iteritems():
+        for item, rating in iter(data[1]):
+            if item in self.dictionary:
+                self.dictionary[item] += rating
+            else:
+                self.dictionary[item] = rating
+
+    self.sortedList = helper.sortList(self.dictionary.iteritems())
+
+def getRec(self, user, n):
+    return self.sortedList[:n]
+\end{lstlisting}
+
 
 
 \subsection{Random}
@@ -30,6 +60,30 @@ The random recommender algorithm chooses items to recommend randomly.
 Even though this algorithm will recommend different items for different
 users it is not personalized because it the recommendations are
 independent of the previous interactions of the user.
+In pseudocode this will be:
+\begin{lstlisting}
+return N randomly chosen items
+\end{lstlisting}
+And in Python:
+\begin{lstlisting}
+def __init__(self, dbdict, seed):
+    self.maxIid = 0
+    self.seed = seed
+    for data in dbdict.iteritems():
+        for itemRating in iter(data[1]):
+            item = itemRating[0]
+            if item > self.maxIid:
+                self.maxIid = item
+    self.maxIid += 1
+
+def getRec(self, user, n):
+    random.seed(self.seed)
+    if self.maxIid < n or n == -1:
+        l = range(self.maxIid)
+        random.shuffle(l)
+        return l
+    return list(random.sample(range(self.maxIid), n))
+\end{lstlisting}
 
 
 \section{k-Nearest-Neighbor}
@@ -60,15 +114,51 @@ between the ith user and the jth item.
 The algorithm interprets the columns of the matrix i.e. the items
 as vectors and computes there similarities by computing their cosine.
 To build the model the algorithm computes the n most similar items
-of each item. 
+of each item. In pseudocode:
+\begin{lstlisting}
+for every item i
+    for every item j
+        sim[i,j] = similarity between i and j
 
-To compute recommendations for user U the algorithm then computes
+for every item i
+    for every item j
+        if sim[i,j] not one of the n largest in sim[i]
+            sim[i,j] = 0
+\end{lstlisting}
+In Python it looks like this:
+\begin{lstlisting}
+def __init__(self, userItemMatrix, n):
+    self.itemUserMatrix = userItemMatrix.transpose()
+    self.sim = computeCosSim(self.sim, self.itemUserMatrix)
+    self.userItemMatrix = userItemMatrix
+
+    order = self.sim.argsort(1)
+
+    # for each row in sim:
+    # Set all entries to 0 except the n highest
+    for j in xrange(0, self.sim.shape[1]):
+        for i in xrange(0, self.sim.shape[1] - n):
+            self.sim[j, order[j, i]] = 0
+\end{lstlisting}
+
+To compute recommendations for user U the algorithm computes
 the union of the n most similar items of each item U interacted with.
 From this set the items U already interacted with are removed. For
 each item remaining in this set we compute the sum of its similarities
 to the items U interacted with. Finally these items are sorted in
 decreasing order of this sum of similarities and the first n items
 will be recommended~\cite{Karypis:2001:EIT:502585.502627}.
+The pseudocode is
+\begin{lstlisting}
+for every item i user u bought
+    itemSimVector = itemSimVector + vector of i
+
+for every item i user u bought
+    itemSimVector[i] = 0
+
+return the N items with the highest value in itemSimVector
+\end{lstlisting
+
 
 
 \subsection{User Based}
@@ -97,7 +187,7 @@ that \(M = W \times H\) is also called singular value decomposition.
 Each of the implemented algorithms train the model with stochastic
 gradient descent. In each iteration the model is trained with a randomly
 chosen user, a randomly chosen item the user interacted with, called
-the positive item and a randomly chosen item the user didn't interacted
+the positive item and a randomly chosen item the user did not interacted
 with yet, called the negative item. The features of the user and the
 negative and the positive item are then trained according to the derivative
 of a loss function.

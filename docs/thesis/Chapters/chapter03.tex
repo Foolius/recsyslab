@@ -49,3 +49,41 @@ and written in C++.
 Lenskit~\cite{Ekstrand:2011:RRR:2043932.2043958} is a toolkit which provides several recommender
 algorithms and an infrastructure to evaluate them. It is an open source
 project by the University of Minnesota
+
+
+\section{Comparison}
+Following a table comparing the algorithms implemented by the different
+frameworks.
+
+\scalebox{0.6}{    
+\begin{tabular}{c|l|cccccc} \toprule
+    Category & Feature & PREA & Mahout & Duine & Cofi & MyMedia & recsyslab\\ \midrule
+    \multirow{2}{*}{Baselines} & Constant & O & & & O & O & O\\
+                               & User/Item Average & O & O & O &O&O& \\
+                               & Random &O&&&&O&O\\\midrule
+    \multirow{3}{*}{Memory-based CF}& User-based CF (Su and Khoshgoftaar, 2009)&O&O&O&O&O&O\\
+                               & Item-based CF (Sarwar et al., 2001)&O&O&O&O&O&O\\
+                                & Default Vote, Inf-User-Frex (Beese et al., 1998)&O&O&&&&\\
+                                & Slope-One (Lemire and Maclachlan, 2005)&O&O&&&O&O\\ \midrule
+    \multirow{6}{*}{Matrix Factorization}&SVD (Paterek, 2007)&O&O&&O&O&O\\
+                                         &NMF(Lee and Seung, 2001)&O&&&&&\\
+                                         &PMF(Salakhutdinov and Mnih, 2008b&O&&&&&\\
+                                         &Bayesian PMF (Salakhutdinov and Mnih, 2008b)&O&&&&&O\\
+                                         &Non-linear PMF (Lawrence and Urtasun, 2009)&O&&&&&\\
+                                         &RankMFX (???)&&&&&&O\\ \midrule
+    \multirow{2}{*}{Other methods}       &Fast NPCA (Yu et al., 2009&O&&&&&\\
+                                         &Rank-based CF (Sun et al., 2011, 2012)&O&&&&&\\ \midrule
+    \multirow{5}{*}{Evaluation Metric}   &(N)MAE&O&O&O&O&O&\\
+                                         &RMSE&O&O&&O&O&\\
+                                         &HLU/NDCG&O&&&&O&\\
+                                         &Kendall's Tau, Spearman&O&&&&&\\
+                                         &Precision/Recall/F1&&O&&&O&O\\
+                                         &ARHR/MRHR&&&&&&O\\ \midrule
+    \multirow{6}{*}{Miscelaneous}        &Sparse Vector/Matrix&O&O&O&O&O&O\\
+                                         &Wrapper for other languages&O&&&O&O&?\\
+                                         &Item Recommender for Positive-only Data&&&&&O&O\\
+                                         &Release Year&2011&2005&2009&2004&2009&2013\\
+                                         &Language&Java&Java&Java&Java&C\#&Python\\
+                                         &License&GPL&LGPL&LGPL&GPL&GPL&???\\ \bottomrule
+    
+\end{tabular}}

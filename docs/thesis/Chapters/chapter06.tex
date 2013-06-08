@@ -1,7 +1,7 @@
 
 \chapter{Design and Implementation}
 \label{design}
-In this chapter we'd like to give a quick overview over the library
+In this chapter we would like to give a quick overview over the library
 by explaining the overall structure of the library and how to extend it.
 
 
@@ -19,13 +19,15 @@ UserID<separator>ItemID<separator>NumberOfInteractions
 <separator> is an arbitrary string but it has to be the same throughout the whole dataset.
 NumberOfInteractions is optional and can be omitted. In this case one will be assumed.
 Everything coming after NumberOfInteractions<separator> will be ignored.
-Please note that when you're omitting NumberOfInteractions but have something else after
+Please note that when you are omitting NumberOfInteractions but have something else after
 the ItemId, this will be recognized as NumberOfInteractions.
 
 We recommend to use the MovieLens database\ref{movielens} with 100,000 ratings.
-It is easy to get, doesn't need any modifications to work with our library and has a
+It is easy to get, does not need any modifications to work with our library and has a
 reasonable size. Also we will use this dataset in the examples of the user manual in 
 chapter \ref{usermanual}.
+
+\includepdf[angle=90]{packagediagram.pdf}
 
 \subsection*{The util Package}
 The util package contains several modules for the things happening around the 
@@ -43,7 +45,7 @@ supplies the other parts of recsyslab with every kind of data they need.
 While the reader reads the dataset it maps the UserIDs and 
 ItemIDs from the original IDs in the dataset to internal IDs 
 starting at zero and counting up to guarantee that the IDs are consecutive. 
-When the IDs are consecutive it's for example possible to use them as
+When the IDs are consecutive it is for example possible to use them as
 indices in a matrix. \\
 Furthermore the reader constructs a dict and a matrix
 out of the data using the internal IDs. The dict has the internal 
@@ -55,7 +57,7 @@ of the reader object. \\
 The matrix offered by a reader has as much lines as the dataset
 has users and as much columns as items are present in the dataset.
 The entry at the ith line and jth column is then the intensity of the interaction
-between user i and item j. A zero means that there hasn't been any
+between user i and item j. A zero means that there has not been any
 interaction yet.\\
 The k-Nearest-Neighbor algorithms need a matrix like it is provided by a
 reader. All other recommendation algorithms need a dict of the 
