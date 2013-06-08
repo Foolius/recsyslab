@@ -31,6 +31,9 @@ class slopeone(object):
                     if count % 100000 == 0:
                         print("%r differences computed" % count)
 
+    import util.helper
+
+    @util.helper.cache
     def getRec(self, u, n):
         """Returns the n best recommendations for user u.
 
@@ -48,8 +51,7 @@ class slopeone(object):
             for i1, r in self.R[u]:
                 if i in self.diffs:
                     if i1 in self.diffs[i]:
-                        ratingSum += (r + (self.diffs[i][i1][0] /
-                                           self.diffs[i][i1][1])
+                        ratingSum += (r + self.diffs[i][i1][0]
                                       ) * self.diffs[i][i1][1]
                         count += self.diffs[i][i1][1]
 

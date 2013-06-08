@@ -1,7 +1,7 @@
 """Module to compute the model of Ranking SVD (Sparse SVD)
 
     Based on:
-    Jahrer, Michael, and Andreas Töscher.
+    Jahrer, Michael, and Andreas Toescher.
     "Collaborative filtering ensemble for ranking."
     Proc. of KDD Cup Workshop at 17th ACM SIGKDD Int. Conf.
     on Knowledge Discovery and Data Mining, KDD. Vol. 11. 2011."""
@@ -60,14 +60,13 @@ def learnModel(n_users, m_items, learningRate, R, features,
                 if r[0] == i:
                     rui = r[1]
 
-            # This is actually not the loss, but the derivative of the loss
-            loss = (ruipred - rui0pred) - (rui - rui0)
-            sum_loss += loss
+            dloss = (ruipred - rui0pred) - (rui - rui0)
+            sum_loss += dloss
             c = userFeatures[u]
-            userFeatures -= learningRate * loss * (
+            userFeatures -= learningRate * dloss * (
                 itemFeatures[i] - itemFeatures[i0])
-            itemFeatures[i] -= learningRate * loss * c
-            itemFeatures[i0] -= learningRate * loss * (-c)
+            itemFeatures[i] -= learningRate * dloss * c
+            itemFeatures[i0] -= learningRate * dloss * (-c)
 
             t += 1  # increment the iteration
             if t % printDelay == 0:
@@ -77,6 +76,8 @@ def learnModel(n_users, m_items, learningRate, R, features,
                       " | time needed: %f" %
                      (e + 1, epochs, t, numberOfIterations, learningRate,
                       printDelay, sum_loss / printDelay, timer))
+                     # This is actually not the printing the loss,
+                     # but the derivative of the loss.
                 sum_loss = 0.0
                 timer = time.clock()
 
