@@ -104,8 +104,9 @@ def precision(testR, recommender, n):
     hits = countHits(testR, recommender, n)[0]
     if n == 0:
         return 0
-    print("Precision: %r" % (hits / n))
-    return hits / n
+    precision = hits / (len(testR) * n)
+    print("Precision: %r" % precision)
+    return precision
 
 
 def f1(testR, recommender, n):
