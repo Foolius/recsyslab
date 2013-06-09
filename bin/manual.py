@@ -16,6 +16,7 @@ print(externalConstantgetRec("196", 10))
 
 import util.test
 util.test.hitrate(evaluationDict, constant.getRec, 10)
+util.test.precision(evaluationDict, constant.getRec, 10)
 
 util.test.precision(evaluationDict, constant.getRec, 10)
 
@@ -37,7 +38,7 @@ itemKnn = recommender.knn.itemKnn(trainingMatrix, 10)
 
 util.test.hitrate(matrixEvaluationDict, itemKnn.getRec, 10)
 
-userKnn = recommender.knn.userKnn(trainingMatrix, 10)
+userKnn = recommender.knn.userKnn(trainingMatrix, 50)
 
 util.test.hitrate(matrixEvaluationDict, userKnn.getRec, 10)
 
@@ -47,7 +48,7 @@ W, H = recommender.BPRMF.learnModel(r.getMaxUid(), r.getMaxIid(),
                                     0.1,                # learning rate
                                     trainingDict,       # training dict
                                     150,                # number of features
-                                    30,                 # number of epochs
+                                    3,                 # number of epochs
                                     r.numberOfTransactions)
 
 import recommender.mf
@@ -59,19 +60,19 @@ W, H = recommender.RankMFX.learnModel(r.getMaxUid(), r.getMaxIid(),
                                       0.01, 0.01, 0.01, # regularization parameter
                                       0.1,              # learning rate
                                       trainingDict,     # training dict
-                                      150,              # number of features
-                                      30,               # number of epochs
+                                      250,              # number of features
+                                      5,                # number of epochs
                                       r.numberOfTransactions)
 
 RankMFX = recommender.mf.MFrec(W, H, trainingDict)
-util.test.hitrate(evaluationDict, BPRMF.getRec, 10)
+util.test.hitrate(evaluationDict, RankMFX.getRec, 10)
 
 import recommender.svd
 W, H = recommender.svd.learnModel(r.getMaxUid(), r.getMaxIid(),
                                   0.0002,         # learning rate
                                   trainingDict,   # training dict
-                                  170,            # number of features
-                                  10,             # number of epochs
+                                  770,            # number of features
+                                  40,             # number of epochs
                                   1000)           # number of iterations
 
 svd = recommender.mf.MFrec(W, H, trainingDict)

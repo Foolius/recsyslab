@@ -30,47 +30,47 @@ import recommender.knn
 recommenderList.append(recommender.knn.itemKnn(trainingMatrix, 20).getRec)
 recommenderList.append(recommender.knn.userKnn(trainingMatrix, 50).getRec)
 
-#import recommender.BPRMF
-#W, H = recommender.BPRMF.learnModel(r.getMaxUid(), r.getMaxIid(),
-#                                    0.01, 0.01, 0.01,
-#                                    # regularization parameter
-#                                    0.1,                # learning rate
-#                                    trainingDict,       # training dict
-#                                    350,                # number of features
-#                                    30,                  # number of epochs
-#                                    r.numberOfTransactions)
-#
-#import recommender.mf
-#BPRMF = recommender.mf.MFrec(W, H, trainingDict)
-#recommenderList.append(BPRMF.getRec)
-#
-#import recommender.RankMFX
-#W, H = recommender.RankMFX.learnModel(r.getMaxUid(), r.getMaxIid(),
-#                                      0.01, 0.01, 0.01,
-#                                      # regularization parameter
-#                                      0.1,              # learning rate
-#                                      trainingDict,     # training dict
-#                                      350,              # number of features
-#                                      30,               # number of epochs
-#                                      r.numberOfTransactions)
-#
-#RankMFX = recommender.mf.MFrec(W, H, trainingDict)
-#recommenderList.append(RankMFX.getRec)
-#
-#import recommender.svd
-#W, H = recommender.svd.learnModel(r.getMaxUid(), r.getMaxIid(),
-#                                  0.0002,         # learning rate
-#                                  trainingDict,   # training dict
-#                                  170,            # number of features
-#                                  10,             # number of epochs
-#                                  1000)           # number of iterations
-#
-#svd = recommender.mf.MFrec(W, H, trainingDict)
-#recommenderList.append(svd.getRec)
-#
-#import recommender.slopeone
-#slopeone = recommender.slopeone.slopeone(trainingDict)
-#recommenderList.append(slopeone.getRec)
+import recommender.BPRMF
+W, H = recommender.BPRMF.learnModel(r.getMaxUid(), r.getMaxIid(),
+                                    0.01, 0.01, 0.01,
+                                    # regularization parameter
+                                    0.1,                # learning rate
+                                    trainingDict,       # training dict
+                                    150,                # number of features
+                                    3,                  # number of epochs
+                                    r.numberOfTransactions)
+
+import recommender.mf
+BPRMF = recommender.mf.MFrec(W, H, trainingDict)
+recommenderList.append(BPRMF.getRec)
+
+import recommender.RankMFX
+W, H = recommender.RankMFX.learnModel(r.getMaxUid(), r.getMaxIid(),
+                                      0.01, 0.01, 0.01,
+                                      # regularization parameter
+                                      0.1,              # learning rate
+                                      trainingDict,     # training dict
+                                      250,              # number of features
+                                      5,                # number of epochs
+                                      r.numberOfTransactions)
+
+RankMFX = recommender.mf.MFrec(W, H, trainingDict)
+recommenderList.append(RankMFX.getRec)
+
+import recommender.svd
+W, H = recommender.svd.learnModel(r.getMaxUid(), r.getMaxIid(),
+                                  0.0002,         # learning rate
+                                  trainingDict,   # training dict
+                                  770,            # number of features
+                                  40,             # number of epochs
+                                  1000)           # number of iterations
+
+svd = recommender.mf.MFrec(W, H, trainingDict)
+recommenderList.append(svd.getRec)
+
+import recommender.slopeone
+slopeone = recommender.slopeone.slopeone(trainingDict)
+recommenderList.append(slopeone.getRec)
 
 results = {}
 for rec in recommenderList:
@@ -82,9 +82,15 @@ for rec in recommenderList:
 for rec in recommenderList:
     for test in testMetricsList:
         if not test.__name__ == 'auc':
-            results[rec][test] = test(matrixEvaluationDict, rec, 10)
+            t = 10
         else:
-            results[rec][test] = test(matrixEvaluationDict, rec, r)
+            t = r
+        if type(rec.__self__).__name__ == "userKnn" or type(
+                rec.__self__).__name__ == "itemKnn":
+            eva = matrixEvaluationDict
+        else:
+            eva = evaluationDict
+        results[rec][test] = test(eva, rec, t)
 
 s = "recommender "
 for test in testMetricsList:
