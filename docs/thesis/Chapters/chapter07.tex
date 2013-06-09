@@ -127,7 +127,7 @@ respective recommender algorithm.
 First we will compute the hitrate
 \begin{lstlisting}
 >>> import util.test
->>> hits, items = util.test.hitrate(evaluationDict, constant.getRec, 10)
+>>> util.test.hitrate(evaluationDict, constant.getRec, 10)
 0 users tested
 Hits so far: 0.0
 100 users tested
@@ -159,7 +159,7 @@ is then its quotient.
 
 Next we will calculate the precision
 \begin{lstlisting}
->>> precision = util.test.precision(evaluationDict, constant.getRec, 10)
+>>>util.test.precision(evaluationDict, constant.getRec, 10)
 0 users tested
 Hits so far: 0.0
 100 users tested
@@ -188,6 +188,7 @@ The output looks similar to the one of hitrate and also means quite the same.
 
 Very similar we can calculate the F1 metric
 \begin{lstlisting}
+>>> util.test.f1(evaluationDict, constant.getRec, 10)
 0 users tested
 Hits so far: 0.0
 100 users tested
@@ -215,6 +216,7 @@ F1: 0.14480587618048268
 
 Also the Mean reciprocal hitrate
 \begin{lstlisting}
+>>> util.test.mrhr(evaluationDict, constant.getRec, 10)
 0 users tested
 Score so far: 0.0
 100 users tested
@@ -307,6 +309,7 @@ Number of possible hits: 943.0
 Hitrate: 0.005302226935312832
 \end{lstlisting}
 The second paratemer of the constructor is the seed for the random function.
+
 From now on we will only show the hitrate because the other metric are computed
 similarly. But feel free to also compute the other metrics as well.
 
@@ -356,7 +359,7 @@ similarities to compute.
 
 Now you can test this algorithm with the test metrics for example the hitrate
 \begin{lstlisting}
-util.test.hitrate(matrixEvaluationDict, itemKnn.getRec, 10)
+>>> util.test.hitrate(matrixEvaluationDict, itemKnn.getRec, 10)
 0 users tested
 Hits so far: 0.0
 100 users tested
@@ -386,7 +389,7 @@ non-personalized algorithms.
 
 For user based k-Nearest Neighbors the call to build the model looks like this
 \begin{lstlisting}
->>> userKnn = recommender.knn.userKnn(trainingMatrix, 10)
+>>> userKnn = recommender.knn.userKnn(trainingMatrix, 50)
 0 Similarities calculated
 10000 Similarities calculated
 20000 Similarities calculated
@@ -406,24 +409,25 @@ Hits so far: 0.0
 100 users tested
 Hits so far: 21.0
 200 users tested
-Hits so far: 45.0
+Hits so far: 52.0
 300 users tested
-Hits so far: 72.0
+Hits so far: 82.0
 400 users tested
-Hits so far: 91.0
+Hits so far: 102.0
 500 users tested
-Hits so far: 120.0
+Hits so far: 130.0
 600 users tested
-Hits so far: 142.0
+Hits so far: 153.0
 700 users tested
-Hits so far: 164.0
+Hits so far: 173.0
 800 users tested
-Hits so far: 196.0
+Hits so far: 206.0
 900 users tested
-Hits so far: 223.0
-Number of hits: 230.0
+Hits so far: 237.0
+Number of hits: 247.0
 Number of possible hits: 943.0
-Hitrate: 0.24390243902439024
+Hitrate: 0.26193001060445387
+0.26193001060445387
 \end{lstlisting}
 
 \section{BPRMF}
@@ -492,42 +496,45 @@ in \ref{experiments}
                     0.01, 0.01, 0.01, # regularization parameter
                     0.1,              # learning rate
                     trainingDict,     # training dict
-                    150,              # number of features
-                    3,                # number of epochs
+                    250,              # number of features
+                    5,                # number of epochs
                     r.numberOfTransactions)
-Epoch: 1/3 | iteration 1000/100000 | learning rate=0.100000 | average_loss for the last 1000 iterations = 1.000484
-Epoch: 1/3 | iteration 2000/100000 | learning rate=0.100000 | average_loss for the last 1000 iterations = 0.987704
-Epoch: 1/3 | iteration 3000/100000 | learning rate=0.100000 | average_loss for the last 1000 iterations = 0.986371
+Epoch: 1/5 | iteration 1000/100000 | learning rate=0.100000 | average_loss for the last 1000 iterations = 0.984394
+Epoch: 1/5 | iteration 2000/100000 | learning rate=0.100000 | average_loss for the last 1000 iterations = 0.978983
+Epoch: 1/5 | iteration 3000/100000 | learning rate=0.100000 | average_loss for the last 1000 iterations = 0.966176
+...
+Epoch: 5/5 | iteration 99000/100000 | learning rate=0.100000 | average_loss for the last 1000 iterations = 0.141662
+Epoch: 5/5 | iteration 100000/100000 | learning rate=0.100000 | average_loss for the last 1000 iterations = 0.130552
 \end{lstlisting}
 Again there is much output to monitor the algorithm.
 
 As above we have to generate a getRec method. Before we can evaluate the algorithm.
 \begin{lstlisting}
 >>> RankMFX = recommender.mf.MFrec(W, H, trainingDict)
->>> util.test.hitrate(evaluationDict, BPRMF.getRec, 10)
+>>> util.test.hitrate(evaluationDict, RankMFX.getRec, 10)
 0 users tested
 Hits so far: 0.0
 100 users tested
-Hits so far: 14.0
+Hits so far: 20.0
 200 users tested
-Hits so far: 32.0
+Hits so far: 37.0
 300 users tested
 Hits so far: 54.0
 400 users tested
-Hits so far: 71.0
+Hits so far: 73.0
 500 users tested
-Hits so far: 89.0
+Hits so far: 103.0
 600 users tested
-Hits so far: 105.0
+Hits so far: 123.0
 700 users tested
-Hits so far: 120.0
+Hits so far: 136.0
 800 users tested
-Hits so far: 138.0
+Hits so far: 154.0
 900 users tested
-Hits so far: 152.0
-Number of hits: 162.0
+Hits so far: 172.0
+Number of hits: 177.0
 Number of possible hits: 943.0
-Hitrate: 0.17179215270413573
+Hitrate: 0.18769883351007424
 \end{lstlisting}
 What applied to BPRMF in terms of performance also applies to RankMFX:
 With better tuned meta parameters and more time the results will likely
@@ -542,47 +549,43 @@ a method similar to RankMFX and BPRMF, only without regularization parameters
 >>> W, H = recommender.svd.learnModel(r.getMaxUid(), r.getMaxIid(),
                     0.0002,         # learning rate
                     trainingDict,   # training dict
-                    1000,           # number of features
-                    1,              # number of epochs
+                    770,           # number of features
+                    40,              # number of epochs
                     1000)           # number of iterations
-Epoch: 1/1 | iteration 100/1000 | learning rate=0.000200 | average_loss for the last 100 iterations = -3.713911 | time needed: 0.560000
-Epoch: 1/1 | iteration 200/1000 | learning rate=0.000200 | average_loss for the last 100 iterations = -3.507542 | time needed: 0.580000
-Epoch: 1/1 | iteration 300/1000 | learning rate=0.000200 | average_loss for the last 100 iterations = -3.626713 | time needed: 0.610000
-Epoch: 1/1 | iteration 400/1000 | learning rate=0.000200 | average_loss for the last 100 iterations = -3.717652 | time needed: 0.570000
-Epoch: 1/1 | iteration 500/1000 | learning rate=0.000200 | average_loss for the last 100 iterations = -3.535933 | time needed: 0.580000
-Epoch: 1/1 | iteration 600/1000 | learning rate=0.000200 | average_loss for the last 100 iterations = -3.572086 | time needed: 0.580000
-Epoch: 1/1 | iteration 700/1000 | learning rate=0.000200 | average_loss for the last 100 iterations = -3.682302 | time needed: 0.580000
-Epoch: 1/1 | iteration 800/1000 | learning rate=0.000200 | average_loss for the last 100 iterations = -3.731191 | time needed: 0.580000
-Epoch: 1/1 | iteration 900/1000 | learning rate=0.000200 | average_loss for the last 100 iterations = -3.507198 | time needed: 0.580000
-Epoch: 1/1 | iteration 1000/1000 | learning rate=0.000200 | average_loss for the last 100 iterations = -3.663757 | time needed: 0.570000
+Epoch: 1/40 | iteration 100/1000 | learning rate=0.000200 | average_loss for the last 100 iterations = -3.451531 | time needed: 0.420000
+Epoch: 1/40 | iteration 200/1000 | learning rate=0.000200 | average_loss for the last 100 iterations = -3.687917 | time needed: 0.400000
+Epoch: 1/40 | iteration 300/1000 | learning rate=0.000200 | average_loss for the last 100 iterations = -3.433482 | time needed: 0.410000
+...
+Epoch: 40/40 | iteration 900/1000 | learning rate=0.000200 | average_loss for the last 100 iterations = -2.934971 | time needed: 0.410000
+Epoch: 40/40 | iteration 1000/1000 | learning rate=0.000200 | average_loss for the last 100 iterations = -2.734519 | time needed: 0.400000
 \end{lstlisting}
-The evaluation works the same as for the other algorithms
+The evaluation works the same as for the other matrix factorization algorithms
 \begin{lstlisting}
 >>> svd = recommender.mf.MFrec(W, H, trainingDict)
 >>> util.test.hitrate(evaluationDict, svd.getRec, 10)
 0 users tested
 Hits so far: 0.0
 100 users tested
-Hits so far: 1.0
+Hits so far: 7.0
 200 users tested
-Hits so far: 2.0
+Hits so far: 19.0
 300 users tested
-Hits so far: 2.0
+Hits so far: 29.0
 400 users tested
-Hits so far: 2.0
+Hits so far: 37.0
 500 users tested
-Hits so far: 3.0
+Hits so far: 54.0
 600 users tested
-Hits so far: 4.0
+Hits so far: 71.0
 700 users tested
-Hits so far: 6.0
+Hits so far: 77.0
 800 users tested
-Hits so far: 6.0
+Hits so far: 95.0
 900 users tested
-Hits so far: 6.0
-Number of hits: 7.0
+Hits so far: 108.0
+Number of hits: 113.0
 Number of possible hits: 943.0
-Hitrate: 0.007423117709437964
+Hitrate: 0.11983032873807
 \end{lstlisting}
 
 Lastly the slopeone recommender
@@ -593,8 +596,8 @@ slopeone = recommender.slopeone.slopeone(trainingDict)
 200000 differences computed
 300000 differences computed
 ...
-20000000 differences computed
-20100000 differences computed
+19800000 differences computed
+19900000 differences computed
 \end{lstlisting}
 
 And its evaluation
@@ -602,25 +605,24 @@ And its evaluation
 0 users tested
 Hits so far: 0.0
 100 users tested
-Hits so far: 0.0
+Hits so far: 11.0
 200 users tested
-Hits so far: 0.0
+Hits so far: 21.0
 300 users tested
-Hits so far: 0.0
+Hits so far: 28.0
 400 users tested
-Hits so far: 0.0
+Hits so far: 38.0
 500 users tested
-Hits so far: 0.0
+Hits so far: 49.0
 600 users tested
-Hits so far: 0.0
+Hits so far: 61.0
 700 users tested
-Hits so far: 0.0
+Hits so far: 70.0
 800 users tested
-Hits so far: 0.0
+Hits so far: 76.0
 900 users tested
-Hits so far: 0.0
-Number of hits: 0.0
+Hits so far: 78.0
+Number of hits: 81.0
 Number of possible hits: 943.0
-Hitrate: 0.0
-# I really hope we can get better 
+Hitrate: 0.08589607635206786
 \end{lstlisting}

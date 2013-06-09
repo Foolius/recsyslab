@@ -1,8 +1,41 @@
 
 \chapter{Background}
 \label{background}
-In this chapter we will provide a short overview over the techniques
-used to evaluate recommender algorithms.
+In this chapter we will provide a short overview over the 
+area of recommender system and how to test them.
+
+
+\section{Collaborative Filtering}
+There are two approaches for recommender systems:
+\begin{itemize}
+\item Collaborative filtering
+\item Content-based filtering
+\end{itemize}
+Collaborative filtering is in general the process of finding 
+informations or patterns in large datasets.
+In the context of recommender systems 
+it is refered to in a narrower sense where the task
+is to predict user preferences. By assuming that users who 
+have the same opinion on some items will also agree on other it is
+possible to do predictions without using additional informations like the age of 
+the users~\cite{collaborativefiltering}.
+Content-based filtering uses informations about users and items
+like, for example, the age of the users or the names of the items~\cite{contentbasedfiltering}.
+This work is only about collaborative filtering so when we are 
+speaking about recommender systems we mean recommender systems
+using the collaborative filtering approach.
+
+
+\section{Matrix Factorization}
+\label{matrixfactorization}
+An important group of recommender algorithms use matrix factorization. 
+Matrix factorization splits a large matrix into a product of matrices~\cite{matrixfactorization}.
+In recommender systems the matrix representing the dataset \(M\) is split into
+two matrices \(W\) and \(H\) so that \(M = W \times H\).
+The matrices \(W\) and \(H\) are supposed to represent abstract
+features of each item and user. For recommendation the dot product
+of the feature vector of an user and an item gives a score whith which
+we can sort the items and recommend the best suitable ones. 
 
 
 \section{Evaluation Methods}
@@ -41,6 +74,22 @@ Then it would be likely that there are some users without a hidden item.
 And without a hidden item it would be impossible to measure the quality
 of the recommendations for this user.
 
+The recommender algorithm recommends N items. This N has to be chosen
+according to the deployment scenario. It depends for example 
+on the layout of the site how many items can get recommended at
+once. According to a chosen N and with the metrics of recsyslab the right
+algorithm can be found. 
+
+Except AUC and MRHR the metrics are not taking the position
+of the items in the recommendation list into account.
+What is more important also depends on the use case.
+When all recommended items are presented equally well to the
+user the position of the items in the recommendation
+is not important, only if or if not the right items are
+recommended. But in contrast to this when the user is shown 
+a long list of items and it is likely that the user will not
+scroll down until the end of the list you would rather care about
+the position of the items in the list of recommendations.
 
 
 \subsection{Evaluation metrics}

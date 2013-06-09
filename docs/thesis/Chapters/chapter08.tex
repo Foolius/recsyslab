@@ -1,37 +1,54 @@
 
 \chapter{Conclusions}
-In this document I provided
-\begin{itemize}
-\item an overview over the research area
-\item explanations of the implemented recommender algorithms
-\item explanations of the implemented test metrics
-\item a user manual explaining how to use every recommonder algorithm and test metric
-\item explanations of the internal structure of recsyslab
-\item test results
-\end{itemize}
+In this document we provided an overview over the research area by
+explaining the terminology of recommender systems respectively
+collaborative filtering and their task. We also introduced the leave-one-out
+protocol used to evaluate the performance of recommender systems.
 
-While recsyslab provides
-\begin{itemize}
-\item several state of the art recommender algorithms
-\item several widely used test metrics
-\item a simple infrastructure to use these together
-\item easy extendable with new recommender algorithms or test metrics
-\item acceptable test results
-\end{itemize}
+This is followed by explanations of the recommender algorithms implemented in recsyslab
+together with the core part of their implemention. By comparing the pseudocode
+and the Python code implementing it we can see that the implementation is quite
+simple.
+
+After we provided the necessary foreknowledge we showed how the described algorithms
+perform with the also described metrics and we showed a high level view on 
+recsyslab to help developers extend it.
+
+All this should provide enough knowledge for
+the reader to understand roughly how recsyslab works in theory.
+So we finally got to the extensive user manual 
+explaining how to use every recommender algorithm and test metric so the reader
+would be able to use the library.
+
+The user manual shows that it is really easy to use recsyslab.
+Together with the comparisons of the Python code with the pseudocode
+in chapter~\ref{recommendationalgorithms} we see that the goals of
+this thesis are achieved.
+
+While recsyslab provides several state of the art recommender algorithms,
+several widely used test metrics, a simple infrastructure to use train and test
+recommender algorithms. Additionally recsyslab is easy extendable with new 
+recommender algorithms or test metrics and it produces acceptable test results
 After reading this document every beginner should be able to use and understand recsyslab.
+
 We hope this will help students start working in this field and researchers to compare their new algorithms
 with already existing algorithms without wasting much time implementing something else
-then their own algorithms.
+then their own algorithms. Which was the motivation to write this thesis.
 
 
 \section{Outlook}
-For future work we could
-\begin{itemize}
-\item implement more recommender algorithms
-\item implement more test metrics
-\item visualize test results graphically
-\item update the model with new interactions so we do not have to train the model from ground up again
-\end{itemize}
+For future work we could implement more recommender algorithms,
+implement more test metrics or visualize test results graphically.
+It would also be handy to update the model with new interactions so 
+we do not have to train the model from ground up again, or the 
+possibility to continue training models after they got evaluated.
+
+Also we want to find out why some algorithms does not perform so well.
+We suspect that there are errors in the implementation of slopeone and
+Ranking SVD. To find and correct this errors is certainly a future task.
+Also RankMFX is not performing as well as expected but there it is 
+perhaps only the problem of finding the right parameters and training
+the model long enough, which will also be interesting to find out.
 
 But apart of that we hope to get feedback from users to improve recsyslab.
 It will be interesting to see in which parts students have problems to 

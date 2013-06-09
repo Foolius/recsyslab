@@ -7,53 +7,56 @@
 \contentsline {section}{\numberline {1.3}Contributions}{2}{section.1.3}
 \contentsline {section}{\numberline {1.4}Structure of this Document}{2}{section.1.4}
 \contentsline {chapter}{\numberline {2}\spacedlowsmallcaps {Background}}{3}{chapter.2}
-\contentsline {section}{\numberline {2.1}Evaluation Methods}{3}{section.2.1}
-\contentsline {subsection}{\numberline {2.1.1}Leave-one-out Protocol}{3}{subsection.2.1.1}
-\contentsline {subsection}{\numberline {2.1.2}Evaluation metrics}{3}{subsection.2.1.2}
-\contentsline {subsubsection}{\numberline {2.1.2.1}Hitrate/Recall@N}{4}{subsubsection.2.1.2.1}
-\contentsline {subsubsection}{\numberline {2.1.2.2}Precision}{4}{subsubsection.2.1.2.2}
-\contentsline {subsubsection}{\numberline {2.1.2.3}F1}{4}{subsubsection.2.1.2.3}
-\contentsline {subsubsection}{\numberline {2.1.2.4}Mean Reciprocal Hitrate}{4}{subsubsection.2.1.2.4}
-\contentsline {subsubsection}{\numberline {2.1.2.5}Area under the ROC (AUC)}{5}{subsubsection.2.1.2.5}
-\contentsline {section}{\numberline {2.2}Datasets for testing}{5}{section.2.2}
-\contentsline {subsection}{\numberline {2.2.1}MovieLens}{5}{subsection.2.2.1}
-\contentsline {subsection}{\numberline {2.2.2}Million Song Dataset}{6}{subsection.2.2.2}
-\contentsline {subsection}{\numberline {2.2.3}476 Million Twitter Tweets Dataset}{6}{subsection.2.2.3}
-\contentsline {chapter}{\numberline {3}\spacedlowsmallcaps {Related Work}}{7}{chapter.3}
-\contentsline {section}{\numberline {3.1}MyMediaLite}{7}{section.3.1}
-\contentsline {section}{\numberline {3.2}PREA (Personalized Recommendation Algorithms Toolkit)}{7}{section.3.2}
-\contentsline {section}{\numberline {3.3}Apache Mahout}{7}{section.3.3}
-\contentsline {section}{\numberline {3.4}Duine Framework}{7}{section.3.4}
-\contentsline {section}{\numberline {3.5}Cofi}{7}{section.3.5}
-\contentsline {section}{\numberline {3.6}LensKit}{7}{section.3.6}
-\contentsline {section}{\numberline {3.7}Comparison}{8}{section.3.7}
-\contentsline {chapter}{\numberline {4}\spacedlowsmallcaps {Recommendation Algorithms}}{9}{chapter.4}
-\contentsline {section}{\numberline {4.1}Non-Personalized Algorithms}{9}{section.4.1}
-\contentsline {subsection}{\numberline {4.1.1}Constant}{9}{subsection.4.1.1}
-\contentsline {subsection}{\numberline {4.1.2}Random}{10}{subsection.4.1.2}
-\contentsline {section}{\numberline {4.2}k-Nearest-Neighbor}{10}{section.4.2}
-\contentsline {subsection}{\numberline {4.2.1}Item Based}{10}{subsection.4.2.1}
-\contentsline {subsection}{\numberline {4.2.2}User Based}{11}{subsection.4.2.2}
-\contentsline {section}{\numberline {4.3}Matrix Factorization}{12}{section.4.3}
-\contentsline {subsection}{\numberline {4.3.1}BPRMF}{12}{subsection.4.3.1}
-\contentsline {subsection}{\numberline {4.3.2}RankMFX}{12}{subsection.4.3.2}
-\contentsline {subsection}{\numberline {4.3.3}Ranking SVD (Sparse SVD)}{13}{subsection.4.3.3}
-\contentsline {subsection}{\numberline {4.3.4}Slope One}{13}{subsection.4.3.4}
-\contentsline {chapter}{\numberline {5}\spacedlowsmallcaps {Experiments}}{15}{chapter.5}
-\contentsline {section}{\numberline {5.1}Execution}{15}{section.5.1}
-\contentsline {section}{\numberline {5.2}Results}{15}{section.5.2}
-\contentsline {section}{\numberline {5.3}Comparison}{15}{section.5.3}
-\contentsline {chapter}{\numberline {6}\spacedlowsmallcaps {Design and Implementation}}{17}{chapter.6}
-\contentsline {section}{\numberline {6.1}General structure}{17}{section.6.1}
-\contentsline {chapter}{\numberline {7}\spacedlowsmallcaps {User Manual}}{21}{chapter.7}
-\contentsline {section}{\numberline {7.1}Load the Dataset}{21}{section.7.1}
-\contentsline {section}{\numberline {7.2}Non-Personalized Algorithms}{23}{section.7.2}
-\contentsline {section}{\numberline {7.3}k-Nearest Neighbor}{27}{section.7.3}
-\contentsline {section}{\numberline {7.4}BPRMF}{29}{section.7.4}
-\contentsline {section}{\numberline {7.5}RankMFX}{30}{section.7.5}
-\contentsline {section}{\numberline {7.6}Ranking SVD (Sparse SVD)}{31}{section.7.6}
-\contentsline {chapter}{\numberline {8}\spacedlowsmallcaps {Conclusions}}{35}{chapter.8}
-\contentsline {section}{\numberline {8.1}Outlook}{35}{section.8.1}
-\contentsline {chapter}{\numberline {9}\spacedlowsmallcaps {Appendix - Docstrings}}{37}{chapter.9}
+\contentsline {section}{\numberline {2.1}Collaborative Filtering}{3}{section.2.1}
+\contentsline {section}{\numberline {2.2}Matrix Factorization}{3}{section.2.2}
+\contentsline {section}{\numberline {2.3}Evaluation Methods}{3}{section.2.3}
+\contentsline {subsection}{\numberline {2.3.1}Leave-one-out Protocol}{4}{subsection.2.3.1}
+\contentsline {subsection}{\numberline {2.3.2}Evaluation metrics}{4}{subsection.2.3.2}
+\contentsline {subsubsection}{\numberline {2.3.2.1}Hitrate/Recall@N}{5}{subsubsection.2.3.2.1}
+\contentsline {subsubsection}{\numberline {2.3.2.2}Precision}{5}{subsubsection.2.3.2.2}
+\contentsline {subsubsection}{\numberline {2.3.2.3}F1}{5}{subsubsection.2.3.2.3}
+\contentsline {subsubsection}{\numberline {2.3.2.4}Mean Reciprocal Hitrate}{5}{subsubsection.2.3.2.4}
+\contentsline {subsubsection}{\numberline {2.3.2.5}Area under the ROC (AUC)}{6}{subsubsection.2.3.2.5}
+\contentsline {section}{\numberline {2.4}Datasets for testing}{6}{section.2.4}
+\contentsline {subsection}{\numberline {2.4.1}MovieLens}{6}{subsection.2.4.1}
+\contentsline {subsection}{\numberline {2.4.2}Million Song Dataset}{7}{subsection.2.4.2}
+\contentsline {subsection}{\numberline {2.4.3}476 Million Twitter Tweets Dataset}{7}{subsection.2.4.3}
+\contentsline {chapter}{\numberline {3}\spacedlowsmallcaps {Related Work}}{9}{chapter.3}
+\contentsline {section}{\numberline {3.1}MyMediaLite}{9}{section.3.1}
+\contentsline {section}{\numberline {3.2}PREA (Personalized Recommendation Algorithms Toolkit)}{9}{section.3.2}
+\contentsline {section}{\numberline {3.3}Apache Mahout}{9}{section.3.3}
+\contentsline {section}{\numberline {3.4}Duine Framework}{9}{section.3.4}
+\contentsline {section}{\numberline {3.5}Cofi}{9}{section.3.5}
+\contentsline {section}{\numberline {3.6}LensKit}{9}{section.3.6}
+\contentsline {section}{\numberline {3.7}Comparison}{10}{section.3.7}
+\contentsline {chapter}{\numberline {4}\spacedlowsmallcaps {Recommendation Algorithms}}{11}{chapter.4}
+\contentsline {section}{\numberline {4.1}Non-Personalized Algorithms}{11}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}Constant}{11}{subsection.4.1.1}
+\contentsline {subsection}{\numberline {4.1.2}Random}{12}{subsection.4.1.2}
+\contentsline {section}{\numberline {4.2}k-Nearest-Neighbor}{12}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}Item Based}{13}{subsection.4.2.1}
+\contentsline {subsection}{\numberline {4.2.2}User Based}{14}{subsection.4.2.2}
+\contentsline {section}{\numberline {4.3}Matrix Factorization}{15}{section.4.3}
+\contentsline {subsection}{\numberline {4.3.1}BPRMF}{17}{subsection.4.3.1}
+\contentsline {subsection}{\numberline {4.3.2}RankMFX}{17}{subsection.4.3.2}
+\contentsline {subsection}{\numberline {4.3.3}Ranking SVD (Sparse SVD)}{18}{subsection.4.3.3}
+\contentsline {section}{\numberline {4.4}Other}{19}{section.4.4}
+\contentsline {subsection}{\numberline {4.4.1}Slope One}{19}{subsection.4.4.1}
+\contentsline {chapter}{\numberline {5}\spacedlowsmallcaps {Experiments}}{21}{chapter.5}
+\contentsline {section}{\numberline {5.1}Execution}{21}{section.5.1}
+\contentsline {section}{\numberline {5.2}Results}{21}{section.5.2}
+\contentsline {section}{\numberline {5.3}Comparison}{22}{section.5.3}
+\contentsline {chapter}{\numberline {6}\spacedlowsmallcaps {Design and Implementation}}{23}{chapter.6}
+\contentsline {section}{\numberline {6.1}General structure}{23}{section.6.1}
+\contentsline {chapter}{\numberline {7}\spacedlowsmallcaps {User Manual}}{27}{chapter.7}
+\contentsline {section}{\numberline {7.1}Load the Dataset}{27}{section.7.1}
+\contentsline {section}{\numberline {7.2}Non-Personalized Algorithms}{29}{section.7.2}
+\contentsline {section}{\numberline {7.3}k-Nearest Neighbor}{33}{section.7.3}
+\contentsline {section}{\numberline {7.4}BPRMF}{35}{section.7.4}
+\contentsline {section}{\numberline {7.5}RankMFX}{36}{section.7.5}
+\contentsline {section}{\numberline {7.6}Ranking SVD (Sparse SVD)}{37}{section.7.6}
+\contentsline {chapter}{\numberline {8}\spacedlowsmallcaps {Conclusions}}{41}{chapter.8}
+\contentsline {section}{\numberline {8.1}Outlook}{41}{section.8.1}
+\contentsline {chapter}{\numberline {9}\spacedlowsmallcaps {Appendix - Docstrings}}{43}{chapter.9}
 \vspace {\beforebibskip }
-\contentsline {chapter}{\spacedlowsmallcaps {Bibliography}}{39}{dummy.3}
+\contentsline {chapter}{\spacedlowsmallcaps {Bibliography}}{59}{dummy.3}
