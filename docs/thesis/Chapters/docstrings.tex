@@ -1,0 +1,759 @@
+\chapter{Appendix - Docstrings}
+In this chapter we provide the inline documentation which is also included
+in recsyslab.
+
+\begin{lstlisting}
+Help on package bin:
+
+NAME
+    bin - Package with the Python scripts of the recsyslab toolbox.
+
+FILE
+    /home/jk/recsyslab/bin/__init__.py
+
+DESCRIPTION
+    It contains the Packages:
+        recommender -- Package for the recommender algorithms
+        util        -- Package with all the other stuff needed to try out the
+                        recommender algorithms
+
+PACKAGE CONTENTS
+    experiments
+    main
+    manual
+    recommender (package)
+    testing
+    usecases
+    util (package)
+\end{lstlisting}
+
+\begin{lstlisting}
+Help on package bin.recommender in bin:
+
+NAME
+    bin.recommender - Package containing the recommending algorithms.
+
+FILE
+    /home/jk/recsyslab/bin/recommender/__init__.py
+
+DESCRIPTION
+    These are:
+        nonpersonalized --  constant and random
+        knn             --  k-Nearest-Neigbor
+        mf              --  Matrix Factorization with an arbitrary loss
+        BPRMF           --  Bayesian Personalized Ranking with MF
+                            (just calls mf with logLoss)
+        RankMFX         --  MF with hingeLoss
+        slopeone        --  slopeone recommender
+        svd             --  Ranking SVD (Sparse SVD)
+
+PACKAGE CONTENTS
+    BPRMF
+    RankMFX
+    knn
+    mf
+    nonpersonalized
+    slopeone
+    svd
+\end{lstlisting}
+
+\begin{lstlisting}
+Help on module bin.recommender.knn in bin.recommender:
+
+NAME
+    bin.recommender.knn - Two classes for k-Nearest-Neighbor(knn) recommendation.
+
+FILE
+    /home/jk/recsyslab/bin/recommender/knn.py
+
+DESCRIPTION
+    itemKnn --  Item based knn
+    userKnn --  User based knn
+    
+    Based on:
+    George Karypis. 2001. Evaluation of Item-Based Top-N Recommendation
+    Algorithms. In Proceedings of the tenth international conference on
+    Information and knowledge management (CIKM 01), Henrique Paques,
+    Ling Liu, and David Grossman (Eds.). ACM, New York, NY, USA, 247-254.
+    DOI=10.1145/502585.502627 http://doi.acm.org/10.1145/502585.502627
+
+CLASSES
+    __builtin__.object
+        itemKnn
+        userKnn
+    
+    class itemKnn(__builtin__.object)
+     |  Class for item based knn.
+     |  
+     |  Methods defined here:
+     |  
+     |  __init__(self, userItemMatrix, n)
+     |      Builds a model for Item based knn.
+     |      
+     |          userItemMatrix  --  A matrix where an entry at i, j is the rating
+     |                              the ith user gave the jth item.
+     |          n               --  number of neighbors which are getting computed.
+     |      
+     |      Uses the cosine for similarity.
+     |  
+     |  getRec(self, u, n)
+     |      Returns the n best recommendations for user u.
+     |      
+     |      Set n = -1 to get all items recommended
+     |  
+     |  ------------------------------------------------------------
+     |  Data descriptors defined here:
+     |  
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |  
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+    
+    class userKnn(__builtin__.object)
+     |  Methods defined here:
+     |  
+     |  __init__(self, userItemMatrix, n)
+     |      Builds a model for user based knn.
+     |      
+     |          userItemMatrix  --  A matrix where an entry at i, j is the rating
+     |                              the ith user gave the jth item.
+     |          n               --  number of neighbors which get computed.
+     |      
+     |      Uses the cosine for similarity.
+     |  
+     |  getRec(self, u, n)
+     |      Returns the n best recommendations for user u.
+     |      
+     |      Set n = -1 to get all items recommended
+     |  
+     |  ------------------------------------------------------------
+     |  Data descriptors defined here:
+     |  
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |  
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+
+FUNCTIONS
+    computeCosSim(sim, matrix)
+        Computes the cos of every two lines in the matrix and writes them into sim.
+    
+    cos(a, b)
+        Gets two vectors(onedimensional np.matrix) and computes their cosine.
+\end{lstlisting}
+\newpage
+\begin{lstlisting}
+Help on module bin.recommender.mf in bin.recommender:
+
+NAME
+    bin.recommender.mf - Module for Matrix Factorization (mf) techniques.
+
+FILE
+    /home/jk/recsyslab/bin/recommender/mf.py
+
+DESCRIPTION
+    learnModel  --  learn a mf model
+    MFrec       --  compute recommendations based on a mf model
+
+CLASSES
+    __builtin__.object
+        MFrec
+    
+    class MFrec(__builtin__.object)
+     |  Class to compute recommendations with a mf model.
+     |  
+     |  Methods defined here:
+     |  
+     |  __init__(self, W, H, trainingR)
+     |      Initialize the class.
+     |      
+     |      W           --  Matrix of the User features
+     |      H           --  Matrix of the Item features
+     |      trainingR   --  The dict the model was trained with
+     |  
+     |  getRec(self, u, n)
+     |      Returns the n best recommendations for user u based on the mf model.
+     |      
+     |      Set n = -1 to get all items recommended
+     |  
+     |  ------------------------------------------------------------
+     |  Data descriptors defined here:
+     |  
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |  
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+
+FUNCTIONS
+    learnModel(n_users, m_items, regU, regI, regJ, learningRate, R, features, epochs, numberOfIterations, lossF, dlossF)
+        Learns a mf model with a passed loss function.
+        
+            n_users             --  The highest internal assigned User ID
+            m_items             --  The highest internal assigned Item ID
+            regU                --  Regularization for the user vector
+            regI                --  Regularization for the positive item
+            regJ                --  Regularization for the negative item
+            learningRate        --  The learning rate
+            R                   --  A dict of the form UserID -> (ItemId, Rating)
+            features            --  Number of features of the items and users
+            epochs              --  Number of epochs the model should be learned
+            numberOfIterations  --  Number of iterations in each epoch
+            lossF               --  Loss function
+            dlossF              --  Derivation of lossF
+        
+        Returns:
+            W   --  User Features
+            H   --  Item Features
+        
+        Based on:
+        Steffen Rendle, Christoph Freudenthaler, Zeno Gantner, and
+        Lars Schmidt-Thieme. 2009. BPR: Bayesian personalized ranking from
+        implicit feedback. In Proceedings of the Twenty-Fifth Conference on
+        Uncertainty in Artificial Intelligence (UAI 09).
+        AUAI Press, Arlington, Virginia, United States, 452-461.
+\end{lstlisting}
+
+\begin{lstlisting}
+Help on module bin.recommender.BPRMF in bin.recommender:
+
+NAME
+    bin.recommender.BPRMF
+
+FILE
+    /home/jk/recsyslab/bin/recommender/BPRMF.py
+
+FUNCTIONS
+    dLogLoss(a, y)
+        Derivative of the logLoss.
+    
+    learnModel(n_users, m_items, regU, regI, regJ, learningRate, R, features, epochs, numberOfIterations)
+        Learns a model with the BPRMF algorithm, actually just calls mf.
+        
+            n_users             --  The highest internal assigned User ID
+            m_items             --  The highest internal assigned Item ID
+            regU                --  Regularization for the user vector
+            regI                --  Regularization for the positive item
+            regJ                --  Regularization for the negative item
+            learningRate        --  The learning rate
+            R                   --  A dict of the form UserID -> (ItemId, Rating)
+            features            --  Number of features of the items and users
+            epochs              --  Number of epochs the model should be learned
+            numberOfIterations  --  Number of iterations in each epoch
+        
+        Returns:
+            W   --  User Features
+            H   --  Item Features
+        
+        Based on:
+        Steffen Rendle, Christoph Freudenthaler, Zeno Gantner, and
+        Lars Schmidt-Thieme. 2009. BPR: Bayesian personalized ranking from
+        implicit feedback. In Proceedings of the Twenty-Fifth Conference on
+        Uncertainty in Artificial Intelligence (UAI 09).
+        AUAI Press, Arlington, Virginia, United States, 452-461.
+    
+    logLoss(a, y)
+        logLoss(a, y) = log(1 + exp(-a*y))
+\end{lstlisting}
+
+\begin{lstlisting}
+Help on module bin.recommender.RankMFX in bin.recommender:
+
+NAME
+    bin.recommender.RankMFX
+
+FILE
+    /home/jk/recsyslab/bin/recommender/RankMFX.py
+
+FUNCTIONS
+    dHingeLoss(a, y)
+        Derivative of the hingeLoss.
+    
+    hingeLoss(a, y)
+        hingeLoss(a, y) = max(0, 1 - a*y)
+    
+    learnModel(n_users, m_items, regU, regI, regJ, learningRate, R, features, epochs, numberOfIterations)
+        Learns a model with the RankMFX algorithm, actually just calls mf.
+        
+            n_users             --  The highest internal assigned User ID
+            m_items             --  The highest internal assigned Item ID
+            regU                --  Regularization for the user vector
+            regI                --  Regularization for the positive item
+            regJ                --  Regularization for the negative item
+            learningRate        --  The learning rate
+            R                   --  A dict of the form UserID -> (ItemId, Rating)
+            features            --  Number of features of the items and users
+            epochs              --  Number of epochs the model should be learned
+            numberOfIterations  --  Number of iterations in each epoch
+        
+        Returns:
+            W   --  User Features
+            H   --  Item Features
+\end{lstlisting}
+
+\begin{lstlisting}
+Help on module bin.recommender.slopeone in bin.recommender:
+
+NAME
+    bin.recommender.slopeone
+
+FILE
+    /home/jk/recsyslab/bin/recommender/slopeone.py
+
+CLASSES
+    __builtin__.object
+        slopeone
+    
+    class slopeone(__builtin__.object)
+     |  A class to compute recommendations with a Slope One Predictor.
+     |  
+     |  Based on:
+     |      "Slope One Predictors for Online Rating-Based Collaborative Filtering"
+     |      by Daniel Lemire and Anna Maclachlan.
+     |  
+     |  Methods defined here:
+     |  
+     |  __init__(self, R)
+     |      Generate the model.
+     |      
+     |      R   --  A dict of the form UserID -> (ItemId, Rating)
+     |  
+     |  getRec(self, u, n)
+     |      Returns the n best recommendations for user u.
+     |      
+     |      Set n = -1 to get all items recommended
+     |  
+     |  ------------------------------------------------------------
+     |  Data descriptors defined here:
+     |  
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |  
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+\end{lstlisting}
+
+\begin{lstlisting}
+Help on module bin.recommender.svd in bin.recommender:
+
+NAME
+    bin.recommender.svd - Module to compute the model of Ranking SVD (Sparse SVD)
+
+FILE
+    /home/jk/recsyslab/bin/recommender/svd.py
+
+DESCRIPTION
+    Based on:
+    Jahrer, Michael, and Andreas Toescher.
+    "Collaborative filtering ensemble for ranking."
+    Proc. of KDD Cup Workshop at 17th ACM SIGKDD Int. Conf.
+    on Knowledge Discovery and Data Mining, KDD. Vol. 11. 2011.
+
+FUNCTIONS
+    learnModel(n_users, m_items, learningRate, R, features, epochs, numberOfIterations)
+        Returns the model of a learned svd as two matrices.
+        
+        n_users             --  The highest internal assigned User ID
+        m_items             --  The highest internal assigned Item ID
+        learningRate        --  The learning rate
+        R                   --  A dict of the form UserID -> (ItemId, Rating)
+        features            --  Number of features of the items and users
+        epochs              --  Number of epochs the model should be learned
+        numberOfIterations  --  Number of iterations in each epoch
+\end{lstlisting}
+
+\begin{lstlisting}
+Help on package bin.util in bin:
+
+NAME
+    bin.util - Package with utility code to run the recommender algorithms.
+
+FILE
+    /home/jk/recsyslab/bin/util/__init__.py
+
+DESCRIPTION
+    It contains the following modules:
+        reader  --  A reader to read in databases
+        split   --  Split databases
+        test    --  Test metrics
+        helper  --  Several helping methods and a two way dict
+
+PACKAGE CONTENTS
+    helper
+    reader
+    split
+    test
+\end{lstlisting}
+
+\begin{lstlisting}
+Help on module bin.util.reader in bin.util:
+
+NAME
+    bin.util.reader - Contains a class to manage a database.
+
+FILE
+    /home/jk/recsyslab/bin/util/reader.py
+
+CLASSES
+    __builtin__.object
+        stringSepReader
+    
+    class stringSepReader(__builtin__.object)
+     |  A class to manage a database.
+     |  
+     |  Methods defined here:
+     |  
+     |  __init__(self, filename, separator)
+     |      Reads in a database file.
+     |      
+     |      The lines of the database file have to look like this:
+     |          UserID<separator>ItemID<separator>Rating
+     |      If there is just an UserID and an ItemID the rating is set to 1.
+     |      Everything coming after the rating will be ignored,
+     |      but when omit the rating and still have something following the ItemID
+     |      this will be understood as the rating.
+     |  
+     |  getInternalIid(self, originalIid)
+     |      Maps the given original ItemID to the corresponding internal ItemID.
+     |      
+     |      The passed original UserID has to be a string.
+     |  
+     |  getInternalUid(self, originalUid)
+     |      Maps the given original UserID to the corresponding internal UserID.
+     |      
+     |      The passed original UserID has to be a string.
+     |  
+     |  getMatrix(self)
+     |      Get the database as a matrix.
+     |      
+     |      The lines of the matrix are corresponding to the users
+     |      and the columns to the items.
+     |      So the n,m entry is the rating the nth user gave the mth item.
+     |  
+     |  getMaxIid(self)
+     |      Returns the highest internal assigned ItemID.
+     |  
+     |  getMaxUid(self)
+     |      Returns the highest internal assigned UserID.
+     |  
+     |  getOriginalIid(self, internalIid)
+     |      Maps the given internal ItemID to the corresponding original ItemID.
+     |  
+     |  getOriginalUid(self, internalUid)
+     |      Maps the given internal UserID to the corresponding original UserID.
+     |  
+     |  getR(self)
+     |      Return the database as a dict.
+     |      
+     |      The dict has internal UserIDs as keys and
+     |      (ItemID, Rating) Tuples as values
+     |  
+     |  ------------------------------------------------------------
+     |  Data descriptors defined here:
+     |  
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |  
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+\end{lstlisting}
+
+\begin{lstlisting}
+Help on module bin.util.split in bin.util:
+
+NAME
+    bin.util.split - Methods to split a database with the leave-one-out method.
+
+FILE
+    /home/jk/recsyslab/bin/util/split.py
+
+DESCRIPTION
+    split        --  splits a reader into two new dicts
+    splitMatrix  --  splits a matrix into a matrix and a dict
+
+FUNCTIONS
+    split(R, seed)
+        Splits a database into two dicts.
+        
+        Splits after the leave-one-out method which means for every user in the
+        database it takes one item out of the database and into a new one.
+        The first returned dict is the database with one item missing for each
+        user. The second returned dict has the missing items.
+        
+        R is a dict of the database.
+        seed is a seed for the randomness.
+    
+    splitMatrix(M, seed)
+        Splits a matrix into two new dicts.
+        
+        Returns an User x Item Matrix with one entry of each user set to 0
+        and a User -> Item Dict with the missing entrys.
+        
+        M is an User x Item Matrix.
+        seed is a seed for the randomness.
+\end{lstlisting}
+
+\begin{lstlisting}
+Help on module bin.util.test in bin.util:
+
+NAME
+    bin.util.test - Module with several metrics to test the recommender algorithms.
+
+FILE
+    /home/jk/recsyslab/bin/util/test.py
+
+DESCRIPTION
+    hitrate     --  Returns #hits, #items
+    precision   --  Returns #hits / n
+    f1          --  Returns the result of a F1 test
+    mrhr        --  Returns the Mean Reciprocal Hitrate
+    auc         --  Returns the Area under the curve
+    countHits   --  Returns hits, items in a tuple
+
+FUNCTIONS
+    auc(testR, recommender, r)
+        Returns and prints the AUC of the recommender function.
+        
+        testR is a dict with an internal UserID as a dict and a list of items as
+        values. Normally testR is the second dict split.split returns.
+        The list can have a lenght greater than 1.
+        
+        recommender is a function which takes an internal UserID and n and returns
+        n items recommender for the UserID.
+        
+        r is a reader object with the database read in.
+        
+        Based on:
+        Steffen Rendle, Christoph Freudenthaler, Zeno Gantner, and
+        Lars Schmidt-Thieme. 2009. BPR: Bayesian personalized ranking from
+        implicit feedback. In Proceedings of the Twenty-Fifth Conference on
+        Uncertainty in Artificial Intelligence (UAI 09).
+        AUAI Press, Arlington, Virginia, United States, 452-461.
+    
+    countHits(testR, recommender, n)
+        Returns the number of hits and the number of items it was tested with.
+        
+        Is a helper function for the other metrics
+        testR is a dict with an internal UserID as a dict and a list of items as
+        values. Normally testR is the second dict split.split returns.
+        The list can have a lenght greater than 1.
+        
+        recommender is a function which takes an internal UserID and n and returns
+        n items recommender for the UserID.
+        
+        n is the number of items the recommender can recommend.
+        
+        hits = number of items from testR the recommender guessed right.
+        items = the number of items in testR.
+        
+        hits, items will be printed.
+        hits, items will get returned.
+    
+    f1(testR, recommender, n)
+        Prints and returns F1 of the recommender.
+        
+        F1 = (2 * hitrate * precision) / (hitrate + precision)
+        testR is a dict with an internal UserID as a dict and a list of items as
+        values. Normally testR is the second dict split.split returns.
+        The list can have a lenght greater than 1.
+        
+        recommender is a function which takes an internal UserID and n and returns
+        n items recommender for the UserID.
+        
+        n is the number of items the recommender can recommend.
+        
+        hits = number of items from testR the recommender guessed right.
+        
+        See also: "Application of Dimensionality Reduction in Recommender System
+        -- A Case Study" by Badrul M. sarcar et al.
+    
+    hitrate(testR, recommender, n)
+        Returns the number of hits and the number of items it was tested with.
+        
+        testR is a dict with an internal UserID as a dict and a list of items as
+        values. Normally testR is the second dict split.split returns.
+        The list can have a lenght greater than 1.
+        
+        recommender is a function which takes an internal UserID and n and returns
+        n items recommender for the UserID.
+        
+        n is the number of items the recommender can recommend.
+        
+        hits = number of items from testR the recommender guessed right.
+        items = the number of items in testR.
+        
+        hits, items and hits / items will be printed.
+        hits, items will get returned.
+        
+        hits / items gives the hitrate or recall.
+        
+        See also:
+        Sarwar, Badrul, et al. Application of dimensionality reduction in
+        recommender system-a case study. No. TR-00-043.
+        MINNESOTA UNIV MINNEAPOLIS DEPT OF COMPUTER SCIENCE, 2000.
+    
+    mrhr(testR, recommender, n)
+        Returns the Mean Reciprocal Hitrate of the recommender.
+        
+        testR is a dict with an internal UserID as a dict and a list of items as
+        values. Normally testR is the second dict split.split returns.
+        The list can have a length greater than 1.
+        
+        recommender is a function which takes an internal UserID and n and returns
+        n items recommender for the UserID.
+        
+        n is the number of items the recommender can recommend.
+        
+        hits = number of items from testR the recommender guessed right.
+    
+    precision(testR, recommender, n)
+        Returns the number of hits / n .
+        
+        testR is a dict with an internal UserID as a dict and a list of items as
+        values. Normally testR is the second dict split.split returns.
+        The list can have a lenght greater than 1.
+        
+        recommender is a function which takes an internal UserID and n and returns
+        n items recommender for the UserID.
+        
+        n is the number of items the recommender can recommend.
+        
+        hits = number of items from testR the recommender guessed right.
+        
+        See also:
+        Sarwar, Badrul, et al. Application of dimensionality reduction in
+        recommender system-a case study. No. TR-00-043.
+        MINNESOTA UNIV MINNEAPOLIS DEPT OF COMPUTER SCIENCE, 2000.
+\end{lstlisting}
+
+\begin{lstlisting}
+Help on module bin.util.helper in bin.util:
+
+NAME
+    bin.util.helper - Several helper functions and a helper class.
+
+FILE
+    /home/jk/recsyslab/bin/util/helper.py
+
+DESCRIPTION
+    idOrigDict          --  two way dict
+    normRowNorm         --  normalize a matrix by the norm
+    normRowSum          --  normalize a matrix by the sum
+    cache               --  cache results of a function
+    writeOrigToFile     --  save a DB with original IDs
+    writeInternalToFile --  save a DB with internal IDs
+    sortList            --  sort a list with scores and IDs
+    listToSet           --  convert a list into a set
+    sortResults         --  sort test results
+    printMatrix         --  print a matrix
+    randDataset         --  generate a random DB
+    dictToMatrix        --  convert a dict to a matrix
+    getScoreMF          --  compute the score of an item
+    getExternalRec      --  convert getRec for original IDs
+
+CLASSES
+    __builtin__.object
+        idOrigDict
+    
+    class idOrigDict(__builtin__.object)
+     |  Class two map external/original IDs to internal IDs and vice versa.
+     |  
+     |  Methods defined here:
+     |  
+     |  __init__(self)
+     |      Initialization.
+     |  
+     |  add(self, orig)
+     |      Add a new original ID.
+     |      
+     |      Returns the internal ID the passed original ID got mapped to.
+     |      If the passed ID is already mapped nothing happens except the
+     |      mapped internal ID is returned.
+     |  
+     |  getId(self, orig)
+     |      Returns the internal ID which is mapped to the passed orinigal ID.
+     |  
+     |  getOrig(self, id)
+     |      Returns the original ID which is mapped to the passed internal ID.
+     |  
+     |  ----------------------------------------------------------------------
+     |  Data descriptors defined here:
+     |  
+     |  __dict__
+     |      dictionary for instance variables (if defined)
+     |  
+     |  __weakref__
+     |      list of weak references to the object (if defined)
+
+FUNCTIONS
+    cache(fn)
+        Decorator to cache the result of the function fn.
+    
+    dictToMatrix(d)
+        Converts a dict like reader.getR() returns to a matrix.
+    
+    getExternalRec(getRec, r)
+        Converts getRec so it takes and returns only the original IDs.
+        
+        r   --  reader object
+    
+    getScoreMF(origUid, origIid, W, H, r)
+        Returns the score of one item for one user with an MF model.
+        origUid --  original User ID
+        origIid --  original Item ID
+        W, H    --  The MF model like returned by recommender.mf for example
+        r       --  a reader object with the database
+    
+    listToSet(sortedscorelist, n)
+        Converts a list into a set with size n.
+        
+        Gets a list like sortList returns and returns a set with the first n
+        items, or less, when there are not enough items
+    
+    normRowNorm(m)
+        Normalize the matrix in place so each row of the matrix has norm 1.
+    
+    normRowSum(m)
+        Normalize the matrix in place so each row of the matrix has sum 1.
+    
+    printMatrix(m)
+        Prints a whole matrix.
+        
+        Prints the whole matrix m without replacing stuff with dots
+        like it normally does when the matrix is to large.
+    
+    randDataset(user, items, p, seed, filename)
+        Generates a random dataset and writes it into a file.
+        
+        user    --  number of users
+        items   --  number of items
+        p       --  percentage of ones in the dataset
+        seed    --  seed for the randomness
+    
+    sortList(scorelist)
+        Gets a list of tuples (itemid, score), sorts by score decreasing.
+    
+    sortResults(name)
+        Sort test results written to a file.
+    
+    writeInternalToFile(reader, toSave, filename)
+        Writes a database into a file with the internal IDs.
+        
+            reader  --  reader object
+            toSave  --  Part of the database to write
+            filename--  Name of the file
+        
+        Writes toSave into a file with the name filename.
+    
+    writeOrigToFile(reader, toSave, filename)
+        Writes a database into a file with the original IDs.
+        
+            reader  --  reader object
+            toSave  --  Part of the database to write
+            filename--  Name of the file
+        
+        Writes toSave into a file with the name filename but first the
+        internal IDs in toSave get mapped to the original IDs.
+\end{lstlisting}
