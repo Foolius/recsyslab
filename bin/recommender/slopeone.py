@@ -31,9 +31,6 @@ class slopeone(object):
                     if count % 100000 == 0:
                         print("%r differences computed" % count)
 
-    import util.helper
-
-    @util.helper.cache
     def getRec(self, u, n):
         """Returns the n best recommendations for user u.
 
