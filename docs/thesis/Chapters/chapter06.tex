@@ -1,9 +1,8 @@
 
 \chapter{Design and Implementation}
 \label{design}
-In this chapter we would like to give a quick overview over the library
-by explaining the overall structure of the library and how to extend it.
-
+In this chapter we present a quick overview over the library
+by explaining its overall structure <of the library and how to extend it.
 
 \subsection*{Dependencies}
 To run recsyslab one needs a Python 2.7.x interpreter~\cite{python} and NumPy~\cite{numpy},
@@ -12,9 +11,11 @@ a package for scientific computing with Python to be installed.
 \subsection*{Input Dataset Format}
 Right now only one type of datasets is supported. The dataset has to be
 a textfile where each line is of this form:
+
 \begin{lstlisting}
 UserID<separator>ItemID<separator>NumberOfInteractions
 \end{lstlisting}
+
 <separator> is an arbitrary string but it has to be the same throughout the whole dataset.
 NumberOfInteractions is optional and can be omitted. In this case one will be assumed.
 Everything coming after NumberOfInteractions<separator> will be ignored.
@@ -24,7 +25,7 @@ the ItemId, this will be recognized as NumberOfInteractions.
 We recommend to use the MovieLens database (see \ref{movielens}) with 100,000 ratings.
 It is easy to get, does not need any modifications to work with our library and has a
 reasonable size. Also we will use this dataset in the examples of the user manual in 
-chapter \ref{usermanual}.
+Chapter~\ref{usermanual}.
 
 %\includepdf[angle=90]{packagediagram.pdf}
 \pagebreak
@@ -42,7 +43,7 @@ recommender algorithms and the methods for the test metrics.
 The modules in the util package are:
 \begin{description}
 \item[reader] manages the data
-\item[split] splits up the dataset following the leave-one-out protocol, see also chapter~\ref{background}
+\item[split] splits up the dataset following the leave-one-out protocol, see also Chapter~\ref{background}
 \item[helper] contains several helper functions
 \item[test] contains the methods for computing the test metrics
 \end{description}
@@ -82,7 +83,9 @@ They are separated into the following modules:
 \item[slopeone] Slope One algorithm
 \item[svd] Ranking SVD (Sparse SVD)
 \end{description}
-For descriptions of the algorithms please refer to chapter~\ref{recommendationalgorithms}.
+Until now these modules do not have a \lstinline!learnModel()! method because the model is trained when the object is instantiated.
+For descriptions of the algorithms please refer to Chapter~\ref{recommendationalgorithms}.
+
 To implement new recommender algorithms which integrate nicely into the infrastructure
 the only thing one has
 to take care of is to provide a \lstinline!getRec! function which has an 

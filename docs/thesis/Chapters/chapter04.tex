@@ -1,4 +1,3 @@
-
 \chapter{Recommendation Algorithms}
 \label{recommendationalgorithms}
 In this chapter we will provide an overview on how the algorithms we implemented
@@ -9,7 +8,7 @@ For further explanations please refer to the cited papers.
 
 \section{Non-Personalized Algorithms}
 
-In this chapter we will describe two very simple and basic recommendation
+In this section we will describe two very simple and basic recommendation
 algorithms we implemented for comparison with the more sophisticated
 algorithms.
 
@@ -268,8 +267,8 @@ def getRec(self, u, n):
 \end{lstlisting}
 
 \section{Matrix Factorization}
-As mentioned in \ref{matrixfactorization} the matrix factorization
-techniques generate two matrices \(W\) and \(H\) so that \(M = W \times H\).
+As mentioned in Section~\ref{matrixfactorization} the matrix factorization
+techniques generate two matrices \(W\) and \(H\) so that \(\hat{M} = W\;H^\top\).
 Each of the implemented algorithms train these two matrices with stochastic
 gradient descent. In each iteration the model is trained with
 \begin{itemize} 
@@ -361,7 +360,7 @@ def getRec(self, u, n):
 
 \subsection{BPRMF}
 
-BPMRF uses the logLoss to train the model. The logLoss is defined
+In our implementation of BPMRF we use the logLoss to train the model. The logLoss is defined
 as
 \begin{equation}
 \textrm{logLoss}(a,y)=\log(1+\exp(-ay)).
@@ -406,7 +405,7 @@ I = randomly chosen item U interacted with
 J = randomly chosen item U did not interact with
 
 ruipred = W[U] * H[I] # Prediction for item I
-rui0pred = W[U] * H[J] # Prediction for item J
+rujpred = W[U] * H[J] # Prediction for item J
 rui = actual value of the interaction between U and I 
 ruj = 0
 

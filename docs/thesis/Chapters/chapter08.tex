@@ -22,7 +22,7 @@ would be able to use the library.
 
 The user manual shows that it is really easy to use recsyslab.
 Together with the comparisons of the Python code with the pseudocode
-in chapter~\ref{recommendationalgorithms} we see that the goals of
+in Chapter~\ref{recommendationalgorithms} we see that the goals of
 this thesis are achieved.
 
 While recsyslab provides several state of the art recommender algorithms,
@@ -43,17 +43,10 @@ It would also be useful to update the model with new interactions so
 one does not have to train the model from ground up again, or the 
 possibility to continue training models after they got evaluated.
 
-Also we want to find out why some algorithms does not perform as well as expected.
-We suspect there are still some errors in the implementation of slopeone and
-Ranking SVD. To find and correct these errors is certainly a future task.
-Also RankMFX is not performing as well as expected but in that case it is 
-perhaps only a problem of finding the right parameters and training
-the model long enough, which will also be interesting to find out.
+We plan to continue testing our algorithms to optimize its performance and to detect any possible bugs. Furthermore, we plan to keep the project active, and to engage more participants so as to conduct a more comprehensive and thorough testing of the library.
 
-But apart from that we hope to get feedback from users to improve recsyslab.
-It will be interesting to see in which parts students have problems to 
-understand what is going on. When such parts are discovered we want to make
-them easier to understand. Also which new features, test metrics and recommender algorithms
-might get implemented will depend on the user feedback. For the recommender algorithms
-we will observe the research in this area and implement new popular recommender algorithms
-to keep recsyslab up to date.
+We plan to also integrate functionality to support grid-search for hyperparameter tuning.
+
+Apart from that, we hope to get feedback from users to improve recsyslab.
+For example, if recsyslab is used to support a recommender system lecture, it will be interesting to see which parts of the implementation students have problems to 
+understand in order to refine them. Furthermore, we expect to receive direct feedback from practitioners regarding which new features, test metrics and additional recommender algorithms should be implemented to keep recsyslab up to date.

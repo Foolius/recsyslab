@@ -16,7 +16,6 @@
 \contentsline {subsubsection}{\numberline {2.3.2.3}F1}{5}{subsubsection.2.3.2.3}
 \contentsline {subsubsection}{\numberline {2.3.2.4}Mean Reciprocal Hitrate}{5}{subsubsection.2.3.2.4}
 \contentsline {subsubsection}{\numberline {2.3.2.5}Area under the ROC (AUC)}{6}{subsubsection.2.3.2.5}
-\contentsline {section}{\numberline {2.4}Datasets for testing}{6}{section.2.4}
 \contentsline {chapter}{\numberline {3}\spacedlowsmallcaps {Related Work}}{7}{chapter.3}
 \contentsline {section}{\numberline {3.1}MyMediaLite}{7}{section.3.1}
 \contentsline {section}{\numberline {3.2}PREA (Personalized Recommendation Algorithms Toolkit)}{7}{section.3.2}
@@ -38,21 +37,18 @@
 \contentsline {subsection}{\numberline {4.3.3}Ranking SVD (Sparse SVD)}{16}{subsection.4.3.3}
 \contentsline {section}{\numberline {4.4}Other}{17}{section.4.4}
 \contentsline {subsection}{\numberline {4.4.1}Slope One}{17}{subsection.4.4.1}
-\contentsline {chapter}{\numberline {5}\spacedlowsmallcaps {Experiments}}{19}{chapter.5}
-\contentsline {section}{\numberline {5.1}Execution}{19}{section.5.1}
-\contentsline {section}{\numberline {5.2}Results}{19}{section.5.2}
-\contentsline {section}{\numberline {5.3}Comparison}{20}{section.5.3}
-\contentsline {chapter}{\numberline {6}\spacedlowsmallcaps {Design and Implementation}}{21}{chapter.6}
-\contentsline {section}{\numberline {6.1}General structure}{22}{section.6.1}
-\contentsline {chapter}{\numberline {7}\spacedlowsmallcaps {User Manual}}{25}{chapter.7}
-\contentsline {section}{\numberline {7.1}Load the Dataset}{25}{section.7.1}
-\contentsline {section}{\numberline {7.2}Non-Personalized Algorithms}{27}{section.7.2}
-\contentsline {section}{\numberline {7.3}k-Nearest Neighbor}{31}{section.7.3}
-\contentsline {section}{\numberline {7.4}BPRMF}{33}{section.7.4}
-\contentsline {section}{\numberline {7.5}RankMFX}{34}{section.7.5}
-\contentsline {section}{\numberline {7.6}Ranking SVD (Sparse SVD)}{35}{section.7.6}
-\contentsline {chapter}{\numberline {8}\spacedlowsmallcaps {Conclusions}}{39}{chapter.8}
-\contentsline {section}{\numberline {8.1}Outlook}{39}{section.8.1}
-\contentsline {chapter}{\numberline {9}\spacedlowsmallcaps {Appendix - Docstrings}}{41}{chapter.9}
+\contentsline {chapter}{\numberline {5}\spacedlowsmallcaps {Design and Implementation}}{19}{chapter.5}
+\contentsline {section}{\numberline {5.1}General structure}{20}{section.5.1}
+\contentsline {chapter}{\numberline {6}\spacedlowsmallcaps {User Manual}}{23}{chapter.6}
+\contentsline {section}{\numberline {6.1}Datasets for testing}{23}{section.6.1}
+\contentsline {section}{\numberline {6.2}Load the Dataset}{23}{section.6.2}
+\contentsline {section}{\numberline {6.3}Non-Personalized Algorithms}{25}{section.6.3}
+\contentsline {section}{\numberline {6.4}k-Nearest Neighbor}{29}{section.6.4}
+\contentsline {section}{\numberline {6.5}BPRMF}{31}{section.6.5}
+\contentsline {section}{\numberline {6.6}RankMFX}{32}{section.6.6}
+\contentsline {section}{\numberline {6.7}Ranking SVD (Sparse SVD)}{33}{section.6.7}
+\contentsline {chapter}{\numberline {7}\spacedlowsmallcaps {Conclusions}}{37}{chapter.7}
+\contentsline {section}{\numberline {7.1}Outlook}{37}{section.7.1}
+\contentsline {chapter}{\numberline {8}\spacedlowsmallcaps {Appendix - Docstrings}}{39}{chapter.8}
 \vspace {\beforebibskip }
-\contentsline {chapter}{\spacedlowsmallcaps {Bibliography}}{51}{dummy.3}
+\contentsline {chapter}{\spacedlowsmallcaps {Bibliography}}{49}{dummy.3}

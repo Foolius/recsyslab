@@ -1,17 +1,44 @@
 \chapter{User Manual}
 \label{usermanual}
 In this chapter we will provide a step by step user manual for recsyslab.
-You can get recsyslab at~\cite{downloadrecsyslab}. Just download the file 
-and unpack it.
+You can get recsyslab at \url{https://github.com/Foolius/recsyslab/archive/master.zip}
+Just download the file url and unpack it.
 To run recsyslab you need to install Python~\cite{python} and NumPy~\cite{numpy}.
 Please refer to their websites for informations on how to install them.
 
-First, we will explain how to load a dataset, second we
+First, we will explain how to load a dataset and where to get one. Second we
 will explain how to use the different recommendation algorithms and
 how to test them with the provided evaluation metrics. 
-For informations about the recommendation algorithms, please refer to chapter~\ref{recommendationalgorithms}.
-For informations about the test metrics refer to chapter~\ref{background}.
+For informations about the recommendation algorithms, please refer to Chapter~\ref{recommendationalgorithms}.
+For informations about the test metrics refer to Chapter~\ref{background}.
 
+\section{Datasets for testing}
+\label{movielens}
+
+MovieLens~\cite{movielensdatasets} is a database provided online by GroupLens, a research
+lab at the University of Minnesota. One of their research areas is
+recommender systems and they built an application where users rate
+movies and then get recommendations for movies the could like. The
+MovieLens dataset is the ratings gathered by this application. For
+this work we will interpret the rating as intensity of interaction
+between users and items for example the number of times the user saw
+this movie.
+
+The dataset is available in three different sizes:
+\begin{itemize}
+\item 100,000 interactions
+\item 1 million interactions
+\item 10 million interactions
+\end{itemize}
+For the experiments the smallest dataset is totally sufficient, with
+the larger datasets the computation time gets too long for just trying
+something out.
+
+There are also other datasets available for example the 
+million song dataset~\cite{Bertin-Mahieux2011}, but in theses examples we are using the 
+MovieLens dataset.
+
+\section{Load the Dataset}
 The following python code is also in the file \lstinline!manual.py! in the \lstinline!bin! directory of the library
 so you do not have to copy the code out of this pdf document. But if you are working through these examples
 please note that you perhaps miss the import of a module when you skip an example because
@@ -29,8 +56,7 @@ Each of these commands will show the documentation of the specified module.
 The docstrings are also available in the appendix of this thesis.
 
 
-\section{Load the Dataset}
-In chapter \ref{design} we explained how the dataset has to look like.
+In Chapter~\ref{design} we explained how the dataset has to look like.
 For trying things out the MovieLens dataset~\cite{movielensdatasets} would work just fine.
 When you have a dataset, place it into the bin directory of recsyslab and start the
 python interpreter from the command line with
@@ -479,9 +505,7 @@ Number of hits: 235.0
 Number of possible hits: 943.0
 Hitrate: 0.2492046659597031
 \end{lstlisting}
-As noted above the results get better with more epochs, which you can see
-in chapter~\ref{experiments}.
-
+As noted above the results get better with more epochs.
 \section{RankMFX}
 \begin{lstlisting}[style=python]
 >>> import recommender.RankMFX

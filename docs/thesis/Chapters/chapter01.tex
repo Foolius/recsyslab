@@ -1,9 +1,13 @@
 \chapter{Introduction}
-Recommender systems are widely used in ecommerce and are an active field of research, new and refined algorithms are proposed continuously. Easy and comprehensive evaluation tools are required to assess their performance in a systematic way.  
+Recommender systems are widely used in e-commerce and are an active field of research; new and refined algorithms are proposed continuously. Easy and comprehensive evaluation tools are required to assess their performance in a systematic way.  
 
 With the simple syntax and the interactivity
-of Python, \textit{recsyslab} is designed in such a way to facilitate experimentation with different recommender systems
-algorithms. Our goal is to provide to beginners and experts an extensible tool to evaluate classic and modern algorithms, to comprehend them, and to extend the existing core implementation if necessary. Together with this document recommender systems' enthusiasts should be able to get started to try out different recommender algorithms
+of Python, \textit{recsyslab} which is available at
+
+\vspace{2mm}
+\centerline{\url{https://github.com/Foolius/recsyslab/archive/master.zip}}
+\vspace{2mm}is designed in such a way, so as to facilitate experimentation with different recommender systems
+algorithms. Our goal is to provide beginners and experts with an extensible tool to evaluate classic and modern algorithms, to comprehend them, and to extend the existing core implementation if necessary. With this document, recommender systems' enthusiasts should be able to get started in trying out different recommender algorithms
 without needing any previous knowledge or long configuration.
 
 
@@ -18,25 +22,25 @@ a recommender system presents them with a ranked list of items, which meets thei
 Two fundamental tasks for recommender systems are:
 \begin{itemize}
     \item \textbf{Rating Prediction}:
-When the feedback is provided explicitly like ratings (e.g., stars in a 1 to 5 scale), the scenario is called rating prediction, and the task consists of predicting the real value of the rating. This task can be cast as a regression problem.
+When the feedback is provided explicitly through ratings (e.g., stars in a 1 to 5 scale), the scenario is called rating prediction, and the task consists of predicting the real value of the rating. This task can be cast as a regression problem.
   
-The rating prediction task got very popular when Netflix announced a prize~\cite{netflixprize}
-in September 2009 offering a one-million-dollar prize to a team able to improve Netflix's existing recommender system.
+The rating prediction task gained popularity when Netflix announced a prize~\cite{netflixprize}
+in September 2009, offering a one-million-dollar prize to a team able to improve Netflix's existing recommender system.
 
     \item \textbf{Item Prediction}:
-When the interactions are implicit like purchases or clicks, then the problem can be cast as one known as item prediction or top-N recommendation. In this case, the task is to recommend a short list of items to meet the particular taste of the users. Please note that in this scenario we are not interested in regressing a value for a rating, but in relative ranking of items that meets the user's individual information needs. 
+When the interactions are implicit, like, in case of purchases or clicks, then the problem can be cast as item prediction or top-N recommendation. In this case, the task is to recommend a short list of items to meet the particular taste of the users. Please note that in this scenario we are not interested in regressing a value for a rating, but in relative ranking of items that meet the user's individual information needs. 
 
 \end{itemize}
 In this work, the focus lies precisely on this scenario of implicit feedback and item prediction. The algorithms implemented within recsyslab compute a score which is used to rank the items relative to each other, but this score is not an absolute rating.
 
 Note that ratings can also be interpreted as the strength for implicit feedback. Some algorithms implemented
-in this library make use of this information, but none of them explicitly predict ratings, like it is usual in rating prediction scenarios. Rating information is used to derive a relative order within the items, that is, it is sufficient to only have a ranked list of items according to the preferences of the users. This information is then used to train our item prediction algorithms. 
+in this library make use of this information, but none of them explicitly predict ratings, unlike the usual practice in rating prediction scenarios. Rating information is used to derive a relative order within the items, that is, it is sufficient to only have a ranked list of items according to the preferences of the users. This information is then used to train our item prediction algorithms. 
 
 
 \section{Contributions}
 The contributions of this bachelor thesis are:
 \begin{enumerate}
-    \item the implementation of an easy to use and Open Source library: \textit{recsyslab}, which is released under under the GNU GPLv3\cite{gpl} and includes a set of the most important state-of-the-art recommender system algorithms for item prediction. Special care has been given to the source code produced, to keep it simple and readable, and as close as possible to the pseudocode of the algorithms.
+    \item the implementation of an easy to use and Open Source library: \textit{recsyslab}, which is released under the GNU GPLv3\cite{gpl} and includes a set of the most important state-of-the-art recommender system algorithms for item prediction. Special care has been given to the source code produced, to keep it simple and readable, and as close as possible to the pseudocode of the algorithms.
     \item supporting infrastructure for testing recommender algorithms
     %\item easy readable source code
     \item extensive user manual
@@ -46,21 +50,20 @@ The contributions of this bachelor thesis are:
 
 
 \section{Structure of this Document}
-In the next chapter is an overview over the research area of recommender systems
+The next chapter includes an overview of the research area in recommender systems,
 together with explanations of different evaluation metrics and the Leave-one-out
 protocol commonly used to evaluate top-N recommender algorithms.
 
-After that, we provide short descriptions over already existing 
-projects providing something similar to recsyslab (Chapter~\ref{relatedwork}).
+After that, we provide short descriptions of already existing 
+projects which provide something similar to recsyslab (Chapter~\ref{relatedwork}).
 
 In Chapter \ref{recommendationalgorithms}, we present the implemented recommender
-algorithms together with the core of their implementation. 
+algorithms along with the core of their implementation. 
 
-This is followed by a chapter with results and explanations about how the
-results have been obtained. After that, we show the inner structure of recsyslab
-to make it easy for developer to extend or change the library.
+After that, we show the inner structure of recsyslab
+to make it easy for developers to extend or change the library (Chapter~\ref{design}).
 
 Chapter \ref{usermanual} provides an extensive guide for recsyslab explaining
 how the library is used.
 
-In the last chapter are the conclusions and an outlook to future work.
+The last chapter includes conclusions and an outlook to future work.
