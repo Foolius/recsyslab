@@ -63,18 +63,18 @@ frameworks.
     \multirow{2}{*}{Baselines} & Constant & O & & & O & O & O\\
                                & User/Item Average & O & O & O &O&O& \\
                                & Random &O&&&&O&O\\\midrule
-    \multirow{3}{*}{Memory-based CF}& User-based CF (Su and Khoshgoftaar, 2009)&O&O&O&O&O&O\\
-                               & Item-based CF (Sarwar et al., 2001)&O&O&O&O&O&O\\
-                                & Default Vote, Inf-User-Frex (Beese et al., 1998)&O&O&&&&\\
-                                & Slope-One (Lemire and Maclachlan, 2005)&O&O&&&O&O\\ \midrule
-    \multirow{6}{*}{Matrix Factorization}&SVD (Paterek, 2007)&O&O&&O&O&O\\
-                                         &NMF(Lee and Seung, 2001)&O&&&&&\\
-                                         &PMF(Salakhutdinov and Mnih, 2008b&O&&&&&\\
-                                         &Bayesian PMF (Salakhutdinov and Mnih, 2008b)&O&&&&&O\\
-                                         &Non-linear PMF (Lawrence and Urtasun, 2009)&O&&&&&\\
-                                         &RankMFX (???)&&&&&&O\\ \midrule
-    \multirow{2}{*}{Other methods}       &Fast NPCA (Yu et al., 2009&O&&&&&\\
-                                         &Rank-based CF (Sun et al., 2011, 2012)&O&&&&&\\ \midrule
+    \multirow{3}{*}{Memory-based CF}& User-based CF~\cite{su2009survey}&O&O&O&O&O&O\\
+                                    & Item-based CF~\cite{linden2003amazon}&O&O&O&O&O&O\\
+                                    & Default Vote, Inf-User-Frex~\cite{breese1998empirical}&O&O&&&&\\
+                                    & Slope-One~\cite{lemire2005slope}&O&O&&&O&O\\ \midrule
+    \multirow{6}{*}{Matrix Factorization}&SVD~\cite{paterek2007improving}&O&O&&O&O&O\\
+                                         &NMF~\cite{seung2001algorithms}&O&&&&&\\
+                                         &PMF~\cite{salakhutdinov2008probabilistic}&O&&&&&\\
+                                         &Bayesian PMF~\cite{salakhutdinov2008bayesian}&O&&&&&O\\
+                                         &Non-linear PMF~\cite{lawrence2009non}&O&&&&&\\
+                                         &RankMFX~\cite{diaz2012happening}&&&&&&O\\ \midrule
+    \multirow{2}{*}{Other methods}       &Fast NPCA~\cite{yu2009fast}&O&&&&&\\
+                                         &Rank-based CF~\cite{sun2012estimating}&O&&&&&\\ \midrule
     \multirow{5}{*}{Evaluation Metric}   &(N)MAE&O&O&O&O&O&\\
                                          &RMSE&O&O&&O&O&\\
                                          &HLU/NDCG&O&&&&O&\\
