@@ -7,14 +7,14 @@ recommender algorithm and how they were computed.
 \section{Execution}
 The results were computed using the recommender algorithms and 
 the test metrics implemented in recsyslab. It was done 
-like it is shown in the user manual in~\ref{usermanual}.
+like it is shown in the user manual in chapter~\ref{usermanual}.
 with exact the same parameters.
 The only difference is that for simplification the different
-getRec methods and metric methods were each in a list and the 
+\lstinline!getRec! methods and metric methods were each in a list and the 
 algorithm is iterating trough both in two nested for loops
 to guarantee that every algorithm is tested with every metric.
-The code which generated the table in \ref{results} is in 
-the experiments.py file in the bin directory of recsyslab.
+The code which generated the table in~\ref{results} is in 
+the \lstinline!experiments.py! file in the \lstinline!bin! directory of recsyslab.
 So check it out for further implementation details.
 
 
@@ -23,7 +23,8 @@ So check it out for further implementation details.
 Here are the results of every test metric in recsyslab
 with every recommender algorithm in recsyslab.
 
-\vspace{1.5 mm}
+%\vspace{1.5 mm}
+\begin{table}[h]
 \begin{tabular}{rlllll}
     recommender  & hitrate & precision & f1 & mrhr & auc \\ \midrule
     constant & 0.0731 & 0.0073 & 0.1448 & 0.0207 & 0.8263 \\
@@ -35,13 +36,15 @@ with every recommender algorithm in recsyslab.
     Ranking SVD & 0.1198 & 0.0119 & 0.2371 & 0.0339 & 0.7725 \\
     slopeone & 0.0858 & 0.0085 & 0.1699 & 0.0350 & 0.4699 \\ \bottomrule
 \end{tabular}
-
+\caption{Results of every test metric with every recommender algorithm of recsyslab}
+\end{table}
 \newpage
 \section{Comparison}
 To show the performance of recsyslab we compare our test results with results 
 from this paper:~\cite{deshpande2004item}
 
-\vspace{1.5 mm}
+%\vspace{1.5 mm}
+\begin{table}[h]
 \begin{tabular}{rllll} \toprule
  & \multicolumn{2}{c}{hitrate} & \multicolumn{2}{c}{mrhr} \\ \cmidrule(r){2-3} \cmidrule(r){4-5}
  & recsyslab & \cite{deshpande2004item} & recsyslab & \cite{deshpande2004item} \\ \midrule
@@ -49,7 +52,9 @@ from this paper:~\cite{deshpande2004item}
     itemKnn & 0.2576 & 0.271 & 0.1151 & 0.119 \\
     userKnn & 0.2619 & 0.281 & 0.1203 & 0.128 \\ \bottomrule
 \end{tabular}
-\vspace{1.5 mm}
+\caption{Comparison of some test results with results computed by someone else.}
+\end{table}
+%\vspace{1.5 mm}
 
 It can be seen that recsyslab performs almost as good as the reference.
 The small advantage probably comes from normalization we did not use when

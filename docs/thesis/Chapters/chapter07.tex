@@ -1,22 +1,21 @@
 \chapter{User Manual}
 \label{usermanual}
 In this chapter we will provide a step by step user manual for recsyslab.
-
+You can get recsyslab at~\cite{downloadrecsyslab}. Just download the file 
+and unpack it.
 To run recsyslab you need to install Python~\cite{python} and NumPy~\cite{numpy}.
-Please refer to their sites for informations on how to install them.
+Please refer to their websites for informations on how to install them.
 
 First, we will explain how to load a dataset, second we
 will explain how to use the different recommendation algorithms and
 how to test them with the provided evaluation metrics. 
-
 For informations about the recommendation algorithms, please refer to chapter~\ref{recommendationalgorithms}.
 For informations about the test metrics refer to chapter~\ref{background}.
 
-The following python code is also in the file manual.py in the bin directory of the library
+The following python code is also in the file \lstinline!manual.py! in the \lstinline!bin! directory of the library
 so you do not have to copy the code out of this pdf document. But if you are working through these examples
 please note that you perhaps miss the import of a module when you skip an example because
 We will not write each needed import in each new example.
-
 Also for help you can use the inline documentation available as docstrings.
 You can display them with the command line utility\footnote{We will use \lstinline!$! to indicate a bash prompt.} pydoc.
 So for example when you are in the bin directory of the library call
@@ -27,6 +26,7 @@ $ pydoc util
 $ pydoc recommender.BPRMF
 \end{lstlisting}
 Each of these commands will show the documentation of the specified module.
+The docstrings are also available in the appendix of this thesis.
 
 
 \section{Load the Dataset}
@@ -39,7 +39,7 @@ $ python
 \end{lstlisting}
 Now import the util.reader module and initialize a new reader object with
 \footnote{We will use \lstinline!>>>! to indicate the python prompt.}
-\begin{lstlisting}
+\begin{lstlisting}[style=python]
 >>> import util.reader
 >>> r=util.reader.stringSepReader("u.data","\t")
 Start reading the database.
@@ -64,17 +64,17 @@ also the separating string.
 The constructor creates a mapping from the original IDs to internal IDs both for the users
 and the items to make sure that the IDs are consecutive. So to get the items a user interacted
 with we have to first find out the internal UserID.
-\begin{lstlisting}
-internalID=r.getInternalUid("196")
+\begin{lstlisting}[style=python]
+>>> internalID=r.getInternalUid("196")
 >>> r.getR()[internalID]
 set([(521, 1), (377, 4), (365, 3), (438, 5), (86, 4), (649, 4), (0, 3), (522, 3), (423, 3), (389, 5), (751, 3), (656, 4), (947, 4), (432, 2), (632, 2), (431, 5), (221, 5), (92, 4), (291, 3), (528, 4), (83, 4), (363, 3), (466, 4), (289, 5), (512, 5), (179, 3), (329, 4), (672, 4), (834, 5), (665, 3), (321, 2), (487, 3), (380, 4), (1006, 4), (1045, 3), (491, 3), (302, 4), (550, 5), (10, 2)])
 \end{lstlisting}
-r.getR() returns a dict with internal UserIDs as keys and sets of (ItemID, NumberOfInteractions) tuples.
+\lstinline!r.getR()! returns a dict with internal UserIDs as keys and sets of (ItemID, NumberOfInteractions) tuples.
 Please note that the original ID is a string.
 
 To evaluate the algorithms you have to split the datasets like described at \ref{leaveoneout}.
 You do this by calling
-\begin{lstlisting}
+\begin{lstlisting}[style=python]
 >>> import util.split
 >>> trainingDict, evaluationDict = util.split(r.getR(), 1234567890)
 0 Users split.
@@ -88,44 +88,45 @@ You do this by calling
 800 Users split.
 900 Users split.
 \end{lstlisting}
-This will split a dict like r.getR() returns into a trainingDict where one transaction
+This will split a dict like \lstinline!r.getR()! returns into a trainingDict where one transaction
 per user is missing and an evaluationDict with these missing transactions.
 
 
 \section{Non-Personalized Algorithms}
-To make our first simple recommendations with the constant recommender
+To make our first simple recommendations with the constant recommender,
 we need to initialize an object of the constant class.
 As parameter the constructor needs a dict for training
-\begin{lstlisting}
-import recommender.nonpersonalized
-constant = recommender.nonpersonalized.constant(trainingDict)
-constant.getRec(0, 10)
+\begin{lstlisting}[style=python]
+>>> import recommender.nonpersonalized
+>>> constant = recommender.nonpersonalized.constant(trainingDict)
+>>> constant.getRec(0, 10)
+[357, 49, 52, 157, 101, 24, 289, 189, 31, 60]
 \end{lstlisting}
-Every recommender has a getRec function with this signature. The first paramater is the internal
+Every recommender has a \lstinline!getRec! function with this signature. The first argument is the internal
 UserID, the second is the number of items to be recommended. If n = -1 all items get recommendend.
 Also the IDs of the recommended items are internal ones.
 If you want to pass external UserIDs and get external ItemIDs back you do not have
 to map them all by yourself. Instead you can use a helper function called
-getExternalRec.
-\begin{lstlisting}
-import util.helper
-externalConstantgetRec = 
+\lstinline!getExternalRec!.
+\begin{lstlisting}[style=python]
+>>> import util.helper
+>>> externalConstantgetRec = 
     util.helper.getExternalRec(constant.getRec, r)
-externalConstantgetRec("196", 10)
+>>> externalConstantgetRec("196", 10)
+['50', '100', '181', '258', '174', '1', '286', '127', '98', '288']
 \end{lstlisting}
-You pass the getRec function and the reader object and you get a new function
+You pass the \lstinline!getRec! function and the reader object and you get a new function
 which takes and returns only the original IDs.
 
-Now we want to find out how good this algorithm is performing.
-Excpet AUC the functions for computing the metrics work by letting the recommender recommend
-for every user as much items as specified in the third parameter.
-With these recommendations and the hidden items the methods then calculate the
-performance according to the respective metric.
-The other parameters are a dict with the hidden items and the getRec function of the 
-respective recommender algorithm.
-
+Now we want to find out how well this algorithm is performing.
+Except AUC the functions for computing the metrics work by letting the recommender recommend
+for every user as much items as specified in the third argument.
+With these recommendations and the hidden items, the methods then calculate the
+performance, according to the respective metric.
+The other parameters are a dict with the hidden items and the \lstinline!getRec! function of the 
+respective recommender algorithm.\\
 First we will compute the hitrate
-\begin{lstlisting}
+\begin{lstlisting}[style=python]
 >>> import util.test
 >>> util.test.hitrate(evaluationDict, constant.getRec, 10)
 0 users tested
@@ -154,11 +155,9 @@ Hitrate: 0.07317073170731707
 \end{lstlisting}
 After some progress output it prints the number of hits and the number of 
 possible hits which is in our case also the number of users. The hitrate
-is then its quotient.
-
-
+is then the number of hits over the number of users.
 Next we will calculate the precision
-\begin{lstlisting}
+\begin{lstlisting}[style=python]
 >>>util.test.precision(evaluationDict, constant.getRec, 10)
 0 users tested
 Hits so far: 0.0
@@ -184,10 +183,9 @@ Number of hits: 69.0
 Number of possible hits: 943.0
 Precision: 6.9
 \end{lstlisting}
-The output looks similar to the one of hitrate and also means quite the same.
-
-Very similar we can calculate the F1 metric
-\begin{lstlisting}
+The output looks similar to the one of hitrate and the meaning is analogous.\\
+Very similarly we can calculate the F1 metric
+\begin{lstlisting}[style=python]
 >>> util.test.f1(evaluationDict, constant.getRec, 10)
 0 users tested
 Hits so far: 0.0
@@ -213,9 +211,8 @@ Number of hits: 69.0
 Number of possible hits: 943.0
 F1: 0.14480587618048268
 \end{lstlisting}
-
 Also the Mean reciprocal hitrate
-\begin{lstlisting}
+\begin{lstlisting}[style=python]
 >>> util.test.mrhr(evaluationDict, constant.getRec, 10)
 0 users tested
 Score so far: 0.0
@@ -241,15 +238,13 @@ Score: 19.79325396825396
 Number of possible hits: 943.0
 Mean Reciprocal Hitrate: 0.02098966486559275
 \end{lstlisting}
-
-
-To compute the AUC the third parameters has to be our reader object because
+To compute the AUC the third argument has to be our \lstinline!reader! object because
 the function needs additional information to compute its metric.
 We do not need to specify the number of items to recommend because
 the AUC works by comparing all items so it needs the recommender
 to recommend all available items.
-The first two parameters do not change.
-\begin{lstlisting}
+The first two arguments do not change.
+\begin{lstlisting}[style=python]
 >>> util.test.auc(evaluationDict, constant.getRec, r)
 0 users tested
 Score so far: 0
@@ -273,13 +268,12 @@ Score so far: 663.7179944721634
 Score so far: 746.0474962705288
 AUC: 0.828894041097185
 \end{lstlisting}
-
 These are all evaluation metrics. They work the same for all 
-recommendation algorithms. You just need to provide the getRec function.
+recommendation algorithms. You just need to provide the \lstinline!getRec! function.
 
 The second non-personalized algorithm is the random recommender.
 You can use it like this
-\begin{lstlisting}
+\begin{lstlisting}[style=python]
 >>> randomRec = recommender.nonpersonalized.randomRec(trainingDict, 1234567890)
 >>> randomRec.getRec(0, 10)
 [1548, 1068, 746, 1357, 1501, 1359, 428, 141, 233, 726]
@@ -308,7 +302,7 @@ Number of hits: 5.0
 Number of possible hits: 943.0
 Hitrate: 0.005302226935312832
 \end{lstlisting}
-The second paratemer of the constructor is the seed for the random function.
+The second argument of the constructor is the seed for the random function.
 
 From now on we will only show the hitrate because the other metric are computed
 similarly. But feel free to also compute the other metrics as well.
@@ -316,8 +310,8 @@ similarly. But feel free to also compute the other metrics as well.
 \section{k-Nearest Neighbor}
 Now we want to try the first more sophisticated algorithm, namely the item based
 k-Nearest Neighbor. The k-Nearest Neighbor algorithms need the database as a matrix so we have to
-first split the matrix provided by the reader object.
-\begin{lstlisting}
+first split the matrix, provided by the \lstinline!reader! object.
+\begin{lstlisting}[style=python]
 >>> trainingMatrix, matrixEvaluationDict = util.split.splitMatrix(r.getMatrix, 123456789)
 0 Users split.
 100 Users split.
@@ -330,16 +324,16 @@ first split the matrix provided by the reader object.
 800 Users split.
 900 Users split.
 \end{lstlisting}
-Depending on the recommendation algorithm we need a matrix or a dict.
-So here we pass a matrix like r.getMatrix() returns and get a trainingMatrix where one
-entry per user is set to 0 and a dict with these missing entries.
+Depending on the recommendation algorithm, we need a matrix or a dict.
+So here we pass a matrix like \lstinline!r.getMatrix()! returns and get a trainingMatrix, where one
+entry per user is set to zero and a dict with these missing entries.
 To understand the matrix represention of the dataset refer to \ref{itembasedknn}
 
 So we initialize an itemKnn object. The initialization builds the model yet
 so it will need some time until the constructor has finished.
-\begin{lstlisting}
-import recommender.knn
-itemKnn = recommender.knn.itemKnn(trainingMatrix, 10)
+\begin{lstlisting}[style=python]
+>>> import recommender.knn
+>>> itemKnn = recommender.knn.itemKnn(trainingMatrix, 10)
 0 Similarities calculated
 10000 Similarities calculated
 20000 Similarities calculated
@@ -350,15 +344,15 @@ itemKnn = recommender.knn.itemKnn(trainingMatrix, 10)
 \end{lstlisting}
 Please note that you pass the the right dict for evaluation as the first parameter
 in this case it is matrixEvaluationDict.
-The second parameter is the number of neighbors to include into the neighborhood.
+The second argument is the number of neighbors to include into the neighborhood.
 During the model building phase the algorithm will compute the similarity of each
-item to each other item. But because this similarity is associative it is only
-necessary to compute the half. The 100k movieLens dataset We use for these examples
-has 1682 items so we get about \begin{math} \frac{N(N-1)}{2}=\frac{1682^2}{2} = 1413721 \end{math} 
-similarities to compute.
+item to each other item. But because this similarity is symmetric it is only
+necessary to compute the half. The 100k movieLens dataset we use for these examples
+has 1682 items so we have to compute \begin{math} \frac{N(N-1)}{2}=\frac{1682*1681}{2} = 1413721 \end{math} 
+similarities.
 
 Now you can test this algorithm with the test metrics for example the hitrate
-\begin{lstlisting}
+\begin{lstlisting}[style=python]
 >>> util.test.hitrate(matrixEvaluationDict, itemKnn.getRec, 10)
 0 users tested
 Hits so far: 0.0
@@ -384,11 +378,11 @@ Number of hits: 248.0
 Number of possible hits: 943.0
 Hitrate: 0.26299045599151644
 \end{lstlisting}
-As you can see this algorithm achieves much better performance than the
+As you can see this algorithm achieves a much better performance than the
 non-personalized algorithms.
 
 For user based k-Nearest Neighbors the call to build the model looks like this
-\begin{lstlisting}
+\begin{lstlisting}[style=python]
 >>> userKnn = recommender.knn.userKnn(trainingMatrix, 50)
 0 Similarities calculated
 10000 Similarities calculated
@@ -398,11 +392,11 @@ For user based k-Nearest Neighbors the call to build the model looks like this
 430000 Similarities calculated
 440000 Similarities calculated
 \end{lstlisting}
-The dataset has 943 users so this time we have to compute approximately
+The dataset has 943 users so this time we have to compute 
 \begin{math} \frac{N(N-1)}{2}=\frac{943*942}{2} = 444153 \end{math} similarities.
-To get the hitrate for this algorithm just like before we call the hitrate
-function with the getRec function.
-\begin{lstlisting}
+To get the hitrate for this algorithm, we call the hitrate
+function with the \lstinline!getRec! function just like before.
+\begin{lstlisting}[style=python]
 >>> util.test.hitrate(matrixEvaluationDict, userKnn.getRec, 10)
 0 users tested
 Hits so far: 0.0
@@ -433,7 +427,7 @@ Hitrate: 0.26193001060445387
 \section{BPRMF}
 For the matrix factorization algorithms like BPRMF, RankMFX
 and Ranking SVD you need to specify some meta parameters.
-\begin{lstlisting}
+\begin{lstlisting}[style=python]
 >>> import recommender.BPRMF
 >>> W, H = recommender.BPRMF.learnModel(r.getMaxUid(), r.getMaxIid(),
                         0.01, 0.01, 0.01,   # regularization parameter
@@ -451,15 +445,14 @@ Epoch: 3/3 | iteration 100000/100000 | learning rate=0.100000 | average_loss for
 \end{lstlisting}
 This will output quite a much so you can observe how the loss is behaving.
 With a short search we found these values for the regularization parameters
-and the learning rate to be quite good, although they are not probably the
-best. But above all the results will get better with more epochs but then
-it will naturally take longer to compute so three is alright for a short
-experiment.
-
-The learnModel returns a model in the form of two matrices. Two get a 
-getRec method you have to instantiate a Mfrec class from the mf module
-in recommender.mf which offers such a method.
-\begin{lstlisting}
+and the learning rate to be quite good, although they are probably not the
+best. But above all, the results will get better with more epochs, but then
+it will naturally take longer to compute. So three is alright for a short
+experiment.\\
+The \lstinline!learnModel! returns a model in the form of two matrices. Two get a 
+\lstinline!getRec! method you have to instantiate a \lstinline!Mfrec! class from the \lstinline!mf! module
+in \lstinline!recommender.mf! which offers such a method.
+\begin{lstlisting}[style=python]
 >>> BPRMF = recommender.mf.MFrec(W, H, trainingDict)
 >>> util.test.hitrate(evaluationDict, BPRMF.getRec, 10)
 0 users tested
@@ -486,13 +479,13 @@ Number of hits: 235.0
 Number of possible hits: 943.0
 Hitrate: 0.2492046659597031
 \end{lstlisting}
-As noted above the results get better with more epochs. As you can see
-in \ref{experiments}
+As noted above the results get better with more epochs, which you can see
+in chapter~\ref{experiments}.
 
 \section{RankMFX}
-\begin{lstlisting}
+\begin{lstlisting}[style=python]
 >>> import recommender.RankMFX
->>> W, H = recommender.RankMFX.learnModel(r.getMaxUid(), r.getMaxIid(),
+>>> W, H = recommender.RankMFX.learnModel(r.getMaxUid(),r.getMaxIid(),
                     0.01, 0.01, 0.01, # regularization parameter
                     0.1,              # learning rate
                     trainingDict,     # training dict
@@ -507,9 +500,8 @@ Epoch: 5/5 | iteration 99000/100000 | learning rate=0.100000 | average_loss for 
 Epoch: 5/5 | iteration 100000/100000 | learning rate=0.100000 | average_loss for the last 1000 iterations = 0.130552
 \end{lstlisting}
 Again there is much output to monitor the algorithm.
-
-As above we have to generate a getRec method. Before we can evaluate the algorithm.
-\begin{lstlisting}
+As above we have to generate a \lstinline!getRec! method. Before we can evaluate the algorithm.
+\begin{lstlisting}[style=python]
 >>> RankMFX = recommender.mf.MFrec(W, H, trainingDict)
 >>> util.test.hitrate(evaluationDict, RankMFX.getRec, 10)
 0 users tested
@@ -544,13 +536,13 @@ be better.
 \section{Ranking SVD (Sparse SVD)}
 Next the Ranking SVD or Sparse SVD algorithm. To build the model we have 
 a method similar to RankMFX and BPRMF, only without regularization parameters
-\begin{lstlisting}
+\begin{lstlisting}[style=python]
 >>> import recommender.svd
 >>> W, H = recommender.svd.learnModel(r.getMaxUid(), r.getMaxIid(),
                     0.0002,         # learning rate
                     trainingDict,   # training dict
-                    770,           # number of features
-                    40,              # number of epochs
+                    770,            # number of features
+                    40,             # number of epochs
                     1000)           # number of iterations
 Epoch: 1/40 | iteration 100/1000 | learning rate=0.000200 | average_loss for the last 100 iterations = -3.451531 | time needed: 0.420000
 Epoch: 1/40 | iteration 200/1000 | learning rate=0.000200 | average_loss for the last 100 iterations = -3.687917 | time needed: 0.400000
@@ -560,7 +552,7 @@ Epoch: 40/40 | iteration 900/1000 | learning rate=0.000200 | average_loss for th
 Epoch: 40/40 | iteration 1000/1000 | learning rate=0.000200 | average_loss for the last 100 iterations = -2.734519 | time needed: 0.400000
 \end{lstlisting}
 The evaluation works the same as for the other matrix factorization algorithms
-\begin{lstlisting}
+\begin{lstlisting}[style=python]
 >>> svd = recommender.mf.MFrec(W, H, trainingDict)
 >>> util.test.hitrate(evaluationDict, svd.getRec, 10)
 0 users tested
@@ -588,10 +580,10 @@ Number of possible hits: 943.0
 Hitrate: 0.11983032873807
 \end{lstlisting}
 
-Lastly the slopeone recommender
-\begin{lstlisting}
-import recommender.slopeone
-slopeone = recommender.slopeone.slopeone(trainingDict)
+At lastthe slopeone recommender
+\begin{lstlisting}[style=python]
+>>> import recommender.slopeone
+>>> slopeone = recommender.slopeone.slopeone(trainingDict)
 100000 differences computed
 200000 differences computed
 300000 differences computed
@@ -601,7 +593,8 @@ slopeone = recommender.slopeone.slopeone(trainingDict)
 \end{lstlisting}
 
 And its evaluation
-\begin{lstlisting}
+\begin{lstlisting}[style=python]
+>>> util.test.hitrate(evaluationDict, slopeone.getRec, 10)
 0 users tested
 Hits so far: 0.0
 100 users tested

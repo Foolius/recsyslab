@@ -1,75 +1,66 @@
 \chapter{Introduction}
+Recommender systems are widely used in ecommerce and are an active field of research, new and refined algorithms are proposed continuously. Easy and comprehensive evaluation tools are required to assess their performance in a systematic way.  
 
-
-\section{Motivation}
-
-The library together with this document shall provide a "cookbook"
-for recommender systems. Recommender systems are widely used in ecommerce
-and are an active field of research so an easy accessible library will be 
-useful in the future.
 With the simple syntax and the interactivity
-of Python recsyslab is aimed at beginners to simply experiment with different
-algorithms and comprehend them. Together with this document everybody
-should be able to get started to try out different recommender algorithms
+of Python, \textit{recsyslab} is designed in such a way to facilitate experimentation with different recommender systems
+algorithms. Our goal is to provide to beginners and experts an extensible tool to evaluate classic and modern algorithms, to comprehend them, and to extend the existing core implementation if necessary. Together with this document recommender systems' enthusiasts should be able to get started to try out different recommender algorithms
 without needing any previous knowledge or long configuration.
 
 
-\section{Task (what a Recommender System does)}
-
-A Recommender System works in a scenario with users, items and interactions
-between these two. Such a scenario could be an online shop,
+\section{What a Recommender System does?}
+A Recommender System works in a scenario with users, items, and interactions
+between these two. Such a scenario could be an online shop such as \url{amazon.com},
 where the interactions are purchases of items by users or a video
 platform, where the users interact with items (videos) by watching
-them e.g. youtube.com~\cite{youtube}. Based on the past interactions of the users
-a Recommender System presents them with a ranked list of items, which meets their interest.
+them, e.g., \url{youtube.com}. Based on the past interactions of the users
+a recommender system presents them with a ranked list of items, which meets their interest and taste.
 
-Two common scenarios are:
+Two fundamental tasks for recommender systems are:
 \begin{itemize}
-    \item Rating Prediction:
-When the feedback is provided explicitly like ratings the scenario is called rating prediction. 
-The rating prediction task got very popular when netflix announced a prize~\cite{netflixprize}
-in September 2009. The algorithm which performs best in predicting ratings 
-would be granted the prize money.
-    \item Item Prediction:
-When the interactions are implicit like purchases or clicks, then the
-scenario is called item prediction. But in this work the focus lies on implicit feedback or item prediction.
-However ratings can also be interpreted as the strength of implicit feedback.
-For example how often a user purchased an item. Some algorithms implemented
-in this library can use this information but none will explicitly
-predict ratings like it is usual in rating prediction scenarios because
-it is normally not useful to predict explicit absolute ratings when
-you want to propose items a user could find interesting. In this case
-it is sufficient to only have a ranked list of items according to the 
-preferences of the users. Most of the recommender algorithms in recsyslab
-compute a score which is used to rank the items relative to each other.
-But this score is not an absolute rating.
+    \item \textbf{Rating Prediction}:
+When the feedback is provided explicitly like ratings (e.g., stars in a 1 to 5 scale), the scenario is called rating prediction, and the task consists of predicting the real value of the rating. This task can be cast as a regression problem.
+  
+The rating prediction task got very popular when Netflix announced a prize~\cite{netflixprize}
+in September 2009 offering a one-million-dollar prize to a team able to improve Netflix's existing recommender system.
+
+    \item \textbf{Item Prediction}:
+When the interactions are implicit like purchases or clicks, then the problem can be cast as one known as item prediction or top-N recommendation. In this case, the task is to recommend a short list of items to meet the particular taste of the users. Please note that in this scenario we are not interested in regressing a value for a rating, but in relative ranking of items that meets the user's individual information needs. 
+
 \end{itemize}
+In this work, the focus lies precisely on this scenario of implicit feedback and item prediction. The algorithms implemented within recsyslab compute a score which is used to rank the items relative to each other, but this score is not an absolute rating.
+
+Note that ratings can also be interpreted as the strength for implicit feedback. Some algorithms implemented
+in this library make use of this information, but none of them explicitly predict ratings, like it is usual in rating prediction scenarios. Rating information is used to derive a relative order within the items, that is, it is sufficient to only have a ranked list of items according to the preferences of the users. This information is then used to train our item prediction algorithms. 
 
 
 \section{Contributions}
 The contributions of this bachelor thesis are:
 \begin{enumerate}
-    \item recsyslab with state of the art algorithms
+    \item the implementation of an easy to use and Open Source library: \textit{recsyslab}, which is released under under the GNU GPLv3\cite{gpl} and includes a set of the most important state-of-the-art recommender system algorithms for item prediction. Special care has been given to the source code produced, to keep it simple and readable, and as close as possible to the pseudocode of the algorithms.
     \item supporting infrastructure for testing recommender algorithms
-    \item easy to use library
-    \item easy readable source code
+    %\item easy readable source code
     \item extensive user manual
-    \item test results of the algorithms computed with recsyslab
-    \item explanations of the technical background
+    %\item test results of the algorithms computed with recsyslab
+    \item explanations of the technical background and software design
 \end{enumerate}
 
 
 \section{Structure of this Document}
 In the next chapter is an overview over the research area of recommender systems
 together with explanations of different evaluation metrics and the Leave-one-out
-Protocol used to evaluate recommender algorithms.
-After that we provide short descriptions over already existing 
-projects providing something similar to recsyslab.
-In chapter \ref{recommendationalgorithms} we present the implemented recommender
+protocol commonly used to evaluate top-N recommender algorithms.
+
+After that, we provide short descriptions over already existing 
+projects providing something similar to recsyslab (Chapter~\ref{relatedwork}).
+
+In Chapter \ref{recommendationalgorithms}, we present the implemented recommender
 algorithms together with the core of their implementation. 
+
 This is followed by a chapter with results and explanations about how the
-results have been obtained. After that we will show the inner structure of recsyslab
+results have been obtained. After that, we show the inner structure of recsyslab
 to make it easy for developer to extend or change the library.
-In chapter \ref{usermanual} is an extensive guide for recsyslab explaining
+
+Chapter \ref{usermanual} provides an extensive guide for recsyslab explaining
 how the library is used.
+
 In the last chapter are the conclusions and an outlook to future work.

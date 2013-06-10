@@ -25,7 +25,7 @@ will be interesting for everyone. However the results show that
 algorithms which personalize the recommendation based on the 
 interaction history of the users perform much better.
 In pseudocode this algorithm will look like this:
-\begin{lstlisting}
+\begin{lstlisting}[style=pseudocode]
 countDict = dict initialized with all ItemIDs as keys and 0 as values
 
 for interaction in dataset:
@@ -36,7 +36,7 @@ ranking = list(ItemIDs in decreasing order of their values)
 return first N items of ranking
 \end{lstlisting}
 And the implementation:
-\begin{lstlisting}
+\begin{lstlisting}[style=python]
 def __init__(self, dbdict):
     self.dictionary = {}
     self.sortedList = []
@@ -62,11 +62,11 @@ Even though this algorithm will recommend different items for different
 users it is not personalized because it the recommendations are
 independent of the previous interactions of the user.
 In pseudocode this will be:
-\begin{lstlisting}
+\begin{lstlisting}[style=pseudocode]
 return N randomly chosen items
 \end{lstlisting}
 And in Python:
-\begin{lstlisting}
+\begin{lstlisting}[style=python]
 def __init__(self, dbdict, seed):
     self.maxIid = 0
     self.seed = seed
@@ -95,11 +95,11 @@ cosine in this library. The similarity function is interchangeable
 for example in
 \cite{Karypis:2001:EIT:502585.502627} two similarity functions are
 compared. The cosine similarity performs best so in recsyslab only the cosine similarity
-is implemented. For two vectors \(\overrightarrow{v},\overrightarrow{u}\)
+is implemented. For two vectors \(\vec{v},\vec{u}\)
 The cosine similarity is defined as follows:
 
 \begin{equation}
-\cos(\overrightarrow{v}, \overrightarrow{u})=\frac{\overrightarrow{v} \cdot \overrightarrow{u}}{||\overrightarrow{v}||_{2} ||\overrightarrow{u}||_{2}}
+\cos(\vec{v}, \vec{u})=\frac{\vec{v} \cdot \vec{u}}{||\vec{v}||_{2} ||\vec{u}||_{2}}
 \end{equation}
 With the similarity it is possible to rank items.
 In the Item Based algorithm for each item we compute the sum of 
@@ -116,13 +116,13 @@ according to this score.
 For this algorithm the database has to be represented as a matrix
 where the rows correspond to the users and the columns to the items.
 Then the entry (i,j) represents the number of transactions which happened
-between the ith user and the jth item. 
+between the i-th user and the j-th item. 
 
 The algorithm interprets the columns of the matrix i.e. the items
 as vectors and computes there similarities by computing their cosine.
 To build the model the algorithm computes the n most similar items
 of each item. In pseudocode:
-\begin{lstlisting}
+\begin{lstlisting}[style=pseudocode]
 for every item i
     for every item j
         sim[i,j] = similarity between i and j
@@ -133,7 +133,7 @@ for every item i
             sim[i,j] = 0
 \end{lstlisting}
 In Python it looks like this:
-\begin{lstlisting}
+\begin{lstlisting}[style=python]
 def __init__(self, userItemMatrix, n):
     self.itemUserMatrix = userItemMatrix.transpose()
     self.sim = computeCosSim(self.sim, self.itemUserMatrix)
@@ -148,7 +148,7 @@ def __init__(self, userItemMatrix, n):
             self.sim[j, order[j, i]] = 0
 \end{lstlisting}
 \lstinline!computeCosSim! looks like this:
-\begin{lstlisting}
+\begin{lstlisting}[style=python]
 def computeCosSim(sim, matrix):
     for i in xrange(1, sim.shape[1]):
 
@@ -160,15 +160,15 @@ def computeCosSim(sim, matrix):
 This function is also used in the user based k-Nearest-Neighbor.
 
 
-To compute recommendations for user U the algorithm computes
-the union of the n most similar items of each item U interacted with.
-From this set the items U already interacted with are removed. For
+To compute recommendations for user $U$ the algorithm computes
+the union of the n most similar items of each item $U$ interacted with.
+From this set the items $U$ already interacted with are removed. For
 each item remaining in this set we compute the sum of its similarities
-to the items U interacted with. Finally these items are sorted in
+to the items $U$ interacted with. Finally these items are sorted in
 decreasing order of this sum of similarities and the first n items
 will be recommended~\cite{Karypis:2001:EIT:502585.502627}.
 The pseudocode is
-\begin{lstlisting}
+\begin{lstlisting}[style=pseudocode]
 for every item i user u bought
     itemSimVector = itemSimVector + vector of i
 
@@ -178,7 +178,7 @@ for every item i user u bought
 return the N items with the highest value in itemSimVector
 \end{lstlisting}
 The Python equivalent:
-\begin{lstlisting}
+\begin{lstlisting}[style=python]
 def getRec(self, u, n):
     # x are the similarities of each item to the items u bought
     # w.r.t. only the highest n similarities are saved.
@@ -201,11 +201,11 @@ def getRec(self, u, n):
 \subsection{User Based}
 
 The user based k-Nearest-Neighbor~\cite{userbasedknn} is very similar to the item based.
-But instead of interpreting the columns as vectors we interpret the
+But instead of interpreting the columns as vectors, we interpret the
 lines or users of the matrix as vectors and compute their similarities
 to other users.
 Pseudocode:
-\begin{lstlisting}
+\begin{lstlisting}[style=pseudocode]
 for every user u
     for every user o
         sim[u,o] = similarity between u and o
@@ -216,7 +216,7 @@ for every user u
             sim[u,o] = 0
 \end{lstlisting}
 Python:
-\begin{lstlisting}
+\begin{lstlisting}[style=python]
 def __init__(self, userItemMatrix, n):
     self.userItemMatrix = userItemMatrix
     self.sim = np.zeros((userItemMatrix.shape[0], userItemMatrix.shape[0]))
@@ -232,12 +232,12 @@ def __init__(self, userItemMatrix, n):
 \end{lstlisting}
 
 
-Then for each item i we sum up the similarities between U and the
-users who interacted with i. Again we remove all items U already interacted
+Then for each item i we sum up the similarities between $U$ and the
+users who interacted with i. Again we remove all items $U$ already interacted
 with, sort in decreasing order fo the sum and recommend the first
 n items.
 Pseudocode:
-\begin{lstlisting}
+\begin{lstlisting}[style=pseudocode]
 for every item i 
     for every user o
         score(i) = score(i) + sim[U,o]
@@ -248,7 +248,7 @@ for every item i user u bought
 return the N items with the highest value in score
 \end{lstlisting}
 Python:
-\begin{lstlisting}
+\begin{lstlisting}[style=python]
 def getRec(self, u, n):
     # x is the weighted sum of the items
     # weighted with the similarity between u and the
@@ -273,18 +273,18 @@ techniques generate two matrices \(W\) and \(H\) so that \(M = W \times H\).
 Each of the implemented algorithms train these two matrices with stochastic
 gradient descent. In each iteration the model is trained with
 \begin{itemize} 
-    \item a randomly chosen user U
-    \item a randomly chosen item I the user U interacted with, called the positive item and 
-    \item a randomly chosen item J the user U did not already interacted with, 
+    \item a randomly chosen user $U$
+    \item a randomly chosen item $I$ the user $U$ interacted with, called the positive item and 
+    \item a randomly chosen item $J$ the user $U$ did not already interacted with, 
         called the negative item.
 \end{itemize}
-The features of U, I and J are trained using the derivative
+The features of $U$, $I$ and $J$ are trained using the derivative
 of a loss function.
 
 BPRMF and RankMFX are sharing the code in the module \lstinline!recommender.mf!. 
 The only difference is the loss function.
 In pseudocode the model update happening in each iteration looks like this:
-\begin{lstlisting}
+\begin{lstlisting}[style=pseudocode]
 U = randomly chosen user
 I = randomly chosen item U interacted with
 J = randomly chosen item U did not interact with
@@ -298,7 +298,7 @@ H[i] += dloss * W[u]          # have to be
 H[j] += dloss * -W[u]         # executed at once
 \end{lstlisting}
 The Python code doing the same looks like this:
-\begin{lstlisting}
+\begin{lstlisting}[style=python]
 u = random.choice(R.keys())
 
 userItems = [x[0] for x in R[u]]
@@ -337,7 +337,7 @@ product of the feature vector of the user
 and the feature vector of the item. All matrix factorization
 algorithms use this.
 In pseudocode:
-\begin{lstlisting}
+\begin{lstlisting}[style=pseudocode]
 for every item i
     scoreList(i) = W[u] * H[i]
 
@@ -345,7 +345,7 @@ sortByScore(score)
 return first N of score
 \end{lstlisting}
 And in Python:
-\begin{lstlisting}
+\begin{lstlisting}[style=python]
 def getRec(self, u, n):
     scoredict = {}
     for i in range(0, self.H.shape[0]):
@@ -361,18 +361,15 @@ def getRec(self, u, n):
 
 \subsection{BPRMF}
 
-BPMRF uses the logloss to train the model. The logloss is defined
+BPMRF uses the logLoss to train the model. The logLoss is defined
 as
 \begin{equation}
-\textrm{logLoss}(a,y)=\log(1+\exp(-ay))
+\textrm{logLoss}(a,y)=\log(1+\exp(-ay)).
 \end{equation}
-
-
-And the derivative of the log loss is
+And the derivative of the logLoss is
 \begin{equation}
-\frac{\partial}{\partial y}(\log(1+\exp(-ay)))=-\frac{a}{\exp(ay)+1}
+\frac{\partial}{\partial y}(\textrm{logLoss})=-\frac{a}{\exp(ay)+1}.
 \end{equation}
-
 For further informations please refer to~\cite{Rendle:2009:BBP:1795114.1795167}
 
 
@@ -381,19 +378,16 @@ For further informations please refer to~\cite{Rendle:2009:BBP:1795114.1795167}
 RankMFX uses the hingeLoss. It is defined as
 
 \begin{equation}
-\mathrm{\textrm{hingeLoss}(a,y)=\max(0,1-ay)}
+\mathrm{\textrm{hingeLoss}(a,y)=\max(0,1-ay)}.
 \end{equation}
-
 And its derivative
 
 \begin{equation}
-\frac{\partial}{\partial y}(\max(0,1-ay))=\begin{cases}
--y & ay<1\\
-0 & \textrm{otherwise}
+\frac{\partial}{\partial y}(\textrm{hingeLoss})=\begin{cases}
+-y, & ay<1,\\
+0, & \textrm{otherwise}.
 \end{cases}
 \end{equation}
-
-
 See also~\cite{diaz2012happening}.
 
 
@@ -402,11 +396,11 @@ See also~\cite{diaz2012happening}.
 Ranking SVD uses the quadratic loss and the difference between the
 predicted score of the positive item and the negative minus the actual
 score of the positive item~\cite{jahrer2011collaborative}.
-Ranking SVD uses another code than BPRMF and RankMFX but the iterations
+Ranking SVD uses code different from BPRMF and RankMFX, but the iterations
 work the same. It also randomly chooses a user and a positive and a
 negative item in each iteration of the stochastic gradient descent. 
 But the model updates are different. In pseudocode:
-\begin{lstlisting}
+\begin{lstlisting}[style=pseudocode]
 U = randomly chosen user
 I = randomly chosen item U interacted with
 J = randomly chosen item U did not interact with
@@ -422,7 +416,7 @@ H[I] = H[I] - learningRate * dloss * W[U]
 H[J] = H[J] - learningRate * dloss * -W[U]
 \end{lstlisting}
 And in Python this part looks like this:
-\begin{lstlisting}
+\begin{lstlisting}[style=python]
 # Choose an user randomly
 u = random.choice(R.keys())
 # Choose an item the user interacted with
@@ -452,7 +446,7 @@ itemFeatures[i0] -= learningRate * dloss * (-c)
 
 
 \section{Other}
-In this chapter we will describe one last algorithm 
+In this section we will describe one last algorithm 
 which does not fit into the above categories.
 \subsection{Slope One}
 The Slope One recommendation algorithm computes the differences of
@@ -460,13 +454,13 @@ interaction intensities between items and uses these differences to
 predict indirectly the interaction intensity between users and items
 without any interaction~\cite{DBLP:journals/corr/abs-cs-0702144}.
 The model building in pseudocode:
-\begin{lstlisting}
+\begin{lstlisting}[style=pseudocode]
 for all interaction pairs i, j where i != j
     diffs[i][j] = i.rating - j.rating
     count[i][j]++
 \end{lstlisting}
 And in Python:
-\begin{lstlisting}
+\begin{lstlisting}[style=python]
 def __init__(self, R):
     self.diffs = {}
     self.R = R
@@ -485,12 +479,12 @@ def __init__(self, R):
                 self.diffs[i][i1][0] += r - r1
                 self.diffs[i][i1][1] += 1
 \end{lstlisting}
-For the recommendations for every item we sum up its differences with
-the items the user rated together with the rating, the user gave these
+For the recommendations for every item, we sum up its differences with
+the items the user rated, together with the rating the user gave these
 other items. Additionaly this is multiplied by the number of times the
 difference occured. This is then normalized by the sum of the occurrences
-of the differences. Following is pseudocode to clarify this.
-\begin{lstlisting}
+of the differences. The following pseudocode clarifies this.
+\begin{lstlisting}[style=pseudocode]
 for every item i
     ratingSum = 0
     count = 0
@@ -507,7 +501,7 @@ sortAfterRatingSum(listToRecommend)
 return first N of listToRecommend
 \end{lstlisting}
 And in python:
-\begin{lstlisting}
+\begin{lstlisting}[style=python]
 def getRec(self, u, n):
     maxIid = max(self.diffs.keys())
     userItems = [x[0] for x in self.R[u]]

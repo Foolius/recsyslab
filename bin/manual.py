@@ -14,6 +14,8 @@ import util.helper
 externalConstantgetRec = util.helper.getExternalRec(constant.getRec, r)
 print(externalConstantgetRec("196", 10))
 
+import time
+time.sleep(1000)
 import util.test
 util.test.hitrate(evaluationDict, constant.getRec, 10)
 util.test.precision(evaluationDict, constant.getRec, 10)

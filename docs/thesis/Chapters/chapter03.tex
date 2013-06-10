@@ -1,5 +1,6 @@
 
 \chapter{Related Work}
+\label{relatedwork}
 
 There is a wide range of projects providing implemantions for recommender
 system. Some of them are described in this chapter to give a quick
@@ -10,7 +11,7 @@ overview and comparison.
 
 MyMediaLite~\cite{Gantner2011MyMediaLite} is an open source project developed at the
 University of Hildesheim and provides several algorithm for rating
-prediction and item prediction. It is written in C\# and is used with
+prediction and item prediction. It is written in C\# and can be used with
 a command line interface. It also provides a graphical interface to
 demonstrate recommender algorithms
 
@@ -55,10 +56,10 @@ project by the University of Minnesota
 Following a table comparing the algorithms implemented by the different
 frameworks.
 
-\vspace{1.5 mm}
+\begin{table}[h]
 \scalebox{0.53}{
 \begin{tabular}{c|l|cccccc} \toprule
-    Category & Feature & PREA & Mahout & Duine & Cofi & MyMedia & recsyslab\\ \midrule
+    Category & Feature & PREA & Mahout & Duine & Cofi & MyMedia & \textbf{recsyslab}\\ \midrule
     \multirow{2}{*}{Baselines} & Constant & O & & & O & O & O\\
                                & User/Item Average & O & O & O &O&O& \\
                                & Random &O&&&&O&O\\\midrule
@@ -81,10 +82,11 @@ frameworks.
                                          &Precision/Recall/F1&&O&&&O&O\\
                                          &ARHR/MRHR&&&&&&O\\ \midrule
     \multirow{6}{*}{Miscelaneous}        &Sparse Vector/Matrix&O&O&O&O&O&O\\
-                                         &Wrapper for other languages&O&&&O&O&?\\
+                                         %&Wrapper for other languages&O&&&O&O&\\
                                          &Item Recommender for Positive-only Data&&&&&O&O\\
                                          &Release Year&2011&2005&2009&2004&2009&2013\\
                                          &Language&Java&Java&Java&Java&C\#&Python\\
-                                         &License&GPL&LGPL&LGPL&GPL&GPL&???\\ \bottomrule
-    
+                                         &License&GPL&LGPL&LGPL&GPL&GPL&GPLv3\\ \bottomrule
 \end{tabular}}
+\caption{Comparison of different recommender frameworks}
+\end{table}

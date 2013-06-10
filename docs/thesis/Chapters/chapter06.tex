@@ -6,8 +6,8 @@ by explaining the overall structure of the library and how to extend it.
 
 
 \subsection*{Dependencies}
-To run recsyslab you need a Python 2.7.x interpreter~\cite{python} and NumPy~\cite{numpy},
-a package for scientific computing with Python.
+To run recsyslab one needs a Python 2.7.x interpreter~\cite{python} and NumPy~\cite{numpy},
+a package for scientific computing with Python to be installed.
 
 \subsection*{Input Dataset Format}
 Right now only one type of datasets is supported. The dataset has to be
@@ -21,16 +21,20 @@ Everything coming after NumberOfInteractions<separator> will be ignored.
 Please note that when you are omitting NumberOfInteractions but have something else after
 the ItemId, this will be recognized as NumberOfInteractions.
 
-We recommend to use the MovieLens database\ref{movielens} with 100,000 ratings.
+We recommend to use the MovieLens database (see \ref{movielens}) with 100,000 ratings.
 It is easy to get, does not need any modifications to work with our library and has a
 reasonable size. Also we will use this dataset in the examples of the user manual in 
 chapter \ref{usermanual}.
 
 %\includepdf[angle=90]{packagediagram.pdf}
+\pagebreak
 \section{General structure}
 Here is a figure illustrating the structure of recsyslab:
 
+\begin{figure}[H]
 \includegraphics[scale=0.4]{packagediagram.png}
+\caption{Structure of recsyslab.}
+\end{figure}
 
 \subsection*{The util Package}
 The util package contains several modules for the things happening around the 
@@ -42,8 +46,8 @@ The modules in the util package are:
 \item[helper] contains several helper functions
 \item[test] contains the methods for computing the test metrics
 \end{description}
-The reader module is a very central part in recsyslab.
-The class reader in the module reader takes care of reading the dataset and 
+The \lstinline!reader! module is a very central part in recsyslab.
+The class \lstinline!reader! in the module reader takes care of reading the dataset and 
 supplies the other parts of recsyslab with every kind of data they need.
 While the reader reads the dataset it maps the UserIDs and 
 ItemIDs from the original IDs in the dataset to internal IDs 
@@ -59,10 +63,10 @@ quantity of the interaction. You get the dict by calling \lstinline!getR()!
 of the reader object. \\
 The matrix offered by a reader has as much lines as the dataset
 has users and as much columns as items are present in the dataset.
-The entry at the ith line and jth column is then the intensity of the interaction
+The entry at the i-th line and j-th column is then the intensity of the interaction
 between user i and item j. A zero means that there has not been any
 interaction yet.\\
-The k-Nearest-Neighbor algorithms need a matrix like it is provided by a
+The k-Nearest-Neighbor algorithms need a matrix, like it is provided by a
 reader. All other recommendation algorithms need a dict of the 
 form described above.
 
@@ -80,8 +84,8 @@ They are separated into the following modules:
 \end{description}
 For descriptions of the algorithms please refer to chapter~\ref{recommendationalgorithms}.
 To implement new recommender algorithms which integrate nicely into the infrastructure
-the only thing you have
-to take care of is to provide a getRec function which has an 
+the only thing one has
+to take care of is to provide a \lstinline!getRec! function which has an 
 internal UserID as first parameter and the number of items to recommend
 as the second parameter. Also it should return a list of internal ItemIDs of the
 length which got specified in the second parameter.
