@@ -1,8 +1,7 @@
 
 \chapter{Background}
 \label{background}
-In this chapter, we provide a short overview over the 
-area of recommender systems and one particular protocol to evaluate them.
+In this chapter, we provide a short overview of the recommender systems realm, and one particular protocol to evaluate them.
 
 
 \section{Collaborative Filtering}
@@ -12,15 +11,15 @@ Broadly speaking, there are two approaches for recommender systems:
 \item Content-based filtering
 \end{itemize}
 
-Collaborative filtering is in general the process of finding 
-informations or patterns in large datasets to predict user preferences. By assuming that users who 
-have the same opinion on some items will also agree on other, collaborative filtering models are able to generate predictions without using additional informations like the age of 
+Collaborative filtering is, in general, the process of finding 
+information or patterns in large datasets to predict user preferences. By assuming that users who 
+have the same opinion on some items will also agree on others, collaborative filtering models are capable of generating predictions without using additional information like the age of 
 the users~\cite{collaborativefiltering}.
 
-Content-based filtering, on the other hand, uses informations about users and items
-like, for example, the age of the users or the name or genre of the items~\cite{contentbasedfiltering}.
+Content-based filtering, on the other hand, uses information about users and items.
+For example, the age of the users or the name or genre of the items~\cite{contentbasedfiltering}.
 
-This work is only about collaborative filtering so when we are 
+This work focuses only on collaborative filtering. So when we are 
 speaking about recommender systems we mean recommender systems
 using the collaborative filtering approach.
 
@@ -30,46 +29,45 @@ using the collaborative filtering approach.
 An important class of recommender algorithms for collaborative filtering uses matrix factorization. 
 Matrix factorization approximates a large and sparse matrix into a product of two low-rank matrices~\cite{matrixfactorization}.
 
-In recommender systems the matrix representing the dataset of user-item interactions ($M$) is factorized into
-two matrices \(W\) and \(H\) so that \(\hat{M} = W\;H^\top\).
+In recommender systems, the matrix representing the dataset of user-item interactions ($M$) is factorized into
+two matrices \(W\) and \(H\) such that \(\hat{M} = W\;H^\top\).
 The matrices \(W\) and \(H\) are supposed to represent abstract
-features of each item and user. For recommendation the dot product
+features of each item and user correspondingly. For recommendation, the dot product
 of the feature vector of an user and an item gives a score, with which
-we can sort the items and recommend the best suitable ones. 
+we can sort the items and recommend the most suitable ones. 
 
 
 \section{Evaluation Methods}
 
 To evaluate a recommender algorithm we have to split up the database
 into one for training and one for evaluation. There are different
-methods to split the database, but in the library only one is implemented
-which is the Leave-one-out protocol~\cite{leaveoneout}.
-One can use the Leave-one-out protocol with many different metrics
+methods to split the database, but in the library only one is implemented,
+which is the leave-one-out protocol~\cite{leaveoneout}.
+One can use the leave-one-out protocol with many different metrics
 which are also explained here.
 
 
 \subsection{Leave-one-out Protocol}
 \label{leaveoneout}
 
-The Leave-one-out protocol works as follows:
+The leave-one-out protocol works as follows:
 \begin{enumerate}
 \item Randomly choose one interaction for every user. These are the hidden
 interactions.
 \item Put the hidden interactions into the test set.
 \item Put all other interactions into the training set.
-\item Let the recommender recommend N items for every user by ranking
-all items, except the ones the user already interacted with,
-and recommending the first N items .
+\item Let the recommender recommend the first N items for every user by ranking
+all items, except the ones the user already interacted with.
 \item If the hidden interaction of the user is in the recommendations
-for this user, the recommender got a hit.
+for this user, the recommender gets a hit.
 \item Count the hits and record the position of the interaction in the 
 recommendations.
-\item Use these informations to compute the various metrics.
+\item Use this information to compute the various metrics.
 
 \end{enumerate}
-Because of the split we can test the recommender on every user.
+Because of the split, we can test the recommender on every user.
 This would not be possible
-if we would for example split by randomly choosing 1\% of the interactions.
+if we would, for example, split by randomly choosing 1\% of the interactions.
 Then it would be likely that there are some users without a hidden item.
 And without a hidden item it would be impossible to measure the quality
 of the recommendations for this user.
@@ -81,32 +79,31 @@ of the recommendations for this user.
 \label{evaluationmetrics}
 
 These are a selection of different metrics to rate the recommendations.
-By default the evaluations are executed with only one hidden item
-but generally the metrics should also work with more than just one.
+By default the evaluations are executed with only one hidden item.
+But generally, the metrics should also work with more than just one.
 
 For the notation: $U$ is the set of users, $H$ is the set of hidden items
 and \(H_u\) is the set of hidden items for user $u$. $T$ is the set used for 
 training. \(\text{TopN}_u\)
 is the set of top N recommendations for user $u$ so the number of items
-the recommender is allowed to recommend is N. For the metrics where
-the order in which the items are recommended count \(\text{TopN}_u\)
+the recommender is allowed to recommend is N. For the metrics, where
+the order in which the items are recommended count, \(\text{TopN}_u\)
 is a list sorted by score in decreasing order.
 To get an implicit score of each item the recommender recommends all
 items.
 
 The recommender algorithm recommends N items. This N has to be chosen
-according to the deployment scenario. It depends for example 
-on the layout of the site how many items can get recommended at
-once. According to a chosen N and with the metrics of recsyslab the right
+according to the deployment scenario. For example, the number of items that can get recommended at once depends on the layout of the website.
+According to a chosen N and with the metrics of recsyslab, the right
 algorithm can be found. 
 
-Except from AUC and MRHR, the rest of the metrics defined in this section do not take the position
+Except for AUC and MRHR, the metrics, defined later in this section, do not take the position
 of the items in the recommendation list into account.
 
-If the position is important depends on the use case.
+Whether the position is important or not, depends on the use case.
 When all recommended items are presented equally well to the
 user, the position of the items in the recommendation
-is not important, only whether or not the right items are
+is not as important as whether or not the right items are
 recommended. But in contrast to this, when the user is shown 
 a long list of items and it is likely that the user will not
 scroll down until the end of the list, one would rather care about
@@ -114,8 +111,8 @@ the position of the items in the list of recommendations.
 
 \subsubsection{Hitrate/Recall@N}
 
-This metrics lets the recommender recommend N items. If the hidden
-item is under the N recommended items, the recommender got a 
+This metric lets the recommender recommend N items. If the hidden
+item is under the N recommended items, the recommender gets a 
 hit~\cite{Karypis:2001:EIT:502585.502627, Sarwar00applicationof}.
 So the Recall@N is the fraction of users who get recommended a
 relevant item when the recommender can recommend N items.
@@ -124,8 +121,8 @@ So the hitrate is
 \begin{equation} 
 \text{Recall@N}=\frac{\sum_{u \in U} H_u \cap \text{topN}_u}{|H|}.
 \end{equation}
-This metric is very intuitive you can for example imagine that you
-show the user 10 items then Recall@10 would be the chance of showing
+This metric is very intuitive. For example, imagine that you
+show the user 10 items, then Recall@10 would be the chance of showing
 the user an item he will interact with. But this metric does not take
 the number of recommended items into account.
 
@@ -137,8 +134,8 @@ The precision~\cite{Sarwar00applicationof} is defined as
 \begin{equation} 
 \text{Precision}=\frac{\sum_{u \in U} H_u \cap \text{topN}_u}{N \times |U|}.
 \end{equation}
-As one can clearly see this metric is taking the number of recommended
-items into account. Which will probably lead to worse results as the
+As one can clearly see, this metric takes the number of recommended
+items into account. This will probably lead to worse results as the
 number of recommended items increases.
 
 
@@ -154,11 +151,11 @@ by taking both into account. It is defined as
 
 \subsubsection{Mean Reciprocal Hitrate}
 
-The mean reciprocal hitrate or more general mean reciprocal
-rank~\cite{DBLP:conf/icdm/NingK11} counts the hits but punishes them the more the lower they
+The mean reciprocal hitrate (MRHR), or the more general mean reciprocal
+rank~\cite{DBLP:conf/icdm/NingK11}, counts the hits but punishes them more, the lower they
 appear in the list of recommendations. So if the hidden item appears
-first in the list of recommendations the hit counts as one, but when
-it is in the second position the hit already counts only as one half
+first in the list of recommendations, the hit counts as one. But when
+it is in the second, position the hit counts only as one half
 and so on. It is defined by
 
 \begin{equation}
@@ -170,14 +167,14 @@ is the position of the hidden item in the recommendation.
 
 \subsubsection{Area under the ROC (AUC)}
 
-AUC~\cite{Rendle:2009:BBP:1795114.1795167} counts the number of items the recommender rates
-higher than the hidden item, normalize it by the number of items the
-recommender can rate higher. Sum this up for every user and again
-normalize by the number of users.
+AUC~\cite{Rendle:2009:BBP:1795114.1795167} counts the number of items that the recommender rates
+higher than the hidden item, normalized by the number of items the
+recommender can rate higher. This is in turn summed up for every user and 
+normalized by the number of users.
 
-To get an implicit score of each item the recommender recommends all
-items in a list sorted by score in decreasing order. This is in fact the same
-as for the other metrics only that the recommender can recommend as
+To get an implicit score of each item, the recommender recommends all
+items in a list, sorted by score in a decreasing order. This is in fact the same
+as for the other metrics, except that the recommender can recommend as
 many items as possible. It is defined as
 
 \begin{equation}
@@ -187,7 +184,7 @@ where \(x_{ui}\) is the predicted score of the interaction between User u and it
 \(\delta\) is defined as follows
 \begin{equation}
 \delta(x)=\begin{cases}1, & \text{if x is true}, \\
-                       0, & \text{otherwise}.
+                       0, & \text{otherwise.}
 \end{cases}
 \end{equation}
 And \(E(u)\) is 
