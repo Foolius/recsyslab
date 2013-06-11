@@ -29,8 +29,8 @@
 \contentsline {subsection}{\numberline {4.1.1}Constant}{9}{subsection.4.1.1}
 \contentsline {subsection}{\numberline {4.1.2}Random}{10}{subsection.4.1.2}
 \contentsline {section}{\numberline {4.2}k-Nearest-Neighbor}{10}{section.4.2}
-\contentsline {subsection}{\numberline {4.2.1}Item Based}{11}{subsection.4.2.1}
-\contentsline {subsection}{\numberline {4.2.2}User Based}{12}{subsection.4.2.2}
+\contentsline {subsection}{\numberline {4.2.1}Item-Based}{11}{subsection.4.2.1}
+\contentsline {subsection}{\numberline {4.2.2}User-Based}{12}{subsection.4.2.2}
 \contentsline {section}{\numberline {4.3}Matrix Factorization}{13}{section.4.3}
 \contentsline {subsection}{\numberline {4.3.1}BPRMF}{15}{subsection.4.3.1}
 \contentsline {subsection}{\numberline {4.3.2}RankMFX}{15}{subsection.4.3.2}
@@ -46,7 +46,7 @@
 \contentsline {section}{\numberline {6.4}k-Nearest Neighbor}{29}{section.6.4}
 \contentsline {section}{\numberline {6.5}BPRMF}{31}{section.6.5}
 \contentsline {section}{\numberline {6.6}RankMFX}{32}{section.6.6}
-\contentsline {section}{\numberline {6.7}Ranking SVD (Sparse SVD)}{33}{section.6.7}
+\contentsline {section}{\numberline {6.7}Ranking SVD (Sparse SVD)}{34}{section.6.7}
 \contentsline {chapter}{\numberline {7}\spacedlowsmallcaps {Conclusions}}{37}{chapter.7}
 \contentsline {section}{\numberline {7.1}Outlook}{37}{section.7.1}
 \contentsline {chapter}{\numberline {8}\spacedlowsmallcaps {Appendix - Docstrings}}{39}{chapter.8}

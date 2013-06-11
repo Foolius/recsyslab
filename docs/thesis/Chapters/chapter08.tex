@@ -1,53 +1,54 @@
 
 \chapter{Conclusions}
 \label{conclusions}
-In this thesis we provided an overview over the research area by
-explaining the terminology of recommender systems respectively
+In this thesis, we provided an overview over the research area by
+explaining the terminology of recommender systems, respectively
 collaborative filtering and their task. We also introduced the leave-one-out
 protocol used to evaluate the performance of recommender systems.
 
 This is followed by explanations of the recommender algorithms implemented in recsyslab
-together with the core part of their implemention. By comparing the pseudocode
-and the Python code implementing it we can see that the implementation is quite
+together with the core part of their implementation. By comparing the pseudocode
+and the Python code implementing it, we can see, that the implementation is quite
 straightforward.
 
-After we provided the necessary requirements we showed how the described algorithms
+After we provided the necessary requirements, we showed how the described algorithms
 perform with the also described metrics and we showed a high level view on 
 recsyslab to help developers extend it.
 
 All this should provide enough knowledge for
 the reader to understand roughly how recsyslab works in theory.
-So we finally got to the extensive user manual 
+So we finally got to the extensive user manual,
 explaining how to use every recommender algorithm and test metric, so the reader
 would be able to use the library.
 
 The user manual shows that it is really easy to use recsyslab.
 Together with the comparisons of the Python code with the pseudocode
-in Chapter~\ref{recommendationalgorithms} we see that the goals of
+in Chapter~\ref{recommendationalgorithms}, we see that the goals of
 this thesis are achieved.
 
-While recsyslab provides several state of the art recommender algorithms,
-several widely used test metrics, a simple infrastructure to use train and test
-recommender algorithms. Additionally recsyslab is easy extendable with new 
-recommender algorithms or test metrics and it produces acceptable test results
-After reading this document every beginner should be able to use and understand recsyslab.
+Recsyslab provides several state of the art recommender algorithms,
+several widely used test metrics, and a simple infrastructure to use, train and test
+recommender algorithms. Additionally, recsyslab is easy extendable with new 
+recommender algorithms or test metrics and it produces acceptable test results.
+After reading this document, every beginner should be able to use and understand recsyslab.
 
 We hope this will help students start working in this field and researchers to compare their new algorithms
 with already existing algorithms without wasting much time implementing something else
-then their own algorithms. Which was the main motivation to write this thesis.
+then their own algorithms. This was the main motivation to write this thesis.
 
 
 \section{Outlook}
-For future work we could implement more recommender algorithms,
+For future work, we could implement more recommender algorithms,
 implement more test metrics or visualize test results graphically.
-It would also be useful to update the model with new interactions so 
-one does not have to train the model from ground up again, or the 
+It would also be useful to update the model with new interactions, so 
+one does not have to train the model from ground up again, or to have the 
 possibility to continue training models after they got evaluated.
 
-We plan to continue testing our algorithms to optimize its performance and to detect any possible bugs. Furthermore, we plan to keep the project active, and to engage more participants so as to conduct a more comprehensive and thorough testing of the library.
+We plan to continue testing our algorithms to optimize its performance and to detect any possible bugs. Furthermore, we plan to keep the project active, and to engage more participants, so as to conduct a more comprehensive and thorough testing of the library.
 
-We plan to also integrate functionality to support grid-search for hyperparameter tuning.
+We also plan to integrate functionality to support grid-search for hyperparameter tuning.
 
 Apart from that, we hope to get feedback from users to improve recsyslab.
-For example, if recsyslab is used to support a recommender system lecture, it will be interesting to see which parts of the implementation students have problems to 
-understand in order to refine them. Furthermore, we expect to receive direct feedback from practitioners regarding which new features, test metrics and additional recommender algorithms should be implemented to keep recsyslab up to date.
+Thus, it would be interesting to see, which parts of the implementation students might have problems with,
+when recsyslab is used to support a recommender system lecture. Then we could refine these parts.
+Furthermore, we expect to receive direct feedback from practitioners regarding which new features, test metrics and additional recommender algorithms should be implemented to keep recsyslab up to date.

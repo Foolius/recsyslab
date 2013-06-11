@@ -2,7 +2,7 @@
 \chapter{Related Work}
 \label{relatedwork}
 
-There is a wide range of projects providing implemantions for recommender
+There is a wide range of projects providing implementations for recommender
 system. Some of them are described in this chapter to give a quick
 overview and comparison.
 
@@ -10,10 +10,10 @@ overview and comparison.
 \section{MyMediaLite}
 
 MyMediaLite~\cite{Gantner2011MyMediaLite} is an open source project developed at the
-University of Hildesheim and provides several algorithm for rating
+University of Hildesheim and provides several algorithms for rating
 prediction and item prediction. It is written in C\# and can be used with
 a command line interface. It also provides a graphical interface to
-demonstrate recommender algorithms
+demonstrate recommender algorithms.
 
 
 \section{PREA (Personalized Recommendation Algorithms Toolkit)}
@@ -25,15 +25,15 @@ them. It is maintained by the Georgia Institute of Technology.
 
 \section{Apache Mahout}
 
-Mahout~\cite{mahout} is an open source library in java. It is implemented
+Mahout~\cite{mahout} is an open source library in Java. It is implemented
 on top of Apache Hadoop, so it uses the map/reduce paradigm. This
-means it can run on different independent computers.
+means it can run on different, independent computers.
 
 
 \section{Duine Framework}
 
 The Duine Framework~\cite{duine} is an open source project written
-in java by the Telematica Instituut/Novay. The recommender of the
+in Java by the Telematica Instituut/Novay. The recommender of the
 Duine Framework combines multiple prediction techniques to exploit
 the strengths of the different techniques and to avoid their weaknesses.
 
@@ -49,11 +49,11 @@ and written in C++.
 
 Lenskit~\cite{Ekstrand:2011:RRR:2043932.2043958} is a toolkit which provides several recommender
 algorithms and an infrastructure to evaluate them. It is an open source
-project by the University of Minnesota
+project by the University of Minnesota.
 
 
 \section{Comparison}
-Following a table comparing the algorithms implemented by the different
+The table below compares the algorithms implemented by the different
 frameworks.
 
 \begin{table}[h]
@@ -85,8 +85,9 @@ frameworks.
                                          %&Wrapper for other languages&O&&&O&O&\\
                                          &Item Recommender for Positive-only Data&&&&&O&O\\
                                          &Release Year&2011&2005&2009&2004&2009&2013\\
-                                         &Language&Java&Java&Java&Java&C\#&Python\\
+                                         &Language&Java&Java&Java&C++&C\#&Python\\
                                          &License&GPL&LGPL&LGPL&GPL&GPL&GPLv3\\ \bottomrule
 \end{tabular}}
+\label{comparisontable}
 \caption{Comparison of different recommender frameworks}
 \end{table}
