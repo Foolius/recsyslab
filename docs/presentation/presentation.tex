@@ -4,7 +4,8 @@
 \usetheme{Warsaw}  %% Themenwahl
 \usepackage{color}
 
-\title{Multi-purpose Library of Recommender System Algorithms for the Item Prediction Task}
+\title[Multi-purpose Library of Recommender System Algorithms]
+{Multi-purpose Library of Recommender System Algorithms for the Item Prediction Task}
 \subtitle{Presentation of my Bachelor Thesis}
 \author{Julius Kolbe}
 \institute{Fakult\"at f\"ur Elektrotechnik und Informatik\\Institut f\"ur Verteilte Systeme}
@@ -108,19 +109,96 @@
         \item Randomly choose one interaction per user and hide them
         \item Train the recommender system with the remaining interactions
         \item Get recommendations for every user
-        \item Compare the recommendations with the hidden items
+        \item Compute the chosen evaluation metric with the hidden items and the recommendations
     \end{enumerate}
 
 \end{frame}
+\subsection{Evaluation Metrics}
 \begin{frame} 
-\frametitle{Evaluation Metrics}
+\frametitle{Hitrate/Recall@N~\cite{Karypis:2001:EIT:502585.502627, Sarwar00applicationof}}
+\begin{equation} 
+\text{Recall@N}=\frac{\sum_{u \in U} H_u \cap \text{topN}_u}{|H|}
+\end{equation}\\
+\vspace{6.4mm}
+\begin{description}
+    \item[$H$] hidden interactions\\
+    \item[$H_u$] the hidden interaction of $u$\\
+    \item[$U$] set of users
+    \item[$topN_u$] N recommendations for $u$
+\end{description}
+\end{frame}
+
+\begin{frame} 
+\frametitle{Precision~\cite{Sarwar00applicationof}}
+\begin{equation} 
+\text{Precision}=\frac{\sum_{u \in U} H_u \cap \text{topN}_u}{N \times |U|}
+\end{equation}\\
+\vspace{6.4mm}
+\begin{description}
+    \item[$H$] hidden interactions\\
+    \item[$H_u$] the hidden interaction of $u$\\
+    \item[$U$] set of users
+    \item[$topN_u$] N recommendations for $u$
+\end{description}
+\end{frame}
+
+\begin{frame} 
+    \frametitle{F1~\cite{Sarwar00applicationof}}
+\begin{equation} 
+\text{F1}=\frac{2 \times \text{Recall@N} \times 
+\text{Precision}}{\text{Recall@N} + \text{Precision}}.
+\end{equation}\\
+\vspace{6.4mm}
+\begin{description}
+    \item[$H$] hidden interactions\\
+    \item[$H_u$] the hidden interaction of $u$\\
+    \item[$U$] set of users
+    \item[$topN_u$] N recommendations for $u$
+\end{description}
+\end{frame}
+
+\begin{frame} 
+    \frametitle{Mean Reciprocal Hitrate~\cite{DBLP:conf/icdm/NingK11}}
+\begin{equation} 
+\text{MRHR}=\frac{1}{|U|} \sum_{u \in U} \frac{1}{\text{pos}(\text{topN}_{u},H_{u})},
+\end{equation}\\
+\vspace{6.4mm}
+\begin{description}
+    \item[$H$] hidden interactions\\
+    \item[$H_u$] the hidden interaction of $u$\\
+    \item[$U$] set of users
+    \item[$topN_u$] N recommendations for $u$
+    \item[$\text{pos}(\text{topN}_{u},H_{u})$] position of the hidden item in the list of recommendations
+\end{description}
+\end{frame}
+
+\begin{frame} 
+    \frametitle{Area under the ROC (AUC)~\cite{Rendle:2009:BBP:1795114.1795167}}
+\begin{equation} 
+\text{AUC}=\frac{1}{|U|}\sum_{u \in U} \frac{1}{|E(u)|} 
+\sum_{(i,j) \in E(u)} \delta(x_{ui}>x_{uj}),
+\end{equation}\\
+\begin{equation}
+\delta(x)=\begin{cases}1, & \text{if x is true}, \\
+                       0, & \text{otherwise.}
+\end{cases}
+\end{equation}
+\begin{equation}
+E(u) =\{(i,j)|(u,i) \in H \land (u,j) \not\in (H \cup T)\}.
+\end{equation}
+%\vspace{6.4mm}
+\begin{description}
+    \item[$H$] hidden interactions\\
+    \item[$H_u$] the hidden interaction of $u$\\
+    \item[$U$] set of users
+    \item[$x_{ui}$] predicted score of the interaction between $u$ and $i$
+\end{description}
 \end{frame}
 
 \section{Recommendation Algorithms}
 \frame{
     \frametitle{Contents}
     \tableofcontents[currentsection]
-   % [pausesections]
 }
 \begin{frame}
 \frametitle{Non-Personalized}
@@ -147,4 +225,6 @@
 \begin{frame}
 \frametitle{General Structure}
 \end{frame}
+\bibliographystyle{ieeetr}
+\bibliography{Bibliography}
 \end{document}
