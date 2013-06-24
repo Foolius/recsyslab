@@ -23,7 +23,7 @@
 \newcommand\markbottomright[2][red]{%
     \tikz[overlay,remember picture] 
     \node (marker-#2-b) at (0,0) {};%
-    \tikz[overlay,remember picture,thick,inner sep=1pt,fill=red]
+    \tikz[overlay,remember picture,thick,inner sep=3pt,fill=red]
     \node[draw,rectangle,fill=#1,nearly transparent,fit=(marker-#2-a.center) (marker-#2-b.center)] {};%
 }
 
@@ -87,16 +87,17 @@
     \begin{tabular}{c|cccccc}
         &\marktopleft{c2}Anna&Berta&Claudia&Dagmar\markbottomright[red]{c2}\\\hline
         \marktopleft{c3}The Shawshank Redemption&\marktopleft{c1}1&&1&\\
-        The Godfather&&1&1&\\
+        The Godfather&&\marktopleft{c4}1&1&\\
         The Godfather: Part II&&1&&1\\
-        Pulp Fiction&1&1&&1\\
+        Pulp Fiction&1&1\markbottomright[magenta]{c4}&&1\\
         The Good, the Bad and the Ugly\markbottomright[green]{c3}&1&&1&\markbottomright[blue]{c1}\\
 \end{tabular}
 \end{table}
 %From now on I will refer to those with:
 \textcolor{green}{Items}\\
 \textcolor{red}{Users}\\
-\textcolor{blue}{Interactions}
+\textcolor{blue}{Interactions}\\
+\textcolor{magenta}{Basket of u}
 % Please note, that it is not important what exactly they are.
 % Interactions can be purchases, views, clicks etc
 % and then the items will be for example goods to buy or videos.
@@ -202,9 +203,59 @@ E(u) =\{(i,j)|(u,i) \in H \land (u,j) \not\in (H \cup T)\}.
 }
 \begin{frame}
 \frametitle{Non-Personalized}
+\begin{description}
+    \item[Constant] Recommend the most popular items
+    \item[Random] Recommend randomly chosen items
+\end{description}
 \end{frame}
 \begin{frame}
-\frametitle{k-Nearest-Neighbor}
+\frametitle{k-Nearest-Neighbor~\cite{Karypis:2001:EIT:502585.502627}}
+\begin{enumerate}
+    \item Compute similarity of each item, item pair
+    \item For each item, save the k items with the highest similarity\\(= neighbors)
+    \item Compute the union of the neighbors of the basket of u
+    \item For each item in this set compute the sum of similarities to the basket of u
+    \item Sort by this score and return the first N items
+\end{enumerate}
+\begin{equation}
+    \text{sim}(i,j) = \cos(\vec{i}, \vec{j})=\frac{\vec{i} \cdot \vec{j}}{||\vec{i}||_{2} ||\vec{j}||_{2}}
+\end{equation}
+% This is item based but it can also be done user based.
+\end{frame}
+\begin{frame}
+\frametitle{k-Nearest-Neighbor~\cite{Karypis:2001:EIT:502585.502627}}
+\begin{table}[t]
+\begin{tabular}{c|cccccc}
+    &Anna&Berta&Claudia&Dagmar\\\hline
+    The Shawshank Redemption&\marktopleft{c5}1&0&1&0\markbottomright[red]{c5}\\
+    The Godfather&0&1&1&0\\
+    The Godfather: Part II&\marktopleft{c7}0&1&0&1\markbottomright[green]{c7}\\ 
+    Pulp Fiction&1&1&0&1\\
+    The Good, the Bad and the Ugly&1&0&1&0\\
+\end{tabular}
+\end{table}
+\begin{equation*}
+    \text{sim}(i,j) = \cos(\vec{i}, \vec{j})=\frac{\vec{i} \cdot \vec{j}}{||\vec{i}||_{2} ||\vec{j}||_{2}}
+    = \frac{0}{2}=0
+\end{equation*}
+\end{frame}
+\begin{frame}
+\frametitle{k-Nearest-Neighbor~\cite{Karypis:2001:EIT:502585.502627}}
+\begin{table}[t]
+\begin{tabular}{c|cccccc}
+    &Anna&Berta&Claudia&Dagmar\\\hline
+    The Shawshank Redemption&1&0&1&0\\
+    The Godfather&0&1&1&0\\
+    The Godfather: Part II&\marktopleft{c7}0&1&0&1\markbottomright[green]{c7}\\
+    Pulp Fiction&\marktopleft{c8}1&1&0&1\markbottomright[blue]{c8}\\
+    The Good, the Bad and the Ugly&1&0&1&0\\
+\end{tabular}
+\end{table}
+\begin{equation*}
+    \text{sim}(i,j) = \cos(\vec{i}, \vec{j})=\frac{\vec{i} \cdot \vec{j}}{||\vec{i}||_{2} ||\vec{j}||_{2}}
+    =\frac{2}{\sqrt{2}\sqrt{3}}
+\end{equation*}
+% go back again and explain the rest of the algorithm.
 \end{frame}
 \begin{frame}
 \frametitle{Matrix Factorization}
