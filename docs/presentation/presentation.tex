@@ -1,0 +1,150 @@
+\documentclass{beamer}
+\usepackage{amsmath,amsfonts,amssymb}
+\setbeamertemplate{footline}[frame number]
+\usetheme{Warsaw}  %% Themenwahl
+\usepackage{color}
+
+\title{Multi-purpose Library of Recommender System Algorithms for the Item Prediction Task}
+\subtitle{Presentation of my Bachelor Thesis}
+\author{Julius Kolbe}
+\institute{Fakult\"at f\"ur Elektrotechnik und Informatik\\Institut f\"ur Verteilte Systeme}
+\date{\today}
+
+
+
+\usepackage{tikz}
+\usetikzlibrary{fit,shapes.misc}
+
+\newcommand\marktopleft[1]{%
+    \tikz[overlay,remember picture] 
+    \node (marker-#1-a) at (0,1.5ex) {};%
+}
+\newcommand\markbottomright[2][red]{%
+    \tikz[overlay,remember picture] 
+    \node (marker-#2-b) at (0,0) {};%
+    \tikz[overlay,remember picture,thick,inner sep=1pt,fill=red]
+    \node[draw,rectangle,fill=#1,nearly transparent,fit=(marker-#2-a.center) (marker-#2-b.center)] {};%
+}
+
+\begin{document}
+\frame{\titlepage} % overview over the thesis with reference to recsyslab as major contribution.
+%\frame{\tableofcontents[currentsection]}
+\frame{
+    \frametitle{Contents}
+    \tableofcontents
+   % [pausesections]
+}
+
+\section{Background}
+\frame{
+    \frametitle{Contents}
+    \tableofcontents[currentsection]
+   % [pausesections]
+}
+\subsection{Item Prediction Task and Implicit Feedback}
+\begin{frame}
+\frametitle{Implicit Feedback}
+
+\begin{table}[t]
+\begin{tabular}{c|cccccc}
+    &Anna&Berta&Claudia&Dagmar\\\hline
+    The Shawshank Redemption&1&&1&\\
+    The Godfather&&1&1&\\
+    The Godfather: Part II&&1&&1\\
+    Pulp Fiction&1&1&&1\\
+    The Good, the Bad and the Ugly&1&&1&\\
+\end{tabular}
+\end{table}
+% Consider the following scenario where we have a viewing history of some persons as illustrated here. [vorlesen]
+% We also call this implicit feedback because the women weren't ask to rate the movies
+% they just watched them and we're trying to get some useful information out of it.
+% The item prediction task a recommender has to solve is to predict which movies are interesting for which persons
+\end{frame}
+\begin{frame}
+\frametitle{Item Prediction Task}
+
+\begin{table}[t]
+\begin{tabular}{c|cccccc}
+    &Anna&Berta&Claudia&Dagmar\\\hline
+    The Shawshank Redemption&1&&1&?\\
+    The Godfather&&1&1&?\\
+    The Godfather: Part II&&1&&1\\
+    Pulp Fiction&1&1&&1\\
+    The Good, the Bad and the Ugly&1&&1&?\\
+\end{tabular}
+% So for example when dagmar goes to the cinema, which movie should we recommend her?
+% Here it's quite probably The Godfather to she should see, but normally those systems
+% are used in scenarios with thousands of persons and movies.
+\end{table}
+
+\end{frame}
+\begin{frame}
+
+\frametitle{Notation}
+
+\begin{table}[t]
+    \begin{tabular}{c|cccccc}
+        &\marktopleft{c2}Anna&Berta&Claudia&Dagmar\markbottomright[red]{c2}\\\hline
+        \marktopleft{c3}The Shawshank Redemption&\marktopleft{c1}1&&1&\\
+        The Godfather&&1&1&\\
+        The Godfather: Part II&&1&&1\\
+        Pulp Fiction&1&1&&1\\
+        The Good, the Bad and the Ugly\markbottomright[green]{c3}&1&&1&\markbottomright[blue]{c1}\\
+\end{tabular}
+\end{table}
+%From now on I will refer to those with:
+\textcolor{green}{Items}\\
+\textcolor{red}{Users}\\
+\textcolor{blue}{Interactions}
+% Please note, that it is not important what exactly they are.
+% Interactions can be purchases, views, clicks etc
+% and then the items will be for example goods to buy or videos.
+
+\end{frame}
+\subsection{Evaluation}
+\begin{frame}
+    \frametitle{Leave-one-out Protocol}
+    \begin{enumerate}
+        \item Randomly choose one interaction per user and hide them
+        \item Train the recommender system with the remaining interactions
+        \item Get recommendations for every user
+        \item Compare the recommendations with the hidden items
+    \end{enumerate}
+
+\end{frame}
+\begin{frame} 
+\frametitle{Evaluation Metrics}
+\end{frame}
+
+\section{Recommendation Algorithms}
+\frame{
+    \frametitle{Contents}
+    \tableofcontents[currentsection]
+   % [pausesections]
+}
+\begin{frame}
+\frametitle{Non-Personalized}
+\end{frame}
+\begin{frame}
+\frametitle{k-Nearest-Neighbor}
+\end{frame}
+\begin{frame}
+\frametitle{Matrix Factorization}
+\end{frame}
+\begin{frame}
+\frametitle{Slope One}
+\end{frame}
+
+\section{Recsyslab}
+\frame{
+    \frametitle{Contents}
+    \tableofcontents[currentsection]
+   % [pausesections]
+}
+\begin{frame} 
+\frametitle{Motivation} %also comparison with other frameworks
+\end{frame}
+\begin{frame}
+\frametitle{General Structure}
+\end{frame}
+\end{document}
