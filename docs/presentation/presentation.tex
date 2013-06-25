@@ -1,4 +1,5 @@
 \documentclass{beamer}
+\hypersetup{breaklinks=false}
 \usepackage{amsmath,amsfonts,amssymb}
 \setbeamertemplate{footline}[frame number]
 \usetheme{Warsaw}  %% Themenwahl
@@ -10,6 +11,25 @@
 \author{Julius Kolbe}
 \institute{Fakult\"at f\"ur Elektrotechnik und Informatik\\Institut f\"ur Verteilte Systeme}
 \date{\today}
+\usepackage{pdfpages}
+\usepackage{listings}
+\lstdefinestyle{pseudocode}{%language=Python,
+    keywordstyle=\color{RoyalBlue},%\bfseries,
+    basicstyle=\small\ttfamily,
+    %identifierstyle=\color{NavyBlue},
+    commentstyle=\color{Green}\ttfamily,
+    stringstyle=\rmfamily,
+    numbers=none,%left,%
+    numberstyle=\scriptsize,%\tiny
+    stepnumber=5,
+    numbersep=8pt,
+    showstringspaces=false,
+    breaklines=true,
+    frameround=ftff,
+    frame=single,
+    belowcaptionskip=.75\baselineskip
+    %frame=L
+} 
 
 
 
@@ -97,7 +117,7 @@
 \textcolor{green}{Items}\\
 \textcolor{red}{Users}\\
 \textcolor{blue}{Interactions}\\
-\textcolor{magenta}{Basket of u}
+\textcolor{magenta}{Basket of $u$}
 % Please note, that it is not important what exactly they are.
 % Interactions can be purchases, views, clicks etc
 % and then the items will be for example goods to buy or videos.
@@ -139,7 +159,7 @@
     \item[$H$] hidden interactions\\
     \item[$H_u$] the hidden interaction of $u$\\
     \item[$U$] set of users
-    \item[$topN_u$] N recommendations for $u$
+    \item[$topN_u$] $N$ recommendations for $u$
 \end{description}
 \end{frame}
 
@@ -154,7 +174,7 @@
     \item[$H$] hidden interactions\\
     \item[$H_u$] the hidden interaction of $u$\\
     \item[$U$] set of users
-    \item[$topN_u$] N recommendations for $u$
+    \item[$topN_u$] $N$ recommendations for $u$
 \end{description}
 \end{frame}
 
@@ -168,7 +188,7 @@
     \item[$H$] hidden interactions\\
     \item[$H_u$] the hidden interaction of $u$\\
     \item[$U$] set of users
-    \item[$topN_u$] N recommendations for $u$
+    \item[$topN_u$] $N$ recommendations for $u$
     \item[$\text{pos}(\text{topN}_{u},H_{u})$] position of the hidden item in the list of recommendations
 \end{description}
 \end{frame}
@@ -212,10 +232,10 @@ E(u) =\{(i,j)|(u,i) \in H \land (u,j) \not\in (H \cup T)\}.
 \frametitle{k-Nearest-Neighbor~\cite{Karypis:2001:EIT:502585.502627}}
 \begin{enumerate}
     \item Compute similarity of each item, item pair
-    \item For each item, save the k items with the highest similarity\\(= neighbors)
-    \item Compute the union of the neighbors of the basket of u
-    \item For each item in this set compute the sum of similarities to the basket of u
-    \item Sort by this score and return the first N items
+    \item For each item, save the $k$ items with the highest similarity\\(= neighbors)
+    \item Compute the union of the neighbors of the basket of $u$
+    \item For each item in this set compute the sum of similarities to the basket of $u$
+    \item Sort by this score and return the first $N$ items
 \end{enumerate}
 \begin{equation}
     \text{sim}(i,j) = \cos(\vec{i}, \vec{j})=\frac{\vec{i} \cdot \vec{j}}{||\vec{i}||_{2} ||\vec{j}||_{2}}
@@ -258,11 +278,62 @@ E(u) =\{(i,j)|(u,i) \in H \land (u,j) \not\in (H \cup T)\}.
 % go back again and explain the rest of the algorithm.
 \end{frame}
 \begin{frame}
-\frametitle{Matrix Factorization}
+    \frametitle{Matrix Factorization~\cite{matrixfactorization}}
+\begin{table}[t]
+\begin{tabular}{c|cccccc}
+    &Anna&Berta&Claudia&Dagmar\\\hline
+    The Shawshank Redemption&\marktopleft{c9}1&0&1&0\\
+    The Godfather&0&1&1&0\\
+    The Godfather: Part II&0&1&0&1\\
+    Pulp Fiction&1&1&0&1\\
+    The Good, the Bad and the Ugly&1&0&1&0\markbottomright[green]{c9}\\
+\end{tabular}
+\end{table}
+\begin{center}
+Find $W$ and $H$ so:
+\(\textcolor{green}{\hat{M}} = W\;H^\top\).\\
+        \begin{equation}
+    \text{Score}(u,i) = W_u I_i^\top.
+\end{equation}
+\end{center}
+%explain the transpose
+%explain that W and H are features of the items and the features
 \end{frame}
-\begin{frame}
-\frametitle{Slope One}
+\begin{frame}[fragile]
+    \frametitle{Matrix Factorization, Training}
+\begin{lstlisting}[style=pseudocode]
+U = randomly chosen user
+I = randomly chosen item U interacted with
+J = randomly chosen item U did not interact with
+
+X=H[i] - H[j]
+wx = dot product of W[u] and X
+dloss = (derivative of the 
+        loss function of wx and 1) * 
+        learningRate
+        
+W[u] += dloss * (H[i] - H[j]) #These three lines
+H[i] += dloss * W[u]          #have to be
+H[j] += dloss * -W[u]         #executed at once
+\end{lstlisting}
 \end{frame}
+%\begin{frame}
+%\frametitle{Slope One~\cite{DBLP:journals/corr/abs-cs-0702144}}
+%\begin{table}[t]
+%\begin{tabular}{c|cccccc}
+%    &Anna&Berta&Claudia&Dagmar\\\hline
+%    The Shawshank Redemption&1&&1&\\
+%    The Godfather&&1&1&\\
+%    The Godfather: Part II&&1&&1\\
+%    Pulp Fiction&\marktopleft{c10}1&1&2&1\markbottomright[green]{c10}\\
+%    The Good, the Bad and the Ugly&\marktopleft{c11}2&?&1&3\markbottomright[red]{c11}\\
+%\end{tabular}%database changed so slope one works.
+%\end{table}
+%\begin{equation}
+%
+%\end{equation}
+%\end{frame}
+%should i include slopeone? it doesn't work great and is complicated to explain.
 
 \section{Recsyslab}
 \frame{
@@ -271,11 +342,37 @@ E(u) =\{(i,j)|(u,i) \in H \land (u,j) \not\in (H \cup T)\}.
    % [pausesections]
 }
 \begin{frame} 
-\frametitle{Motivation} %also comparison with other frameworks
+\frametitle{Introduction of recsyslab} %also comparison with other frameworks
+\begin{itemize}
+    \item Python for easy readable source code
+    \item simple usage
+    \item for education
+    \item for research
+    \item open source license: GPLv3
+\end{itemize}
 \end{frame}
 \begin{frame}
 \frametitle{General Structure}
+\begin{center}
+    \includegraphics[page=1, scale=0.3]{packagediagram.pdf}
+%    \hspace*{8cm}
+\end{center}
 \end{frame}
-\bibliographystyle{ieeetr}
+\begin{frame}[fragile]
+    \frametitle{Get recsyslab}
+%    Github repository:\\
+    \url{github.com/Foolius/recsyslab}\\
+    \hspace*{8cm}\\
+%    Direct download of a .zip:\\
+    \url{github.com/Foolius/recsyslab/archive/master.zip}\\
+    \hspace*{8cm}\\
+%    Clone it with git:
+    \begin{lstlisting}[style=pseudocode]
+$ git clone 
+    https://github.com/Foolius/recsyslab.git
+    \end{lstlisting}
+\end{frame}
+
+\bibliographystyle{plainnat}
 \bibliography{Bibliography}
 \end{document}
