@@ -48,7 +48,7 @@ W, H = recommender.BPRMF.learnModel(r.getMaxUid(), r.getMaxIid(),
                                     0.1,                # learning rate
                                     trainingDict,       # training dict
                                     150,                # number of features
-                                    3,                 # number of epochs
+                                    3,                  # number of epochs
                                     r.numberOfTransactions)
 
 import recommender.mf
