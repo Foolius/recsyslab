@@ -49,6 +49,7 @@ class randomRec(object):
         """
         self.maxIid = 0
         self.seed = seed
+        random.seed(self.seed)
         for data in dbdict.iteritems():
             for itemRating in iter(data[1]):
                 item = itemRating[0]
@@ -61,7 +62,6 @@ class randomRec(object):
         Recommends n random items for user n, which is obsolete in this case.
 
         Set n = -1 to get all items recommended"""
-        random.seed(self.seed)
         if self.maxIid < n or n == -1:
             l = range(self.maxIid)
             random.shuffle(l)
