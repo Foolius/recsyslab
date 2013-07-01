@@ -1,15 +1,63 @@
-\documentclass{beamer}
-\hypersetup{breaklinks=false}
-\usepackage{amsmath,amsfonts,amssymb}
-\setbeamertemplate{footline}[frame number]
-\usetheme{Warsaw}  %% Themenwahl
+%\documentclass[mathserif,handout]{beamer}
+\documentclass[mathserif]{beamer}
+%
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{epsfig}
 \usepackage{color}
+%\usepackage{biblatex}
+\hypersetup{breaklinks=false}
 
-\title[Multi-purpose Library of Recommender System Algorithms]
+%Define the l3s color
+%RGB=50,78,125
+\xdefinecolor{l3scolor}{rgb}{0.2,0.31,0.49}
+
+%color structure for template
+\usecolortheme[named=l3scolor]{structure}
+
+%color definition for elements
+\setbeamercolor*{Title bar}{fg=white,bg=l3scolor}
+\setbeamercolor*{Location bar}{fg=l3scolor,bg=black}
+%\setbeamercolor*{frametitle}{parent=Title bar}
+\setbeamercolor*{normal text}{bg=white,fg=l3scolor}
+\setbeamercolor*{section in head/foot}{bg=black,fg=white}
+\setbeamercolor*{date in head/foot}{bg=black,fg=white}
+\setbeamercolor*{alerted text}{fg=black}
+\setbeamercolor*{block body alerted}{bg=l3scolor!14}
+\setbeamercolor*{block title alerted}{bg=l3scolor!36} 
+
+%Blocks are rounded with a shadow
+\setbeamertemplate{blocks}[rounded][shadow=true]
+
+%watermark logo
+\logo{\includegraphics[width=11cm]{l3s_watermark.jpg}}
+
+
+\setbeamerfont{section in head/foot}{size=\tiny,series=\normalfont}
+\setbeamerfont{frametitle}{size=\Large}
+\defbeamertemplate*{footline}{infolines theme}
+
+\usepackage{rotating}
+%
+
+\setbeamertemplate{headline}{
+\includegraphics[width=\paperwidth]{header}
+}
+%
+\setbeamertemplate{footline}{
+	\hspace{10mm}\colouredline{l3scolor!14}{
+	\color{gray}
+	\hspace{165pt}  \textbf{Julius Kolbe} $\,\mid\,$ \insertshorttitle $\,\mid\,$ \insertframenumber/\inserttotalframenumber \hfill
+	}
+}
+
+\usenavigationsymbolstemplate{}
+\title[Library of Recommender System Algorithms]
 {Multi-purpose Library of Recommender System Algorithms for the Item Prediction Task}
 \subtitle{Presentation of my Bachelor Thesis}
 \author{Julius Kolbe}
-\institute{Fakult\"at f\"ur Elektrotechnik und Informatik\\Institut f\"ur Verteilte Systeme}
+%\institute{Fakult\"at f\"ur Elektrotechnik und Informatik\\Institut f\"ur Verteilte Systeme}
 \date{\today}
 \usepackage{pdfpages}
 \usepackage{listings}
@@ -47,7 +95,13 @@
     \node[draw,rectangle,fill=#1,nearly transparent,fit=(marker-#2-a.center) (marker-#2-b.center)] {};%
 }
 
+%\title{\bf my title}
+%\author{\bf Me \\ and others}
+\institute{\large{L3S Research Center / Leibniz University of Hanover\\ Hannover, Germany}}
+%\date{\today}
+
 \begin{document}
+
 \frame{\titlepage} % overview over the thesis with reference to recsyslab as major contribution.
 %\frame{\tableofcontents[currentsection]}
 \frame{
@@ -373,6 +427,48 @@ $ git clone
     \end{lstlisting}
 \end{frame}
 
-\bibliographystyle{plainnat}
+\bibliographystyle{abbrv}
 \bibliography{Bibliography}
+%\frame{\titlepage}
+%
+%
+%%=====================
+%\section[Outline]{}
+%\begin{frame}
+%\frametitle{Outline}
+%%
+%\tableofcontents
+%%
+%\end{frame}
+%
+%
+%%=====================
+%\section{Section 1}
+%
+%\begin{frame}
+%		\begin{itemize}
+%				\item one
+%				\item two	
+%		\end{itemize}
+%\end{frame}
+%
+%% --------------------------------------------
+%%
+%
+%\section{Section 2}
+%\begin{frame}
+%	\frametitle{Box}
+%	\begin{alertblock}{alert box title}
+%		\begin{center}
+%			Content in Alert Box :)
+%			\begin{itemize}
+%				\item one
+%				\item two
+%			content...
+%			\end{itemize}
+%		\end{center}
+%	\end{alertblock}
+%\end{frame}
+
 \end{document}
+%
