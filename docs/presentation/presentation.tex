@@ -80,7 +80,7 @@
 } 
 \lstdefinestyle{python}{language=Python,
     keywordstyle=\color{RoyalBlue},%\bfseries,
-    basicstyle=\small\ttfamily,
+    basicstyle=\tiny\ttfamily,
     %identifierstyle=\color{NavyBlue},
     commentstyle=\color{Green}\ttfamily,
     stringstyle=\rmfamily,
@@ -342,7 +342,7 @@ u = random.choice(R.keys())
 userItems = [x[0] for x in R[u]]
 # the positive example
 i = userItems[np.random.random_integers(0, len(userItems) - 1)]
-# the negative exampl
+# the negative example
 j = np.random.random_integers(0, m_items)
 # if  j is also relevant for u we continue
 # we need to see a negative example to contrast the positive one
@@ -357,14 +357,12 @@ dloss = dlossF(wx, y)
 wu = W[u]
 hi = H[i]
 hj = H[j]
-
 if dloss != 0.0:
     # Updates
     eta_dloss = learningRate * dloss
     W[u] += eta_dloss * (hi - hj)
     H[i] += eta_dloss * wu
     H[j] += eta_dloss * (-wu)
-
     W[u] *= scaling_factorU
     H[i] *= scaling_factorI
     H[j] *= scaling_factorJ
