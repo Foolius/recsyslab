@@ -1,5 +1,5 @@
 %\documentclass[mathserif,handout]{beamer}
-\documentclass[mathserif]{beamer}
+\documentclass[mathserif,svgnames]{beamer}
 %
 \usepackage{amsmath}
 \usepackage{amssymb}
@@ -78,6 +78,23 @@
     belowcaptionskip=.75\baselineskip
     %frame=L
 } 
+\lstdefinestyle{python}{language=Python,
+    keywordstyle=\color{RoyalBlue},%\bfseries,
+    basicstyle=\small\ttfamily,
+    %identifierstyle=\color{NavyBlue},
+    commentstyle=\color{Green}\ttfamily,
+    stringstyle=\rmfamily,
+    numbers=none,%left,%
+    numberstyle=\scriptsize,%\tiny
+    stepnumber=5,
+    numbersep=8pt,
+    showstringspaces=false,
+    breaklines=true,
+    frameround=ftff,
+    frame=single,
+    belowcaptionskip=.75\baselineskip
+    %frame=L
+} 
 
 
 
@@ -110,13 +127,12 @@
    % [pausesections]
 }
 
-\section{Background}
+\section{Item Prediction Task and Implicit Feedback}
 \frame{
     \frametitle{Contents}
     \tableofcontents[currentsection]
    % [pausesections]
 }
-\subsection{Item Prediction Task and Implicit Feedback}
 \begin{frame}
 \frametitle{Implicit Feedback}
 
@@ -175,99 +191,44 @@
 % Please note, that it is not important what exactly they are.
 % Interactions can be purchases, views, clicks etc
 % and then the items will be for example goods to buy or videos.
-
 \end{frame}
-\subsection{Evaluation}
+
+\section{Recsyslab}
+\frame{
+    \frametitle{Contents}
+    \tableofcontents[currentsection]
+   % [pausesections]
+}
+\begin{frame} 
+\frametitle{Motivation for recsyslab} %also comparison with other frameworks
+\begin{itemize}
+    \item Python for easy readable source code
+    \item simple usage
+    \item for education
+    \item for research
+    \item open source license: GPLv3
+\end{itemize}
+\end{frame}
 \begin{frame}
-    \frametitle{Leave-one-out Protocol}
-    \begin{enumerate}
-        \item Randomly choose one interaction per user and hide them
-        \item Train the recommender system with the remaining interactions
-        \item Get recommendations for every user
-        \item Compute the chosen evaluation metric with the hidden items and the recommendations
-    \end{enumerate}
-
+\frametitle{General Structure}
+\begin{center}
+    \includegraphics[page=1, scale=0.3]{packagediagram.pdf}
+%    \hspace*{8cm}
+\end{center}
 \end{frame}
-\subsection{Evaluation Metrics}
-\begin{frame} 
-\frametitle{Hitrate/Recall@N~\cite{Karypis:2001:EIT:502585.502627, Sarwar00applicationof}}
-\begin{equation} 
-\text{Recall@N}=\frac{\sum_{u \in U} H_u \cap \text{topN}_u}{|H|}
-\end{equation}\\
-\vspace{6.4mm}
-\begin{description}
-    \item[$H$] hidden interactions\\
-    \item[$H_u$] the hidden interaction of $u$\\
-    \item[$U$] set of users
-    \item[$topN_u$] N recommendations for $u$
-\end{description}
-\end{frame}
-
-\begin{frame} 
-\frametitle{Precision~\cite{Sarwar00applicationof}}
-\begin{equation} 
-\text{Precision}=\frac{\sum_{u \in U} H_u \cap \text{topN}_u}{N \times |U|}
-\end{equation}\\
-\vspace{6.4mm}
-\begin{description}
-    \item[$H$] hidden interactions\\
-    \item[$H_u$] the hidden interaction of $u$\\
-    \item[$U$] set of users
-    \item[$topN_u$] $N$ recommendations for $u$
-\end{description}
-\end{frame}
-
-\begin{frame} 
-    \frametitle{F1~\cite{Sarwar00applicationof}}
-\begin{equation} 
-\text{F1}=\frac{2 \times \text{Recall@N} \times 
-\text{Precision}}{\text{Recall@N} + \text{Precision}}.
-\end{equation}\\
-\vspace{6.4mm}
-\begin{description}
-    \item[$H$] hidden interactions\\
-    \item[$H_u$] the hidden interaction of $u$\\
-    \item[$U$] set of users
-    \item[$topN_u$] $N$ recommendations for $u$
-\end{description}
-\end{frame}
-
-\begin{frame} 
-    \frametitle{Mean Reciprocal Hitrate~\cite{DBLP:conf/icdm/NingK11}}
-\begin{equation} 
-\text{MRHR}=\frac{1}{|U|} \sum_{u \in U} \frac{1}{\text{pos}(\text{topN}_{u},H_{u})},
-\end{equation}\\
-\vspace{6.4mm}
-\begin{description}
-    \item[$H$] hidden interactions\\
-    \item[$H_u$] the hidden interaction of $u$\\
-    \item[$U$] set of users
-    \item[$topN_u$] $N$ recommendations for $u$
-    \item[$\text{pos}(\text{topN}_{u},H_{u})$] position of the hidden item in the list of recommendations
-\end{description}
-\end{frame}
-
-\begin{frame} 
-    \frametitle{Area under the ROC (AUC)~\cite{Rendle:2009:BBP:1795114.1795167}}
-\begin{equation} 
-\text{AUC}=\frac{1}{|U|}\sum_{u \in U} \frac{1}{|E(u)|} 
-\sum_{(i,j) \in E(u)} \delta(x_{ui}>x_{uj}),
-\end{equation}\\
-\begin{equation}
-\delta(x)=\begin{cases}1, & \text{if x is true}, \\
-                       0, & \text{otherwise.}
-\end{cases}
-\end{equation}
-\begin{equation}
-E(u) =\{(i,j)|(u,i) \in H \land (u,j) \not\in (H \cup T)\}.
-\end{equation}
-%\vspace{6.4mm}
-\begin{description}
-    \item[$H$] hidden interactions\\
-    \item[$H_u$] the hidden interaction of $u$\\
-    \item[$U$] set of users
-    \item[$x_{ui}$] predicted score of the interaction between $u$ and $i$
-\end{description}
+\begin{frame}[fragile]
+    \frametitle{Get recsyslab}
+%    Github repository:\\
+    \url{github.com/Foolius/recsyslab}\\
+    \hspace*{8cm}\\
+%    Direct download of a .zip:\\
+    \url{github.com/Foolius/recsyslab/archive/master.zip}\\
+    \hspace*{8cm}\\
+%    Clone it with git:
+    \begin{lstlisting}[style=pseudocode]
+$ git clone 
+    https://github.com/Foolius/recsyslab.git
+    \end{lstlisting}
 \end{frame}
 
 \section{Recommendation Algorithms}
@@ -275,13 +236,13 @@ E(u) =\{(i,j)|(u,i) \in H \land (u,j) \not\in (H \cup T)\}.
     \frametitle{Contents}
     \tableofcontents[currentsection]
 }
-\begin{frame}
-\frametitle{Non-Personalized}
-\begin{description}
-    \item[Constant] Recommend the most popular items
-    \item[Random] Recommend randomly chosen items
-\end{description}
-\end{frame}
+%\begin{frame}
+%\frametitle{Non-Personalized}
+%\begin{description}
+%    \item[Constant] Recommend the most popular items
+%    \item[Random] Recommend randomly chosen items
+%\end{description}
+%\end{frame}
 \begin{frame}
 \frametitle{k-Nearest-Neighbor~\cite{Karypis:2001:EIT:502585.502627}}
 \begin{enumerate}
@@ -371,6 +332,44 @@ H[i] += dloss * W[u]          #have to be
 H[j] += dloss * -W[u]         #executed at once
 \end{lstlisting}
 \end{frame}
+
+\begin{frame}[fragile]
+%\frametitle{Matrix Factorization, Training}
+\beamertemplatenavigationsymbolsempty
+\begin{lstlisting}[style=python]
+u = random.choice(R.keys())
+
+userItems = [x[0] for x in R[u]]
+# the positive example
+i = userItems[np.random.random_integers(0, len(userItems) - 1)]
+# the negative exampl
+j = np.random.random_integers(0, m_items)
+# if  j is also relevant for u we continue
+# we need to see a negative example to contrast the positive one
+while j in userItems:
+    j = np.random.random_integers(0, m_items)
+
+X = H[i] - H[j]
+wx = np.dot(W[u], X)
+dloss = dlossF(wx, y)
+
+# temp
+wu = W[u]
+hi = H[i]
+hj = H[j]
+
+if dloss != 0.0:
+    # Updates
+    eta_dloss = learningRate * dloss
+    W[u] += eta_dloss * (hi - hj)
+    H[i] += eta_dloss * wu
+    H[j] += eta_dloss * (-wu)
+
+    W[u] *= scaling_factorU
+    H[i] *= scaling_factorI
+    H[j] *= scaling_factorJ
+\end{lstlisting}
+\end{frame}
 %\begin{frame}
 %\frametitle{Slope One~\cite{DBLP:journals/corr/abs-cs-0702144}}
 %\begin{table}[t]
@@ -389,42 +388,102 @@ H[j] += dloss * -W[u]         #executed at once
 %\end{frame}
 %should i include slopeone? it doesn't work great and is complicated to explain.
 
-\section{Recsyslab}
+\section{Evaluation}
 \frame{
     \frametitle{Contents}
     \tableofcontents[currentsection]
    % [pausesections]
 }
-\begin{frame} 
-\frametitle{Introduction of recsyslab} %also comparison with other frameworks
-\begin{itemize}
-    \item Python for easy readable source code
-    \item simple usage
-    \item for education
-    \item for research
-    \item open source license: GPLv3
-\end{itemize}
-\end{frame}
 \begin{frame}
-\frametitle{General Structure}
-\begin{center}
-    \includegraphics[page=1, scale=0.3]{packagediagram.pdf}
-%    \hspace*{8cm}
-\end{center}
+    \frametitle{Leave-one-out Protocol}
+    \begin{enumerate}
+        \item Randomly choose one interaction per user and hide them
+        \item Train the recommender system with the remaining interactions
+        \item Get recommendations for every user
+        \item Compute the chosen evaluation metric with the hidden items and the recommendations
+    \end{enumerate}
+
 \end{frame}
-\begin{frame}[fragile]
-    \frametitle{Get recsyslab}
-%    Github repository:\\
-    \url{github.com/Foolius/recsyslab}\\
-    \hspace*{8cm}\\
-%    Direct download of a .zip:\\
-    \url{github.com/Foolius/recsyslab/archive/master.zip}\\
-    \hspace*{8cm}\\
-%    Clone it with git:
-    \begin{lstlisting}[style=pseudocode]
-$ git clone 
-    https://github.com/Foolius/recsyslab.git
-    \end{lstlisting}
+%\subsection{Evaluation Metrics}
+\begin{frame} 
+\frametitle{Hitrate/Recall@N~\cite{Karypis:2001:EIT:502585.502627, Sarwar00applicationof}}
+\begin{equation} 
+\text{Recall@N}=\frac{\sum_{u \in U} H_u \cap \text{topN}_u}{|H|}
+\end{equation}\\
+\vspace{6.4mm}
+\begin{description}
+    \item[$H$] hidden interactions\\
+    \item[$H_u$] the hidden interaction of $u$\\
+    \item[$U$] set of users
+    \item[$topN_u$] N recommendations for $u$
+\end{description}
+\end{frame}
+
+\begin{frame} 
+\frametitle{Precision~\cite{Sarwar00applicationof}}
+\begin{equation} 
+\text{Precision}=\frac{\sum_{u \in U} H_u \cap \text{topN}_u}{N \times |U|}
+\end{equation}\\
+\vspace{6.4mm}
+\begin{description}
+    \item[$H$] hidden interactions\\
+    \item[$H_u$] the hidden interaction of $u$\\
+    \item[$U$] set of users
+    \item[$topN_u$] $N$ recommendations for $u$
+\end{description}
+\end{frame}
+
+\begin{frame} 
+    \frametitle{F1~\cite{Sarwar00applicationof}}
+\begin{equation} 
+\text{F1}=\frac{2 \times \text{Recall@N} \times 
+\text{Precision}}{\text{Recall@N} + \text{Precision}}.
+\end{equation}\\
+\vspace{6.4mm}
+\begin{description}
+    \item[$H$] hidden interactions\\
+    \item[$H_u$] the hidden interaction of $u$\\
+    \item[$U$] set of users
+    \item[$topN_u$] $N$ recommendations for $u$
+\end{description}
+\end{frame}
+
+\begin{frame} 
+    \frametitle{Mean Reciprocal Hitrate~\cite{DBLP:conf/icdm/NingK11}}
+\begin{equation} 
+\text{MRHR}=\frac{1}{|U|} \sum_{u \in U} \frac{1}{\text{pos}(\text{topN}_{u},H_{u})},
+\end{equation}\\
+\vspace{6.4mm}
+\begin{description}
+    \item[$H$] hidden interactions\\
+    \item[$H_u$] the hidden interaction of $u$\\
+    \item[$U$] set of users
+    \item[$topN_u$] $N$ recommendations for $u$
+    \item[$\text{pos}(\text{topN}_{u},H_{u})$] position of the hidden item in the list of recommendations
+\end{description}
+\end{frame}
+
+\begin{frame} 
+    \frametitle{Area under the ROC (AUC)~\cite{Rendle:2009:BBP:1795114.1795167}}
+\begin{equation} 
+\text{AUC}=\frac{1}{|U|}\sum_{u \in U} \frac{1}{|E(u)|} 
+\sum_{(i,j) \in E(u)} \delta(x_{ui}>x_{uj}),
+\end{equation}\\
+\begin{equation}
+\delta(x)=\begin{cases}1, & \text{if x is true}, \\
+                       0, & \text{otherwise.}
+\end{cases}
+\end{equation}
+\begin{equation}
+E(u) =\{(i,j)|(u,i) \in H \land (u,j) \not\in (H \cup T)\}.
+\end{equation}
+%\vspace{6.4mm}
+\begin{description}
+    \item[$H$] hidden interactions\\
+    \item[$H_u$] the hidden interaction of $u$\\
+    \item[$U$] set of users
+    \item[$x_{ui}$] predicted score of the interaction between $u$ and $i$
+\end{description}
 \end{frame}
 
 \bibliographystyle{abbrv}
