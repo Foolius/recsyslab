@@ -211,10 +211,10 @@
 \end{frame}
 \begin{frame}
 \frametitle{General Structure}
-\begin{center}
-    \includegraphics[page=1, scale=0.3]{packagediagram.pdf}
+\begin{centering}
+    \includegraphics[page=1, scale=0.34]{packagediagram.pdf}
 %    \hspace*{8cm}
-\end{center}
+\end{centering}
 \end{frame}
 \begin{frame}[fragile]
     \frametitle{Get recsyslab}
@@ -236,6 +236,32 @@ $ git clone
     \frametitle{Contents}
     \tableofcontents[currentsection]
 }
+\begin{frame}
+    \frametitle{Recommender Algorithms in recsyslab}
+    \begin{itemize}
+        \item Non-Personalized
+            \begin{itemize}
+                \item Constant
+                \item Random
+            \end{itemize}
+        \item k-Nearest-Neighbor
+            \begin{itemize}
+                \item Item-Based
+                \item User-Based
+            \end{itemize}
+        \item Matrix Factorization
+            \begin{itemize}
+                \item Bayesian Personalized Ranking (BRPMF)
+                \item RankMFX
+                \item Ranking SVD
+            \end{itemize}
+        \item Other
+            \begin{itemize}
+                \item Slope One
+            \end{itemize}
+    \end{itemize}
+
+\end{frame}
 %\begin{frame}
 %\frametitle{Non-Personalized}
 %\begin{description}
@@ -243,55 +269,6 @@ $ git clone
 %    \item[Random] Recommend randomly chosen items
 %\end{description}
 %\end{frame}
-\begin{frame}
-\frametitle{k-Nearest-Neighbor~\cite{Karypis:2001:EIT:502585.502627}}
-\begin{enumerate}
-    \item Compute similarity of each item, item pair
-    \item For each item, save the $k$ items with the highest similarity\\(= neighbors)
-    \item Compute the union of the neighbors of the basket of $u$
-    \item For each item in this set compute the sum of similarities to the basket of $u$
-    \item Sort by this score and return the first $N$ items
-\end{enumerate}
-\begin{equation}
-    \text{sim}(i,j) = \cos(\vec{i}, \vec{j})=\frac{\vec{i} \cdot \vec{j}}{||\vec{i}||_{2} ||\vec{j}||_{2}}
-\end{equation}
-% This is item based but it can also be done user based.
-\end{frame}
-\begin{frame}
-\frametitle{k-Nearest-Neighbor~\cite{Karypis:2001:EIT:502585.502627}}
-\begin{table}[t]
-\begin{tabular}{c|cccccc}
-    &Anna&Berta&Claudia&Dagmar\\\hline
-    The Shawshank Redemption&\marktopleft{c5}1&0&1&0\markbottomright[red]{c5}\\
-    The Godfather&0&1&1&0\\
-    The Godfather: Part II&\marktopleft{c7}0&1&0&1\markbottomright[green]{c7}\\ 
-    Pulp Fiction&1&1&0&1\\
-    The Good, the Bad and the Ugly&1&0&1&0\\
-\end{tabular}
-\end{table}
-\begin{equation*}
-    \text{sim}(i,j) = \cos(\vec{i}, \vec{j})=\frac{\vec{i} \cdot \vec{j}}{||\vec{i}||_{2} ||\vec{j}||_{2}}
-    = \frac{0}{2}=0
-\end{equation*}
-\end{frame}
-\begin{frame}
-\frametitle{k-Nearest-Neighbor~\cite{Karypis:2001:EIT:502585.502627}}
-\begin{table}[t]
-\begin{tabular}{c|cccccc}
-    &Anna&Berta&Claudia&Dagmar\\\hline
-    The Shawshank Redemption&1&0&1&0\\
-    The Godfather&0&1&1&0\\
-    The Godfather: Part II&\marktopleft{c7}0&1&0&1\markbottomright[green]{c7}\\
-    Pulp Fiction&\marktopleft{c8}1&1&0&1\markbottomright[blue]{c8}\\
-    The Good, the Bad and the Ugly&1&0&1&0\\
-\end{tabular}
-\end{table}
-\begin{equation*}
-    \text{sim}(i,j) = \cos(\vec{i}, \vec{j})=\frac{\vec{i} \cdot \vec{j}}{||\vec{i}||_{2} ||\vec{j}||_{2}}
-    =\frac{2}{\sqrt{2}\sqrt{3}}
-\end{equation*}
-% go back again and explain the rest of the algorithm.
-\end{frame}
 \begin{frame}
     \frametitle{Matrix Factorization~\cite{matrixfactorization}}
 \begin{table}[t]
@@ -368,6 +345,55 @@ if dloss != 0.0:
     H[j] *= scaling_factorJ
 \end{lstlisting}
 \end{frame}
+\begin{frame}
+\frametitle{k-Nearest-Neighbor~\cite{Karypis:2001:EIT:502585.502627}}
+\begin{enumerate}
+    \item Compute similarity of each item, item pair
+    \item For each item, save the $k$ items with the highest similarity\\(= neighbors)
+    \item Compute the union of the neighbors of the basket of $u$
+    \item For each item in this set compute the sum of similarities to the basket of $u$
+    \item Sort by this score and return the first $N$ items
+\end{enumerate}
+\begin{equation}
+    \text{sim}(i,j) = \cos(\vec{i}, \vec{j})=\frac{\vec{i} \cdot \vec{j}}{||\vec{i}||_{2} ||\vec{j}||_{2}}
+\end{equation}
+% This is item based but it can also be done user based.
+\end{frame}
+\begin{frame}
+\frametitle{k-Nearest-Neighbor~\cite{Karypis:2001:EIT:502585.502627}}
+\begin{table}[t]
+\begin{tabular}{c|cccccc}
+    &Anna&Berta&Claudia&Dagmar\\\hline
+    The Shawshank Redemption&\marktopleft{c5}1&0&1&0\markbottomright[red]{c5}\\
+    The Godfather&0&1&1&0\\
+    The Godfather: Part II&\marktopleft{c7}0&1&0&1\markbottomright[green]{c7}\\ 
+    Pulp Fiction&1&1&0&1\\
+    The Good, the Bad and the Ugly&1&0&1&0\\
+\end{tabular}
+\end{table}
+\begin{equation*}
+    \text{sim}(i,j) = \cos(\vec{i}, \vec{j})=\frac{\vec{i} \cdot \vec{j}}{||\vec{i}||_{2} ||\vec{j}||_{2}}
+    = \frac{0}{2}=0
+\end{equation*}
+\end{frame}
+\begin{frame}
+\frametitle{k-Nearest-Neighbor~\cite{Karypis:2001:EIT:502585.502627}}
+\begin{table}[t]
+\begin{tabular}{c|cccccc}
+    &Anna&Berta&Claudia&Dagmar\\\hline
+    The Shawshank Redemption&1&0&1&0\\
+    The Godfather&0&1&1&0\\
+    The Godfather: Part II&\marktopleft{c7}0&1&0&1\markbottomright[green]{c7}\\
+    Pulp Fiction&\marktopleft{c8}1&1&0&1\markbottomright[blue]{c8}\\
+    The Good, the Bad and the Ugly&1&0&1&0\\
+\end{tabular}
+\end{table}
+\begin{equation*}
+    \text{sim}(i,j) = \cos(\vec{i}, \vec{j})=\frac{\vec{i} \cdot \vec{j}}{||\vec{i}||_{2} ||\vec{j}||_{2}}
+    =\frac{2}{\sqrt{2}\sqrt{3}}
+\end{equation*}
+% go back again and explain the rest of the algorithm.
+\end{frame}
 %\begin{frame}
 %\frametitle{Slope One~\cite{DBLP:journals/corr/abs-cs-0702144}}
 %\begin{table}[t]
@@ -403,6 +429,17 @@ if dloss != 0.0:
 
 \end{frame}
 %\subsection{Evaluation Metrics}
+\begin{frame}
+    \frametitle{Evaluation Metrics in recsyslab}
+    \begin{itemize}
+        \item Hitrate/Recall@N
+        \item Precision
+        \item F1
+        \item Mean Reciprocal Hitratea (MRHR)
+        \item Area under the ROC (AUC)
+    \end{itemize}
+\end{frame}
+
 \begin{frame} 
 \frametitle{Hitrate/Recall@N~\cite{Karypis:2001:EIT:502585.502627, Sarwar00applicationof}}
 \begin{equation} 
@@ -417,84 +454,98 @@ if dloss != 0.0:
 \end{description}
 \end{frame}
 
-\begin{frame} 
-\frametitle{Precision~\cite{Sarwar00applicationof}}
-\begin{equation} 
-\text{Precision}=\frac{\sum_{u \in U} H_u \cap \text{topN}_u}{N \times |U|}
-\end{equation}\\
-\vspace{6.4mm}
-\begin{description}
-    \item[$H$] hidden interactions\\
-    \item[$H_u$] the hidden interaction of $u$\\
-    \item[$U$] set of users
-    \item[$topN_u$] $N$ recommendations for $u$
-\end{description}
-\end{frame}
-
-\begin{frame} 
-    \frametitle{F1~\cite{Sarwar00applicationof}}
-\begin{equation} 
-\text{F1}=\frac{2 \times \text{Recall@N} \times 
-\text{Precision}}{\text{Recall@N} + \text{Precision}}.
-\end{equation}\\
-\vspace{6.4mm}
-\begin{description}
-    \item[$H$] hidden interactions\\
-    \item[$H_u$] the hidden interaction of $u$\\
-    \item[$U$] set of users
-    \item[$topN_u$] $N$ recommendations for $u$
-\end{description}
-\end{frame}
-
-\begin{frame} 
-    \frametitle{Mean Reciprocal Hitrate~\cite{DBLP:conf/icdm/NingK11}}
-\begin{equation} 
-\text{MRHR}=\frac{1}{|U|} \sum_{u \in U} \frac{1}{\text{pos}(\text{topN}_{u},H_{u})},
-\end{equation}\\
-\vspace{6.4mm}
-\begin{description}
-    \item[$H$] hidden interactions\\
-    \item[$H_u$] the hidden interaction of $u$\\
-    \item[$U$] set of users
-    \item[$topN_u$] $N$ recommendations for $u$
-    \item[$\text{pos}(\text{topN}_{u},H_{u})$] position of the hidden item in the list of recommendations
-\end{description}
-\end{frame}
-
-\begin{frame} 
-    \frametitle{Area under the ROC (AUC)~\cite{Rendle:2009:BBP:1795114.1795167}}
-\begin{equation} 
-\text{AUC}=\frac{1}{|U|}\sum_{u \in U} \frac{1}{|E(u)|} 
-\sum_{(i,j) \in E(u)} \delta(x_{ui}>x_{uj}),
-\end{equation}\\
-\begin{equation}
-\delta(x)=\begin{cases}1, & \text{if x is true}, \\
-                       0, & \text{otherwise.}
-\end{cases}
-\end{equation}
-\begin{equation}
-E(u) =\{(i,j)|(u,i) \in H \land (u,j) \not\in (H \cup T)\}.
-\end{equation}
+%\begin{frame} 
+%\frametitle{Precision~\cite{Sarwar00applicationof}}
+%\begin{equation} 
+%\text{Precision}=\frac{\sum_{u \in U} H_u \cap \text{topN}_u}{N \times |U|}
+%\end{equation}\\
 %\vspace{6.4mm}
-\begin{description}
-    \item[$H$] hidden interactions\\
-    \item[$H_u$] the hidden interaction of $u$\\
-    \item[$U$] set of users
-    \item[$x_{ui}$] predicted score of the interaction between $u$ and $i$
-\end{description}
-\end{frame}
+%\begin{description}
+%    \item[$H$] hidden interactions\\
+%    \item[$H_u$] the hidden interaction of $u$\\
+%    \item[$U$] set of users
+%    \item[$topN_u$] $N$ recommendations for $u$
+%\end{description}
+%\end{frame}
+%
+%\begin{frame} 
+%    \frametitle{F1~\cite{Sarwar00applicationof}}
+%\begin{equation} 
+%\text{F1}=\frac{2 \times \text{Recall@N} \times 
+%\text{Precision}}{\text{Recall@N} + \text{Precision}}.
+%\end{equation}\\
+%\vspace{6.4mm}
+%\begin{description}
+%    \item[$H$] hidden interactions\\
+%    \item[$H_u$] the hidden interaction of $u$\\
+%    \item[$U$] set of users
+%    \item[$topN_u$] $N$ recommendations for $u$
+%\end{description}
+%\end{frame}
+%
+%\begin{frame} 
+%    \frametitle{Mean Reciprocal Hitrate~\cite{DBLP:conf/icdm/NingK11}}
+%\begin{equation} 
+%\text{MRHR}=\frac{1}{|U|} \sum_{u \in U} \frac{1}{\text{pos}(\text{topN}_{u},H_{u})},
+%\end{equation}\\
+%\vspace{6.4mm}
+%\begin{description}
+%    \item[$H$] hidden interactions\\
+%    \item[$H_u$] the hidden interaction of $u$\\
+%    \item[$U$] set of users
+%    \item[$topN_u$] $N$ recommendations for $u$
+%    \item[$\text{pos}(\text{topN}_{u},H_{u})$] position of the hidden item in the list of recommendations
+%\end{description}
+%\end{frame}
+%
+%\begin{frame} 
+%    \frametitle{Area under the ROC (AUC)~\cite{Rendle:2009:BBP:1795114.1795167}}
+%\begin{equation} 
+%\text{AUC}=\frac{1}{|U|}\sum_{u \in U} \frac{1}{|E(u)|} 
+%\sum_{(i,j) \in E(u)} \delta(x_{ui}>x_{uj}),
+%\end{equation}\\
+%\begin{equation}
+%\delta(x)=\begin{cases}1, & \text{if x is true}, \\
+%                       0, & \text{otherwise.}
+%\end{cases}
+%\end{equation}
+%\begin{equation}
+%E(u) =\{(i,j)|(u,i) \in H \land (u,j) \not\in (H \cup T)\}.
+%\end{equation}
+%%\vspace{6.4mm}
+%\begin{description}
+%    \item[$H$] hidden interactions\\
+%    \item[$H_u$] the hidden interaction of $u$\\
+%    \item[$U$] set of users
+%    \item[$x_{ui}$] predicted score of the interaction between $u$ and $i$
+%\end{description}
+%\end{frame}
 
-\section{Demontration of recsyslab}
+\section{Demonstration of recsyslab}
+\frame{
+    \frametitle{Contents}
+    \tableofcontents[currentsection]
+   % [pausesections]
+}
+
+\section{Conclusions}
 \frame{
     \frametitle{Contents}
     \tableofcontents[currentsection]
    % [pausesections]
 }
 \begin{frame} 
-\frametitle{Demonstration of recsyslab} 
+\frametitle{\insertsection} 
+\begin{itemize}
+    \item Python for easy readable source code \visible<2->{$\checkmark$}
+    \item Simple usage \visible<3->{$\checkmark$}
+    \item For education \visible<4->{$\checkmark$}
+    \item For research \visible<5->{$\checkmark$}
+    \item Open source license: GPLv3 \visible<6->{$\checkmark$}
+\end{itemize}
 \end{frame}
 
-\bibliographystyle{abbrv}
+\bibliographystyle{alphaurl}
 \bibliography{Bibliography}
 %\frame{\titlepage}
 %
