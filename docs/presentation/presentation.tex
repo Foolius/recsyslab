@@ -193,6 +193,23 @@
 % and then the items will be for example goods to buy or videos.
 \end{frame}
 
+\section{Related Work}
+\frame{
+    \frametitle{Contents}
+    \tableofcontents[currentsection]
+   % [pausesections]
+}
+\begin{frame} 
+\frametitle{\insertsection}\pause  
+\begin{itemize} 
+	\item MyMediaLite\pause
+	\item PREA (Personalized Recommandation Algorithms Toolkit)\pause
+	\item Apache Mahout\pause
+	\item Duine Framework\pause
+	\item Cofi\pause
+	\item Lenskit %written in Java
+\end{itemize}
+\end{frame}
 \section{Recsyslab}
 \frame{
     \frametitle{Contents}
@@ -200,12 +217,12 @@
    % [pausesections]
 }
 \begin{frame} 
-\frametitle{Motivation for recsyslab} %also comparison with other frameworks
+\frametitle{Motivation for recsyslab}\pause
 \begin{itemize}
-    \item Python for easy readable source code
-    \item Simple usage
-    \item For education
-    \item For research
+    \item Python for easy readable source code\pause
+    \item Simple to use\pause
+    \item For education\pause
+    \item For research\pause
     \item Open source license: GPLv3
 \end{itemize}
 \end{frame}
@@ -237,27 +254,24 @@ $ git clone
     \tableofcontents[currentsection]
 }
 \begin{frame}
-    \frametitle{Recommender Algorithms in recsyslab}
+    \frametitle{Recommender Algorithms in recsyslab}\pause
     \begin{itemize}
-        \item Non-Personalized
-            \begin{itemize}
-                \item Constant
-                \item Random
-            \end{itemize}
-        \item k-Nearest-Neighbor
-            \begin{itemize}
-                \item Item-Based
-                \item User-Based
-            \end{itemize}
         \item Matrix Factorization
             \begin{itemize}
                 \item Bayesian Personalized Ranking (BRPMF)
                 \item RankMFX
                 \item Ranking SVD
-            \end{itemize}
-        \item Other
+            \end{itemize}\pause
+        \item k-Nearest-Neighbor
             \begin{itemize}
-                \item Slope One
+                \item Item-Based
+                \item User-Based
+            \end{itemize}\pause
+		  \item Slope One\pause
+        \item Non-Personalized
+            \begin{itemize}
+                \item Constant
+                \item Random
             \end{itemize}
     \end{itemize}
 
@@ -348,14 +362,16 @@ if dloss != 0.0:
 \begin{frame}
 \frametitle{k-Nearest-Neighbor~\cite{Karypis:2001:EIT:502585.502627}}
 \begin{enumerate}
-    \item Compute similarity of each item, item pair
-    \item For each item, save the $k$ items with the highest similarity\\(= neighbors)
-    \item Compute the union of the neighbors of the basket of $u$
-    \item For each item in this set compute the sum of similarities to the basket of $u$
-    \item Sort by this score and return the first $N$ items
+    \item <2->Compute similarity of each item, item pair
+    \item <3->For each item, save the $k$ items with the highest similarity\\(= neighbors)
+    \item <4->Compute the union of the neighbors of the basket of $u$
+    \item <5->For each item in this set compute the sum of similarities to the basket of $u$
+    \item <6->Sort by this score and return the first $N$ items
 \end{enumerate}
 \begin{equation}
-    \text{sim}(i,j) = \cos(\vec{i}, \vec{j})=\frac{\vec{i} \cdot \vec{j}}{||\vec{i}||_{2} ||\vec{j}||_{2}}
+	\onslide<2->{
+    \text{sim}(i,j) = 
+	 	\cos(\vec{i}, \vec{j})=\frac{\vec{i} \cdot \vec{j}}{||\vec{i}||_{2} ||\vec{j}||_{2}}}
 \end{equation}
 % This is item based but it can also be done user based.
 \end{frame}
@@ -419,11 +435,11 @@ if dloss != 0.0:
    % [pausesections]
 }
 \begin{frame}
-    \frametitle{Leave-one-out Protocol}
+    \frametitle{Leave-one-out Protocol}\pause
     \begin{enumerate}
-        \item Randomly choose one interaction per user and hide them
-        \item Train the recommender system with the remaining interactions
-        \item Get recommendations for every user
+        \item Randomly choose one interaction per user and hide them\pause
+        \item Train the recommender system with the remaining interactions\pause
+        \item Get recommendations for every user\pause
         \item Compute the chosen evaluation metric with the hidden items and the recommendations
     \end{enumerate}
 
@@ -528,6 +544,22 @@ if dloss != 0.0:
    % [pausesections]
 }
 
+\section{Outlook}
+\frame{
+    \frametitle{Contents}
+    \tableofcontents[currentsection]
+   % [pausesections]
+}
+\begin{frame}
+\frametitle{\insertsection}\pause
+\begin{itemize}
+	\item More algorithms\pause
+	\item Refine hyperparameters with more experiments\pause
+	\item Update function for the models\pause
+	\item Incorporate user feedback
+\end{itemize}
+\end{frame}
+
 \section{Conclusions}
 \frame{
     \frametitle{Contents}
@@ -538,14 +570,30 @@ if dloss != 0.0:
 \frametitle{\insertsection} 
 \begin{itemize}
     \item Python for easy readable source code \visible<2->{$\checkmark$}
-    \item Simple usage \visible<3->{$\checkmark$}
+    \item Simple to use \visible<3->{$\checkmark$}
     \item For education \visible<4->{$\checkmark$}
     \item For research \visible<5->{$\checkmark$}
     \item Open source license: GPLv3 \visible<6->{$\checkmark$}
 \end{itemize}
 \end{frame}
 
-\bibliographystyle{alphaurl}
+\begin{frame}[fragile]
+    \frametitle{Get recsyslab}
+%    Github repository:\\
+    \url{github.com/Foolius/recsyslab}\\
+    \hspace*{8cm}\\
+%    Direct download of a .zip:\\
+    \url{github.com/Foolius/recsyslab/archive/master.zip}\\
+    \hspace*{8cm}\\
+%    Clone it with git:
+    \begin{lstlisting}[style=pseudocode]
+$ git clone 
+    https://github.com/Foolius/recsyslab.git
+    \end{lstlisting}
+\end{frame}
+
+%\bibliographystyle{alphaurl}
+\bibliographystyle{plainnat}
 \bibliography{Bibliography}
 %\frame{\titlepage}
 %
