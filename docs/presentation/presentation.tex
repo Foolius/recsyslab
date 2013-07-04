@@ -114,7 +114,7 @@
 
 %\title{\bf my title}
 %\author{\bf Me \\ and others}
-\institute{\large{L3S Research Center / Leibniz University of Hanover\\ Hannover, Germany}}
+\institute{\large{L3S Research Center / Leibniz University of Hanover\\ Hanover, Germany}}
 %\date{\today}
 
 \begin{document}
@@ -193,21 +193,16 @@
 % and then the items will be for example goods to buy or videos.
 \end{frame}
 
-\section{Related Work}
-\frame{
-    \frametitle{Contents}
-    \tableofcontents[currentsection]
-   % [pausesections]
-}
 \begin{frame} 
-\frametitle{\insertsection}\pause  
+\frametitle{Related Work}
 \begin{itemize} 
-	\item MyMediaLite\pause
-	\item PREA (Personalized Recommandation Algorithms Toolkit)\pause
-	\item Apache Mahout\pause
-	\item Duine Framework\pause
-	\item Cofi\pause
-	\item Lenskit %written in Java
+    \item \textbf{MyMediaLite} C\#, several recommender algorithms
+    \item \textbf{PREA} (Personalized Recommandation Algorithms Toolkit) Java, recommender algorithms and evaluation metrics
+    \item \textbf{Apache Mahout} Java, machine learning on top of Apache Hadoop
+    \item \textbf{Duine Framework} Java, combination of multiple recommender algorithms
+    \item \textbf{Cofi} C++, centers on one recommender algorithm
+    \item \textbf{Lenskit} Java, toolkit for recommendation and evaluation
+    \item \textbf{Scikit-learn} Python, machine learning, no recommender algorithms
 \end{itemize}
 \end{frame}
 \section{Recsyslab}
@@ -221,8 +216,6 @@
 \begin{itemize}
     \item Python for easy readable source code\pause
     \item Simple to use\pause
-    \item For education\pause
-    \item For research\pause
     \item Open source license: GPLv3
 \end{itemize}
 \end{frame}
@@ -248,26 +241,21 @@ $ git clone
     \end{lstlisting}
 \end{frame}
 
-\section{Recommendation Algorithms}
-\frame{
-    \frametitle{Contents}
-    \tableofcontents[currentsection]
-}
 \begin{frame}
     \frametitle{Recommender Algorithms in recsyslab}\pause
     \begin{itemize}
-        \item Matrix Factorization
+        \item Matrix Factorization~\cite{matrixfactorization}
             \begin{itemize}
-                \item Bayesian Personalized Ranking (BRPMF)
-                \item RankMFX
-                \item Ranking SVD
+                \item Bayesian Personalized Ranking (BPRMF)~\cite{Rendle:2009:BBP:1795114.1795167}
+                \item RankMFX~\cite{diaz2012happening}
+                \item Ranking SVD~\cite{jahrer2011collaborative}
             \end{itemize}\pause
-        \item k-Nearest-Neighbor
+        \item k-Nearest-Neighbor\cite{Karypis:2001:EIT:502585.502627}
             \begin{itemize}
                 \item Item-Based
                 \item User-Based
             \end{itemize}\pause
-		  \item Slope One\pause
+		  \item Slope One~\cite{DBLP:journals/corr/abs-cs-0702144}\pause
         \item Non-Personalized
             \begin{itemize}
                 \item Constant
@@ -308,19 +296,20 @@ Find $W$ and $H$ so:
 \begin{frame}[fragile]
     \frametitle{Matrix Factorization, Training}
 \begin{lstlisting}[style=pseudocode]
-U = randomly chosen user
-I = randomly chosen item U interacted with
-J = randomly chosen item U did not interact with
+repeat until conversion of W and H:
+    u=randomly chosen user
+    i=randomly chosen item U interacted with
+    j=randomly chosen item U did not interact 
+      with
 
-X=H[i] - H[j]
-wx = dot product of W[u] and X
-dloss = (derivative of the 
-        loss function of wx and 1) * 
-        learningRate
-        
-W[u] += dloss * (H[i] - H[j]) #These three lines
-H[i] += dloss * W[u]          #have to be
-H[j] += dloss * -W[u]         #executed at once
+    X=H[i] - H[j]
+    wx=dot product of W[u] and X
+    dloss=(derivative of the loss 
+           function of wx and 1) * learningRate
+
+    W[u]+=dloss*(H[i] - H[j]) #These three lines
+    H[i]+=dloss*W[u]          #have to be
+    H[j]+=dloss*-W[u]         #executed at once
 \end{lstlisting}
 \end{frame}
 
@@ -328,51 +317,49 @@ H[j] += dloss * -W[u]         #executed at once
 %\frametitle{Matrix Factorization, Training}
 \beamertemplatenavigationsymbolsempty
 \begin{lstlisting}[style=python]
-u = random.choice(R.keys())
-
-userItems = [x[0] for x in R[u]]
-# the positive example
-i = userItems[np.random.random_integers(0, len(userItems) - 1)]
-# the negative example
-j = np.random.random_integers(0, m_items)
-# if  j is also relevant for u we continue
-# we need to see a negative example to contrast the positive one
-while j in userItems:
+for i in xrange(0, iterations):
+    u = random.choice(R.keys())
+    userItems = [x[0] for x in R[u]]
+    # the positive example
+    i = userItems[np.random.random_integers(0, len(userItems) - 1)]
+    # the negative example
     j = np.random.random_integers(0, m_items)
+    # if  j is also relevant for u we continue
+    # we need to see a negative example to contrast the positive one
+    while j in userItems:
+        j = np.random.random_integers(0, m_items)
 
-X = H[i] - H[j]
-wx = np.dot(W[u], X)
-dloss = dlossF(wx, y)
+    X = H[i] - H[j]
+    wx = np.dot(W[u], X)
+    dloss = dlossF(wx, y)
 
-# temp
-wu = W[u]
-hi = H[i]
-hj = H[j]
-if dloss != 0.0:
-    # Updates
-    eta_dloss = learningRate * dloss
-    W[u] += eta_dloss * (hi - hj)
-    H[i] += eta_dloss * wu
-    H[j] += eta_dloss * (-wu)
-    W[u] *= scaling_factorU
-    H[i] *= scaling_factorI
-    H[j] *= scaling_factorJ
+    # temp
+    wu = W[u]
+    hi = H[i]
+    hj = H[j]
+    if dloss != 0.0:
+        # Updates
+        eta_dloss = learningRate * dloss
+        W[u] += eta_dloss * (hi - hj)
+        H[i] += eta_dloss * wu
+        H[j] += eta_dloss * (-wu)
+        W[u] *= scaling_factorU
+        H[i] *= scaling_factorI
+        H[j] *= scaling_factorJ
 \end{lstlisting}
 \end{frame}
 \begin{frame}
-\frametitle{k-Nearest-Neighbor~\cite{Karypis:2001:EIT:502585.502627}}
-\begin{enumerate}
-    \item <2->Compute similarity of each item, item pair
+    \frametitle{k-Nearest-Neighbor~\cite{Karypis:2001:EIT:502585.502627}}
+    \begin{enumerate}
+        \item <2->Compute similarity of each (item, item) pair
+            \begin{equation}
+                \text{sim}(i,j) = \cos(\vec{i}, \vec{j})=\frac{\vec{i} \cdot \vec{j}}{||\vec{i}||_{2} ||\vec{j}||_{2}}
+            \end{equation}
     \item <3->For each item, save the $k$ items with the highest similarity\\(= neighbors)
     \item <4->Compute the union of the neighbors of the basket of $u$
     \item <5->For each item in this set compute the sum of similarities to the basket of $u$
     \item <6->Sort by this score and return the first $N$ items
 \end{enumerate}
-\begin{equation}
-	\onslide<2->{
-    \text{sim}(i,j) = 
-	 	\cos(\vec{i}, \vec{j})=\frac{\vec{i} \cdot \vec{j}}{||\vec{i}||_{2} ||\vec{j}||_{2}}}
-\end{equation}
 % This is item based but it can also be done user based.
 \end{frame}
 \begin{frame}
@@ -428,14 +415,8 @@ if dloss != 0.0:
 %\end{frame}
 %should i include slopeone? it doesn't work great and is complicated to explain.
 
-\section{Evaluation}
-\frame{
-    \frametitle{Contents}
-    \tableofcontents[currentsection]
-   % [pausesections]
-}
 \begin{frame}
-    \frametitle{Leave-one-out Protocol}\pause
+    \frametitle{Leave-one-out Protocol~\cite{leaveoneout}}\pause
     \begin{enumerate}
         \item Randomly choose one interaction per user and hide them\pause
         \item Train the recommender system with the remaining interactions\pause
@@ -448,11 +429,11 @@ if dloss != 0.0:
 \begin{frame}
     \frametitle{Evaluation Metrics in recsyslab}
     \begin{itemize}
-        \item Hitrate/Recall@N
-        \item Precision
-        \item F1
-        \item Mean Reciprocal Hitratea (MRHR)
-        \item Area under the ROC (AUC)
+        \item Hitrate/Recall@N~\cite{Karypis:2001:EIT:502585.502627, Sarwar00applicationof}
+        \item Precision~\cite{Sarwar00applicationof}
+        \item F1~\cite{Sarwar00applicationof}
+        \item Mean Reciprocal Hitratea (MRHR)~\cite{DBLP:conf/icdm/NingK11}
+        \item Area under the ROC (AUC)~\cite{Rendle:2009:BBP:1795114.1795167}
     \end{itemize}
 \end{frame}
 
@@ -544,41 +525,62 @@ if dloss != 0.0:
    % [pausesections]
 }
 
-\section{Outlook}
+\begin{frame}
+    \frametitle{MovieLens Data Set}
+    \begin{itemize}
+        \item 100 000 interactions
+        \item 943 users
+        \item 1682 items
+        \item Text file with columns separated with a single tab
+    \end{itemize}
+\end{frame}
+\begin{frame}[fragile]
+    \frametitle{Movielens Data Set Excerpt}
+\begin{lstlisting}
+user    item    rating  time stamp
+196     242     3       881250949
+186     302     3       891717742
+22      377     1       878887116
+244     51      2       880606923
+166     346     1       886397596
+298     474     4       884182806
+115     265     2       881171488
+253     465     5       891628467
+305     451     3       886324817
+6       86      3       883603013
+62      257     2       879372434
+286     1014    5       879781125
+200     222     5       876042340
+\end{lstlisting}
+\end{frame}
+
+\section{Outlook \& Conclusions}
 \frame{
     \frametitle{Contents}
     \tableofcontents[currentsection]
    % [pausesections]
 }
 \begin{frame}
-\frametitle{\insertsection}\pause
+\frametitle{Outlook}\pause
 \begin{itemize}
 	\item More algorithms\pause
 	\item Refine hyperparameters with more experiments\pause
 	\item Update function for the models\pause
-	\item Incorporate user feedback
+	\item Incorporate user feedback about the library
 \end{itemize}
 \end{frame}
 
-\section{Conclusions}
-\frame{
-    \frametitle{Contents}
-    \tableofcontents[currentsection]
-   % [pausesections]
-}
 \begin{frame} 
-\frametitle{\insertsection} 
+\frametitle{Conclusions} 
 \begin{itemize}
     \item Python for easy readable source code \visible<2->{$\checkmark$}
     \item Simple to use \visible<3->{$\checkmark$}
-    \item For education \visible<4->{$\checkmark$}
-    \item For research \visible<5->{$\checkmark$}
-    \item Open source license: GPLv3 \visible<6->{$\checkmark$}
+    \item Open source license: GPLv3 \visible<4->{$\checkmark$}
 \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]
-    \frametitle{Get recsyslab}
+    \frametitle{Have Fun!}
 %    Github repository:\\
     \url{github.com/Foolius/recsyslab}\\
     \hspace*{8cm}\\
@@ -592,8 +594,9 @@ $ git clone
     \end{lstlisting}
 \end{frame}
 
+\bibliographystyle{apalike}
 %\bibliographystyle{alphaurl}
-\bibliographystyle{plainnat}
+%\bibliographystyle{plainnat}
 \bibliography{Bibliography}
 %\frame{\titlepage}
 %
