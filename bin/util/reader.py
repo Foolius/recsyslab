@@ -28,7 +28,7 @@ class stringSepReader(object):
             origUid = split[0]
             origIid = split[1]
             try:
-                rating = int(split[2])
+                rating = int(float(split[2]))
             except IndexError:
                 rating = 1
 

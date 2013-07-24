@@ -52,7 +52,7 @@ def learnModel(n_users, m_items, regU, regI, regJ,
     W = sigma * np.random.randn(n_users + 1, features) + mu
     H = sigma * np.random.randn(m_items + 1, features) + mu
 
-    printDelay = 0.01 * numberOfIterations
+    printDelay = int(0.01 * numberOfIterations)
     sum_loss = 0.0
     y = 1.0
 
