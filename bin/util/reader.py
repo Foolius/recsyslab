@@ -22,6 +22,7 @@ class fastStringSepReader(object):
         self.numberOfTransactions = 0
         self.maxUid = 0
         self.maxIid = 0
+        self.matrix = None
 
         print("Start reading the database.")
         for line in self.dbfile:
@@ -63,8 +64,21 @@ class fastStringSepReader(object):
         The lines of the matrix are corresponding to the users
         and the columns to the items.
         So the n,m entry is the rating the nth user gave the mth item."""
-        print("Sorry, no matrix")
+        if self.matrix == None:
+            self.computeMatrix()
         return self.matrix
+
+    def computeMatrix(self):
+        """Compute a matrix representing the dataset."""
+        self.matrix = np.matrix(np.zeros((
+            self.getMaxUid() + 1, self.getMaxIid() + 1)))
+        for u in self.R.iterkeys():
+            for d in self.R[u]:
+                item = d[0]
+                rating = d[1]
+                self.matrix[u, item] = rating
+
+
 
     def getOriginalUid(self, internalUid):
         """Maps the given internal UserID to the corresponding original UserID.
