@@ -20,19 +20,27 @@ class fastStringSepReader(object):
         self.iidDict = helper.idOrigDict()
         self.dbfile = open(filename, 'r')
         self.numberOfTransactions = 0
+        self.maxUid = 0
+        self.maxIid = 0
 
         print("Start reading the database.")
         for line in self.dbfile:
             self.numberOfTransactions += 1
             split = line.strip().split(separator, 3)
-            uid = split[0]
-            iid = split[1]
+            uid = int(split[0])
+            iid = int(split[1])
+
+            if uid > self.maxUid:
+                self.maxUid = uid
+            if iid > self.maxIid:
+                self.maxIid = iid
+
             try:
                 rating = int(float(split[2]))
             except IndexError:
                 rating = 1
 
-            if self.numberOfTransactions % 10000 == 0:
+            if self.numberOfTransactions % 100000 == 0:
                 print("%r Lines read." % self.numberOfTransactions)
 
             # put in R when not already there
@@ -84,11 +92,11 @@ class fastStringSepReader(object):
 
     def getMaxIid(self):
         """Returns the highest internal assigned ItemID."""
-        return self.iidDict.id - 1
+        return self.maxIid
 
     def getMaxUid(self):
         """Returns the highest internal assigned UserID."""
-        return self.uidDict.id - 1
+        return self.maxUid
 
 
 
