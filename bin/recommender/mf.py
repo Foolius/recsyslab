@@ -12,7 +12,8 @@ import numpy as np
 
 
 def learnModel(n_users, m_items, regU, regI, regJ,
-               learningRate, R, features, epochs, numberOfIterations, lossF, dlossF):
+               learningRate, R, features, epochs, numberOfIterations, lossF, dlossF,
+               W = None, H = None):
     """Learns a mf model with a passed loss function.
 
         n_users             --  The highest internal assigned User ID
@@ -49,8 +50,10 @@ def learnModel(n_users, m_items, regU, regI, regJ,
     sigma = 0.1
     mu = 0
     # Random initialization of W and H between mean=0 ; sigma=0.1
-    W = sigma * np.random.randn(n_users + 1, features) + mu
-    H = sigma * np.random.randn(m_items + 1, features) + mu
+    if W == None:
+        W = sigma * np.random.randn(n_users + 1, features) + mu
+    if H == None:
+        H = sigma * np.random.randn(m_items + 1, features) + mu
 
     printDelay = int(0.01 * numberOfIterations)
     sum_loss = 0.0
