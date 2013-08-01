@@ -94,21 +94,15 @@ def learnModel(n_users, m_items, regU, regI, regJ,
             if dloss != 0.0:
                 # Updates
                 eta_dloss = learningRate * dloss
-                Wu=W[u]
-                Hi=H[i]
-                Hj=H[j]
 
-                Wu += eta_dloss * (hi - hj)
-                Hi += eta_dloss * wu
-                Hj += eta_dloss * (-wu)
+                W[u] += eta_dloss * (hi - hj)
+                H[i] += eta_dloss * wu
+                H[j] += eta_dloss * (-wu)
 
-                Wu *= scaling_factorU
-                Hi *= scaling_factorI
-                Hj *= scaling_factorJ
+                W[u]*= scaling_factorU
+                H[i]*= scaling_factorI
+                H[j]*= scaling_factorJ
                 
-                W[u] = Wu
-                H[i] = Hi
-                H[j] = Hj
 
                 #t += 1  # increment the iteration
                 #if t % printDelay == 0:

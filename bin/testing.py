@@ -82,7 +82,7 @@ def fastBPRMF():
 
     from recommender import fastBPRMF
     W, H = fastBPRMF.learnModel(r.getMaxUid(), r.getMaxIid(), 0.01, 0.01, 0.01,
-                         0.1, train, 150, 1)
+                         0.1, train, 150, 3)
     import numpy as np
     # np.savez_compressed(
     #    "BPRMFModelFile", W=W, H=H)
@@ -96,7 +96,7 @@ def fastBPRMF():
     t = mf.MFrec(W, H, train)
     test.hitrate(test1, t.getRec, 10)
 
-fastBPRMF()
+#fastBPRMF()
 
 
 def knn():
