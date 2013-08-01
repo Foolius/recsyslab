@@ -51,8 +51,6 @@ def learnModel(n_users, m_items, regU, regI, regJ,
     mathexp = math.exp
     randomshuffle = random.shuffle
 
-    c =0
-
     for e in range(0, epochs):
         randomshuffle(l)
         for u, i, r in l:

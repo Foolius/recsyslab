@@ -71,7 +71,7 @@ def mf():
     t = mf.MFrec(W, H, train)
     test.hitrate(test1, t.getRec, 10)
 
-# mf()
+#mf()
 
 def fastBPRMF():
     from util import reader
