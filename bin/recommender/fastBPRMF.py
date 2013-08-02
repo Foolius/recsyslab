@@ -1,10 +1,10 @@
 def learnModel(n_users, m_items, regU, regI, regJ,
-        learningRate, R, features, epochs, W = None, H = None): 
+        learningRate, R, features, epochs, filename, W = None, H = None): 
     import numpy as np
     import math
     import random
 
-    db = file("u.data","r")
+    db = file(filename,"r")
 
     l=[]
     d={}
