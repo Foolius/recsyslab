@@ -9,8 +9,10 @@ def learnModel(n_users, m_items, regU, regI, regJ,
     l=[]
     d={}
 
-    for line in db:
-        u,i,r=line.split("\t")[:3]
+    csvReader = csv.reader(self.dbfile, delimiter = "\t")
+
+    for line in csvReader:
+        u,i,r=line[:3]
         u=int(u)
         i=int(i)
         r=int(r)

@@ -1,12 +1,13 @@
 """Contains a class to manage a database."""
 import helper
 import numpy as np
+import csv
 
 
 class fastStringSepReader(object):
     """A class to manage a database."""
 
-    def __init__(self, filename, separator):
+    def __init__(self, filename, separator = None):
         """Reads in a database file with consecutive IDs.
 
         The lines of the database file have to look like this:
@@ -23,11 +24,14 @@ class fastStringSepReader(object):
         self.maxUid = 0
         self.maxIid = 0
         self.matrix = None
+        dialect = csv.Sniffer().sniff(self.dbfile.read(1024), 
+                delimiters = separator)
+        self.dbfile.seek(0)
+        csvReader = csv.reader(self.dbfile, dialect)
 
         print("Start reading the database.")
-        for line in self.dbfile:
+        for split in csvReader:
             self.numberOfTransactions += 1
-            split = line.strip().split(separator, 3)
             uid = int(split[0])
             iid = int(split[1])
 
@@ -118,7 +122,7 @@ class fastStringSepReader(object):
 class stringSepReader(object):
     """A class to manage a database."""
 
-    def __init__(self, filename, separator):
+    def __init__(self, filename, separator = None):
         """Reads in a database file.
 
         The lines of the database file have to look like this:
@@ -130,15 +134,20 @@ class stringSepReader(object):
         self.R = {}
         self.uidDict = helper.idOrigDict()
         self.iidDict = helper.idOrigDict()
-        self.dbfile = open(filename, 'r')
+        self.dbfile = open(filename, "r")
         self.numberOfTransactions = 0
+        dialect = csv.Sniffer().sniff(self.dbfile.read(1024), 
+                delimiters = separator)
+        self.dbfile.seek(0)
+        csvReader = csv.reader(self.dbfile, dialect)
 
         print("Start reading the database.")
-        for line in self.dbfile:
+        for split in csvReader:
             self.numberOfTransactions += 1
-            split = line.strip().split(separator, 3)
+#            split = line.strip().split(separator, 3)
             origUid = split[0]
             origIid = split[1]
+
             try:
                 rating = int(float(split[2]))
             except IndexError:
