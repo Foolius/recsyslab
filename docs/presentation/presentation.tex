@@ -118,6 +118,24 @@
 %\date{\today}
 
 \begin{document}
+\begin{frame}
+\frametitle{Implicit Feedback}
+
+\begin{table}[t]
+\begin{tabular}{c|cccccc}
+    &Anna&Berta&Claudia&Dagmar\\\hline
+    The Shawshank Redemption&1&&1&\\
+    The Godfather&&1&1&\\
+    The Godfather: Part II&&1&&1\\
+    Pulp Fiction&1&1&&1\\
+    The Good, the Bad and the Ugly&1&&1&\\
+\end{tabular}
+\end{table}
+% Consider the following scenario where we have a viewing history of some persons as illustrated here. [vorlesen]
+% We also call this implicit feedback because the women weren't ask to rate the movies
+% they just watched them and we're trying to get some useful information out of it.
+% The item prediction task a recommender has to solve is to predict which movies are interesting for which persons
+\end{frame}
 
 \frame{\titlepage} % overview over the thesis with reference to recsyslab as major contribution.
 %\frame{\tableofcontents[currentsection]}
