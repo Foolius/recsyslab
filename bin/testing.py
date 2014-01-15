@@ -50,15 +50,14 @@ def svd():
 
 def mf():
     from util import reader
-    r = reader.tabSepReader("u.data")
+    r = reader.fastStringSepReader("u.data", "\t")
 
     from util import split
     train, test1 = split.split(r.getR(), 1234567890)
 
-    from recommender import mf
-    W, H = mf.learnModel(r.getMaxUid(), r.getMaxIid(), 0.01, 0.01, 0.01,
-                         0.1, train, 150, 3, r.numberOfTransactions,
-                         mf.logLoss, mf.dLogLoss)
+    from recommender import BPRMF
+    W, H = BPRMF.learnModel(r.getMaxUid(), r.getMaxIid(), 0.01, 0.01, 0.01,
+                         0.1, train, 150, 3, r.numberOfTransactions)
     import numpy as np
     # np.savez_compressed(
     #    "BPRMFModelFile", W=W, H=H)
@@ -67,11 +66,37 @@ def mf():
     # H = modelf['H']
     # modelf.close
 
+    from recommender import mf
     from util import test
-    t = test.MFtest(W, H, train)
+    t = mf.MFrec(W, H, train)
     test.hitrate(test1, t.getRec, 10)
 
-# mf()
+#mf()
+
+def fastBPRMF():
+    from util import reader
+    r = reader.fastStringSepReader("u.data", "\t")
+
+    from util import split
+    train, test1 = split.split(r.getR(), 1234567890)
+
+    from recommender import fastBPRMF
+    W, H = fastBPRMF.learnModel(r.getMaxUid(), r.getMaxIid(), 0.01, 0.01, 0.01,
+                         0.1, train, 150, 3)
+    import numpy as np
+    # np.savez_compressed(
+    #    "BPRMFModelFile", W=W, H=H)
+    # modelf = np.load("BPRMFModelFile" + ".npz")
+    # W = modelf['W']
+    # H = modelf['H']
+    # modelf.close
+
+    from recommender import mf
+    from util import test
+    t = mf.MFrec(W, H, train)
+    test.hitrate(test1, t.getRec, 10)
+
+#fastBPRMF()
 
 
 def knn():
@@ -112,4 +137,4 @@ def simple():
     from util import test
     test.auc(test1, c.getRec, r)
 
-simple()
+#simple()

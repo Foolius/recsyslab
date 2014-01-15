@@ -1,5 +1,6 @@
 def learnModel(n_users, m_items, regU, regI, regJ,
-               learningRate, R, features, epochs, numberOfIterations):
+               learningRate, R, features, epochs, numberOfIterations,
+               W = None, H = None):
     """Learns a model with the RankMFX algorithm, actually just calls mf.
 
         n_users             --  The highest internal assigned User ID
@@ -20,7 +21,7 @@ def learnModel(n_users, m_items, regU, regI, regJ,
     import mf
     return mf.learnModel(n_users, m_items, regU, regI, regJ, learningRate, R,
                          features, epochs, numberOfIterations, hingeLoss,
-                         dHingeLoss)
+                         dHingeLoss, W, H)
 
 
 def hingeLoss(a, y):

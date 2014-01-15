@@ -11,7 +11,8 @@ import numpy as np
 
 
 def learnModel(n_users, m_items, learningRate, R, features,
-               epochs, numberOfIterations):
+               epochs, numberOfIterations, 
+               userFeatures = None, itemFeatures = None):
     """Returns the model of a learned svd as two matrices.
 
         n_users             --  The highest internal assigned User ID
@@ -24,8 +25,10 @@ def learnModel(n_users, m_items, learningRate, R, features,
     """
 
     sigma = 0.1
-    userFeatures = sigma * np.random.randn(n_users + 1, features)
-    itemFeatures = sigma * np.random.randn(m_items + 1, features)
+    if userFeatures == None:
+        userFeatures = sigma * np.random.randn(n_users + 1, features)
+    if itemFeatures == None:
+        itemFeatures = sigma * np.random.randn(m_items + 1, features)
 
     printDelay = 0.1 * numberOfIterations
     sum_loss = 0.0
